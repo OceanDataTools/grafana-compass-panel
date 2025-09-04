@@ -1,0 +1,27 @@
+{
+  "$schema": "https://raw.githubusercontent.com/grafana/grafana/main/docs/sources/developers/plugins/plugin.schema.json",
+  "type": "panel",
+  "name": "Compass-Panel",
+  "id": "oceandatatools-compass-panel",
+  "info": {
+    "keywords": ["compass", "panel"],
+    "description": "A dynamic compass panel for Grafana",
+    "author": {
+      "name": "OceanDataTools.org"
+    },
+    "logos": {
+      "small": "img/logo.png",
+      "large": "img/logo.png"
+    },
+    "links": [],
+    "screenshots": [],
+    "version": "%VERSION%",
+    "updated": "%TODAY%"
+  },
+  "dependencies": {
+    "grafanaDependency": ">=10.4.0",
+    "plugins": []
+  },
+  "includes": [],
+  "module": "dist/module.js"
+}

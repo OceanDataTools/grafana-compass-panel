@@ -191,7 +191,22 @@ const renderArrowNeedle = () => {
     return renderDefaultNeedle();
   };
 
-  console.log(colors.needle);
+  // Early return if no data
+  if (!data.series || data.series.length === 0) {
+    return (
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+        <text
+          x={center}
+          y={center}
+          fontSize={radius * 0.15}
+          textAnchor="middle"
+          fill="#888"
+        >
+          No data
+        </text>
+      </svg>
+    );
+  }
 
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>

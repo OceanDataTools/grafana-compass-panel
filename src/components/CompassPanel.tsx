@@ -112,6 +112,7 @@ const renderArrowNeedle = () => {
         fill={colors.needle}
         stroke={colors.text}
         strokeWidth={Math.max(1, radius * 0.01)}
+        data-testid="compass-arrow-needle"
       />
       {/* Center pivot */}
       <circle cx={0} cy={0} r={capR} fill="white" stroke={colors.text} strokeWidth={Math.max(1, radius * 0.01)} />
@@ -124,7 +125,10 @@ const renderArrowNeedle = () => {
     const scale = (radius * 0.9) / shipHeight;
     const strokeW = Math.max(0.5, radius * 0.005);
     return (
-      <g transform={`scale(${scale})`}>
+      <g
+        transform={`scale(${scale})`}
+        data-testid="compass-ship-needle"
+      >
         <path
           d="M 0 -30 Q 8 -25 8 0 L 8 23 Q 8 25 0 25 Q -8 25 -8 23 L -8 0 Q -8 -25 0 -30 Z"
           fill={colors.needle}
@@ -138,8 +142,10 @@ const renderArrowNeedle = () => {
   const renderSvgNeedle = () => {
     const scale = radius / 50;
     return (
-      <g transform={`scale(${scale})`}>
-        <image href={options.needleSvg!} x={-5} y={-25} width={10} height={50} />
+      <g
+        transform={`scale(${scale})`}
+      >
+        <image href={options.needleSvg!} x={-5} y={-25} width={10} height={50} data-testid="compass-svg-needle"/>
       </g>
     );
   };
@@ -161,6 +167,7 @@ const renderArrowNeedle = () => {
           y={-pngHeight / 2}
           width={pngWidth}
           height={pngHeight}
+          data-testid="compass-png-needle"
         />
       </g>
     );
@@ -267,6 +274,7 @@ const renderArrowNeedle = () => {
       {/* Needle */}
       <g transform={`translate(${center},${center}) rotate(${displayHeading})`}
         style={{ transition: 'transform 0.6s ease-in-out' }}
+        data-testid="compass-needle"
       >
         {renderNeedle()}
       </g>
@@ -281,6 +289,7 @@ const renderArrowNeedle = () => {
           fill={colors.text}
           textAnchor="middle"
           fontWeight="600"
+          data-testid="compass-numeric-heading"
         >
           {`${Math.round(((rawHeading % 360) + 360) % 360)}°`}
         </text>

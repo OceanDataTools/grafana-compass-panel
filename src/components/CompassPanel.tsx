@@ -21,7 +21,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
     for (const series of data.series) {
       const field = series.fields.find(f => f.name === options.headingField);
       if (field && field.values.length) {
-        return field.values.get(field.values.length - 1) as number;
+        return field.values[field.values.length - 1] as number;
       }
     }
     return 0;

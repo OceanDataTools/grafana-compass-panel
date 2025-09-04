@@ -9,6 +9,8 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
   width,
   height,
   options,
+  fieldConfig,
+  id
 }) => {
   const size = Math.min(width, height);
   const radius = size / 2;

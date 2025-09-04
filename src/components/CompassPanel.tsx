@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { PanelProps } from '@grafana/data';
 import { useTheme } from '@grafana/ui';
+import { PanelDataErrorView } from '@grafana/runtime';
 import { SimpleOptions } from 'types';
 
 export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
@@ -200,19 +201,7 @@ const renderArrowNeedle = () => {
 
   // Early return if no data
   if (!data.series || data.series.length === 0) {
-    return (
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-        <text
-          x={center}
-          y={center}
-          fontSize={radius * 0.15}
-          textAnchor="middle"
-          fill="#888"
-        >
-          No data
-        </text>
-      </svg>
-    );
+    return <PanelDataErrorView fieldConfig={fieldConfig} panelId={id} data={data} needsStringField />;
   }
 
   return (

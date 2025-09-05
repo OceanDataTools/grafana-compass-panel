@@ -71,7 +71,9 @@ It is especially useful for ship navigation, robotics, UAVs, or any time-series 
 *Arrow needle with labels and numeric heading enabled*
 
 ![Ship Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-ship-profile.png)
+
 *Ship silhouette needle for vessel heading visualization*
 
 ![Custom Styling](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-custom-styling.png)
+
 *Standard needle compass with custom styling*

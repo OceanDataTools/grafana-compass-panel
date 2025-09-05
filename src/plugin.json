@@ -11,14 +11,30 @@
     },
     "keywords": ["compass", "panel"],
     "logos": {
-      "small": "img/logo.png",
-      "large": "img/logo.png"
+      "small": "img/logo.svg",
+      "large": "img/logo.svg"
     },
     "links": [{
       "name": "Code Repository",
       "url": "https://github.com/OceanDataTools/grafana-compass-panel"
+    },
+    {
+        "name": "sponsorship",
+        "url": "https://github.com/sponsors/webbpinner"
     }],
-    "screenshots": [],
+    "screenshots": [{
+      "name": "Compass with needle",
+      "path": "screenshots/compass-with-needle.png"
+    }, {
+      "name": "Compass with arrow",
+      "path": "screenshots/compass-with-arrow.png"
+    }, {
+      "name": "Compass with ship profile",
+      "path": "screenshots/compass-with-ship-profile.png"
+    }, {
+      "name": "Compass with custom styling",
+      "path": "screenshots/compass-with-custom-styling.png"
+    }],
     "version": "%VERSION%",
     "updated": "%TODAY%"
   },

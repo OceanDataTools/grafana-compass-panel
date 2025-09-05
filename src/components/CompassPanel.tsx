@@ -14,8 +14,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
 }) => {
   const size = Math.min(width, height);
   const radius = size / 2;
-  const center = radius;
-
+  
   const theme = useTheme();
 
   // === Extract heading ===
@@ -58,8 +57,8 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
 
   // === Helpers ===
   const polarToCartesian = (r: number, angleRad: number) => ({
-    x: center + r * Math.sin(angleRad),
-    y: center - r * Math.cos(angleRad),
+    x: r * Math.sin(angleRad),
+    y: r * Math.cos(angleRad),
   });
 
   const renderTicks = (
@@ -207,84 +206,91 @@ const renderArrowNeedle = () => {
   }
 
   return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-      {/* Outer bezel */}
-      <circle
-        cx={center}
-        cy={center}
-        r={radius * 0.98}
-        fill={colors.bezel}
-        stroke="#9ca3af"
-        strokeWidth={radius * 0.01}
-      />
+    <svg
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      preserveAspectRatio="xMidYMid meet"
+    >
+      <g transform={`translate(${width / 2}, ${height / 2})`}>
+        {/* Outer bezel */}
+        <circle
+          cx={0}
+          cy={0}
+          r={radius * 0.98}
+          fill={colors.bezel}
+          stroke="#9ca3af"
+          strokeWidth={radius * 0.01}
+        />
 
-      {/* Dial */}
-      <circle
-        cx={center}
-        cy={center}
-        r={radius * 0.88}
-        fill={colors.dial}
-        stroke={colors.text}
-        strokeWidth={radius * 0.015}
-      />
+        {/* Dial */}
+        <circle
+          cx={0}
+          cy={0}
+          r={radius * 0.88}
+          fill={colors.dial}
+          stroke={colors.text}
+          strokeWidth={radius * 0.015}
+        />
 
-      {/* Labels */}
-      {options.showLabels && (
-        <g
-          fontFamily="system-ui, sans-serif"
-          fontSize={radius * 0.12}
-          fill={colors.text}
-          textAnchor="middle"
-          fontWeight="700"
+        {/* Labels */}
+        {options.showLabels && (
+          <g
+            fontFamily="system-ui, sans-serif"
+            fontSize={radius * 0.12}
+            fill={colors.text}
+            textAnchor="middle"
+            fontWeight="700"
+          >
+            {['N', 'E', 'S', 'W'].map((dir, i) => {
+              const angle = (i * 90 * Math.PI) / 180;
+              const { x, y } = polarToCartesian(radius * 0.8, angle);
+              return (
+                <text key={dir} x={x} y={y + radius * 0.04}>
+                  {dir}
+                </text>
+              );
+            })}
+          </g>
+        )}
+
+        {/* Minor ticks */}
+        {renderTicks(48, 0.80, 0.86, i => i % 12 === 0, colors.text, 0.01)}
+
+        {/* Major ticks (skip cardinal if labels are shown) */}
+        {renderTicks(
+          8,
+          0.72,
+          0.86,
+          i => !!options.showLabels && [0, 2, 4, 6].includes(i),
+          colors.text,
+          0.02
+        )}
+
+        {/* Needle */}
+        <g transform={`rotate(${displayHeading})`}
+          style={{ transition: 'transform 0.6s ease-in-out' }}
+          data-testid="compass-needle"
         >
-          {['N', 'E', 'S', 'W'].map((dir, i) => {
-            const angle = (i * 90 * Math.PI) / 180;
-            const { x, y } = polarToCartesian(radius * 0.8, angle);
-            return (
-              <text key={dir} x={x} y={y + radius * 0.04}>
-                {dir}
-              </text>
-            );
-          })}
+          {renderNeedle()}
         </g>
-      )}
 
-      {/* Minor ticks */}
-      {renderTicks(48, 0.80, 0.86, i => i % 12 === 0, colors.text, 0.01)}
-
-      {/* Major ticks (skip cardinal if labels are shown) */}
-      {renderTicks(
-        8,
-        0.72,
-        0.86,
-        i => !!options.showLabels && [0, 2, 4, 6].includes(i),
-        colors.text,
-        0.02
-      )}
-
-      {/* Needle */}
-      <g transform={`translate(${center},${center}) rotate(${displayHeading})`}
-        style={{ transition: 'transform 0.6s ease-in-out' }}
-        data-testid="compass-needle"
-      >
-        {renderNeedle()}
+        {/* Numeric heading */}
+        {options.showHeadingValue && (
+          <text
+            x={0}
+            y={radius * 0.65}
+            fontFamily="system-ui, sans-serif"
+            fontSize={radius * 0.15}
+            fill={colors.text}
+            textAnchor="middle"
+            fontWeight="600"
+            data-testid="compass-numeric-heading"
+          >
+            {`${Math.round(((rawHeading % 360) + 360) % 360)}°`}
+          </text>
+        )}
       </g>
-
-      {/* Numeric heading */}
-      {options.showHeadingValue && (
-        <text
-          x={center}
-          y={center + radius * 0.65}
-          fontFamily="system-ui, sans-serif"
-          fontSize={radius * 0.15}
-          fill={colors.text}
-          textAnchor="middle"
-          fontWeight="600"
-          data-testid="compass-numeric-heading"
-        >
-          {`${Math.round(((rawHeading % 360) + 360) % 360)}°`}
-        </text>
-      )}
     </svg>
   );
 };

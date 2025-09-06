@@ -111,6 +111,18 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
         description: 'Provide a URL or data URI for a custom PNG needle',
         defaultValue: '',
         showIf: (opts) => opts.needleType === 'png',
+      })
+      .addSelect({
+        path: 'rotationMode',
+        name: 'Rotation Mode',
+        description: 'Choose whether to rotate the needle or the dial',
+        settings: {
+          options: [
+            { value: 'rotate-needle', label: 'Rotate Needle' },
+            { value: 'rotate-dial', label: 'Rotate Dial' },
+          ],
+        },
+        defaultValue: 'rotate-needle',
       });
   }
 );

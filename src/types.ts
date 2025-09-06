@@ -11,4 +11,6 @@ export interface SimpleOptions {
   needleType?: 'needle' | 'arrow' | 'ship' | 'svg' | 'png';
   needleSvg?: string;
   needlePng?: string;
+
+  rotationMode?: 'rotate-needle' | 'rotate-dial';
 }

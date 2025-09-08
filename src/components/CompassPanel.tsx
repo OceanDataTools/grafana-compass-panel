@@ -58,7 +58,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
   // === Helpers ===
   const polarToCartesian = (r: number, angleRad: number) => ({
     x: r * Math.sin(angleRad),
-    y: r * Math.cos(angleRad),
+    y: -r * Math.cos(angleRad),
   });
 
   const renderTicks = (
@@ -233,43 +233,56 @@ const renderArrowNeedle = () => {
           strokeWidth={radius * 0.015}
         />
 
-        {/* Labels */}
-        {options.showLabels && (
-          <g
-            fontFamily="system-ui, sans-serif"
-            fontSize={radius * 0.12}
-            fill={colors.text}
-            textAnchor="middle"
-            fontWeight="700"
-          >
-            {['N', 'E', 'S', 'W'].map((dir, i) => {
-              const angle = (i * 90 * Math.PI) / 180;
-              const { x, y } = polarToCartesian(radius * 0.8, angle);
-              return (
-                <text key={dir} x={x} y={y + radius * 0.04}>
-                  {dir}
-                </text>
-              );
-            })}
-          </g>
-        )}
+        <g
+          transform={options.rotationMode === 'rotate-dial' ? `rotate(${-displayHeading})` : undefined}
+          style={options.rotationMode === 'rotate-dial' ? { transition: 'transform 0.6s ease-in-out' } : {}}
+          data-testid="compass-dial"
+        >
+          {/* Labels */}
+          {options.showLabels && (
+            <g
+              fontFamily="system-ui, sans-serif"
+              fontSize={radius * 0.12}
+              fill={colors.text}
+              textAnchor="middle"
+              dominantBaseline="central"
+              fontWeight="700"
+            >
+              {['N', 'E', 'S', 'W'].map((dir, i) => {
+                const angle = (i * 90 * Math.PI) / 180;
+                const { x, y } = polarToCartesian(radius * 0.8, angle);
+                return (
+                  <text key={dir} x={x} y={y}>
+                    {dir}
+                  </text>
+                );
+              })}
+            </g>
+          )}
 
-        {/* Minor ticks */}
-        {renderTicks(48, 0.80, 0.86, i => i % 12 === 0, colors.text, 0.01)}
+          {/* Minor ticks */}
+          {renderTicks(48, 0.80, 0.86, i => i % 12 === 0, colors.text, 0.01)}
 
-        {/* Major ticks (skip cardinal if labels are shown) */}
-        {renderTicks(
-          8,
-          0.72,
-          0.86,
-          i => !!options.showLabels && [0, 2, 4, 6].includes(i),
-          colors.text,
-          0.02
-        )}
+          {/* Major ticks (skip cardinal if labels are shown) */}
+          {renderTicks(
+            8,
+            0.72,
+            0.86,
+            i => !!options.showLabels && [0, 2, 4, 6].includes(i),
+            colors.text,
+            0.02
+          )}
+        </g>
 
         {/* Needle */}
-        <g transform={`rotate(${displayHeading})`}
+{/*        <g transform={`rotate(${displayHeading})`}
           style={{ transition: 'transform 0.6s ease-in-out' }}
+          data-testid="compass-needle"
+        >
+*/}
+        <g
+          transform={options.rotationMode === 'rotate-needle' ? `rotate(${displayHeading})` : undefined}
+          style={options.rotationMode === 'rotate-needle' ? { transition: 'transform 0.6s ease-in-out' } : {}}
           data-testid="compass-needle"
         >
           {renderNeedle()}

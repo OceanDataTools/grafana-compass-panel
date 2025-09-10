@@ -7,7 +7,7 @@
 **Compass** is a Grafana visualization plugin for displaying heading or orientation data on a compass dial.  
 It is especially useful for ship navigation, robotics, UAVs, or any time-series data representing direction in degrees (0–360).
 
-![Compass Example](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/windrose=north-up.png)
+![Compass Example](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/windrose-north-up.png)
 
 ---
 
@@ -78,10 +78,10 @@ It is especially useful for ship navigation, robotics, UAVs, or any time-series 
 
 *Standard needle compass with custom styling*
 
-![North Up Orientation](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/winddial-north-up.png)
+![North Up Orientation](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/windrose-north-up.png)
 
 *North up orientation for wind dial visualization*
 
-![Custom Styling](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/winddial-bow-up.png)
+![Bow Up Orientation](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/winddial-bow-up.png)
 
 *Bow up orientation for wind dial visualization*

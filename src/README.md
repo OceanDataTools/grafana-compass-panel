@@ -77,3 +77,11 @@ It is especially useful for ship navigation, robotics, UAVs, or any time-series 
 ![Custom Styling](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-custom-styling.png)
 
 *Standard needle compass with custom styling*
+
+![North Up Orientation](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/winddial-north-up.png)
+
+*North up orientation for wind dial visualization*
+
+![Custom Styling](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/winddial-bow-up.png)
+
+*Bow up orientation for wind dial visualization*

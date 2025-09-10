@@ -6,8 +6,9 @@
 ## Overview / Introduction
 **Compass** is a Grafana visualization plugin for displaying heading or orientation data on a compass dial.  
 It is especially useful for ship navigation, robotics, UAVs, or any time-series data representing direction in degrees (0–360).
+Optionally the panel can display true and/or apparent wind angle.
 
-![Compass Example](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-needle.png)
+![Compass Example](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/winddial-north-up.png)
 
 ---
 
@@ -20,10 +21,12 @@ It is especially useful for ship navigation, robotics, UAVs, or any time-series 
   - **Ship**: minimal ship silhouette pointing forward.
   - **Custom SVG**: load your own vector as a needle.
   - **Custom PNG**: load your own bitmap as a needle.
-- Optional numeric heading readout (e.g. `273°`).
 - Cardinal direction labels (N/E/S/W).
 - Configurable colors for bezel, dial, text, needle, and tail.
 - Minor and major tick marks for easy orientation.
+- Optional numeric heading readout (e.g. `273°`).
+- Optional indicator and numeric heading for true wind direction.
+- Optional indicator and numeric heading for apparent wind direction.
 
 ---
 
@@ -61,11 +64,17 @@ It is especially useful for ship navigation, robotics, UAVs, or any time-series 
 ### Colors
 - **Dial Color** – background of compass dial.  
 - **Bezel Color** – outer rim.  
-- **Text Color** – labels, ticks, numeric heading.  
+- **Text Color** – labels, ticks, numeric heading.
+- **True Wind Color**: Color of the true wind indicator.  
+- **Apparent Wind Color**: Color of the apparent wind indicator.  
 
 ---
 
 ## Screenshots
+![Default Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-needle.png)
+
+*Arrow needle with labels and numeric heading enabled*
+
 ![Arrow Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-arrow.png)
 
 *Arrow needle with labels and numeric heading enabled*
@@ -77,3 +86,7 @@ It is especially useful for ship navigation, robotics, UAVs, or any time-series 
 ![Custom Styling](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-custom-styling.png)
 
 *Standard needle compass with custom styling*
+
+![Custom Styling](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/winddial-bow-up.png)
+
+*Bow up orientation for wind dial visualization*

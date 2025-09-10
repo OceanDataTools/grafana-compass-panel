@@ -1,15 +1,28 @@
 import { PanelPlugin } from '@grafana/data';
 import { CompassPanel } from './components/CompassPanel';
+// import { DialTypeEditor } from './components/DialTypeEditor'
 import { SimpleOptions } from './types';
 
-export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptions(
-  (builder) => {
-    return builder
+export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel)
+  .setPanelOptions((builder) => {
+    builder
       .addFieldNamePicker({
         path: 'headingField',
         name: 'Heading Field',
         description: 'Select which field contains the heading value',
         defaultValue: '',
+      })
+      .addFieldNamePicker({
+        path: 'trueWindField',
+        name: 'Truewind Field',
+        description: 'Select which field contains the true wind value',
+        defaultValue: ''
+      })
+      .addFieldNamePicker({
+        path: 'apparentWindField',
+        name: 'Apparent wind Field',
+        description: 'Select which field contains the apparent wind value',
+        defaultValue: ''
       })
       .addColorPicker({
         path: 'textColor',
@@ -25,25 +38,7 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
         category: ['Coloring'],
         description: 'Color of the north-pointing side of the needle',
         defaultValue: 'red',
-        showIf: (opts) => opts.needleType === 'needle',
-        settings: { showAlpha: true, mode: 'hue' },
-      })
-      .addColorPicker({
-        path: 'needleColor',
-        name: 'Arrow Color',
-        category: ['Coloring'],
-        description: 'Color of the arrow',
-        defaultValue: 'red',
-        showIf: (opts) => opts.needleType === 'arrow',
-        settings: { showAlpha: true, mode: 'hue' },
-      })
-      .addColorPicker({
-        path: 'needleColor',
-        name: 'Ship Color',
-        category: ['Coloring'],
-        description: 'Color of the ship profile',
-        defaultValue: 'red',
-        showIf: (opts) => opts.needleType === 'ship',
+        showIf: (opts) => ['needle', 'arrow', 'ship'].includes(opts.needleType || ""),
         settings: { showAlpha: true, mode: 'hue' },
       })
       .addColorPicker({
@@ -69,6 +64,24 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
         category: ['Coloring'],
         description: 'Outer ring color',
         defaultValue: '#c6c6c6',
+        settings: { showAlpha: true, mode: 'hue' },
+      })
+      .addColorPicker({
+        path: 'trueWindColor',
+        name: 'True Wind Color',
+        category: ['Coloring'],
+        description: 'Color of the ship profile',
+        defaultValue: 'blue',
+        showIf: (opts) => opts.trueWindField !== '',
+        settings: { showAlpha: true, mode: 'hue' },
+      })
+      .addColorPicker({
+        path: 'apparentWindColor',
+        name: 'Apparent Wind Color',
+        category: ['Coloring'],
+        description: 'Color of the ship profile',
+        defaultValue: 'yellow',
+        showIf: (opts) => opts.apparentWindField !== '',
         settings: { showAlpha: true, mode: 'hue' },
       })
       .addBooleanSwitch({
@@ -124,5 +137,4 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
         },
         defaultValue: 'rotate-needle',
       });
-  }
-);
+  })

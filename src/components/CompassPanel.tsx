@@ -17,34 +17,67 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
   
   const theme = useTheme();
 
-  // === Extract heading ===
-  const rawHeading = (() => {
-    if (!options.headingField) { return 0 };
+  // === Extract helpers ===
+  const extractLatest = (fieldName?: string): number | null => {
+    if (!fieldName) {
+      return null;
+    }
     for (const series of data.series) {
-      const field = series.fields.find(f => f.name === options.headingField);
+      const field = series.fields.find((f) => f.name === fieldName);
       if (field && field.values.length) {
         return field.values[field.values.length - 1] as number;
       }
     }
-    return 0;
-  })();
+    return null;
+  };
 
-  // === Smooth heading interpolation ===
-  const [displayHeading, setDisplayHeading] = useState(rawHeading);
-  const cumulativeHeadingRef = useRef(rawHeading);
+  const heading = extractLatest(options.headingField) ?? 0;
+  const trueWind = extractLatest(options.trueWindField) ?? 0;
+  const apparentWind = extractLatest(options.apparentWindField) ?? 0;
+
+  // === Smooth direction interpolation ===
+  const [displayHeading, setDisplayHeading] = useState(heading);
+  const cumulativeHeadingRef = useRef(heading);
+
+  const [displayTruewind, setDisplayTruewind] = useState(trueWind);
+  const cumulativeTruewindRef = useRef(trueWind);
+
+  const [displayApparent, setDisplayApparent] = useState(apparentWind);
+  const cumulativeApparentRef = useRef(apparentWind);
+
+  function unwrapAngle(prev: number, raw: number): number {
+    let delta = raw - (prev % 360);
+
+    if (delta > 180) {
+      delta -= 360;
+    }
+    if (delta < -180) {
+      delta += 360;
+    }
+
+    return prev + delta;
+  }
 
   useEffect(() => {
     const prev = cumulativeHeadingRef.current;
-    let delta = rawHeading - (prev % 360);
-
-    // Shortest rotation path
-    if (delta > 180) { delta -= 360 };
-    if (delta < -180) { delta += 360 };
-
-    const next = prev + delta;
+    const next = unwrapAngle(prev, heading);
     cumulativeHeadingRef.current = next;
     setDisplayHeading(next);
-  }, [rawHeading]);
+  }, [heading]);
+
+  useEffect(() => {
+    const prev = cumulativeTruewindRef.current;
+    const next = unwrapAngle(prev, trueWind);
+    cumulativeTruewindRef.current = next;
+    setDisplayTruewind(next);
+  }, [trueWind]);
+
+  useEffect(() => {
+    const prev = cumulativeApparentRef.current;
+    const next = unwrapAngle(prev, apparentWind);
+    cumulativeApparentRef.current = next;
+    setDisplayApparent(next);
+  }, [apparentWind]);
 
   // === Colors ===
   const colors = {
@@ -53,6 +86,8 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
     tail: theme.visualization.getColorByName(options.tailColor || 'gray'),
     dial: theme.visualization.getColorByName(options.dialColor || 'white'),
     bezel: theme.visualization.getColorByName(options.bezelColor || '#c6c6c6'),
+    trueWind: theme.visualization.getColorByName(options.trueWindColor || 'blue'),
+    apparentWind: theme.visualization.getColorByName(options.apparentWindColor || 'yellow'),
   };
 
   // === Helpers ===
@@ -88,40 +123,42 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
     });
 
   // === Needles ===
-const renderArrowNeedle = () => {
-  const len = radius * 0.7;      // full arrow length
-  const headLen = radius * 0.25; // arrowhead length
-  const halfW = radius * 0.05;   // shaft half-width
-  const tipW = radius * 0.1;     // arrow tip half-width
-  const capR = Math.max(2, radius * 0.025);
+  // === Arrow ===
+  const renderArrowNeedle = () => {
+    const len = radius * 0.7;      // full arrow length
+    const headLen = radius * 0.25; // arrowhead length
+    const halfW = radius * 0.05;   // shaft half-width
+    const tipW = radius * 0.1;     // arrow tip half-width
+    const capR = Math.max(2, radius * 0.025);
 
-  const points = [
-    [-halfW, len - headLen],        // tail left
-    [-halfW, -len + headLen],       // shaft top-left
-    [-tipW, -len + headLen],        // arrowhead base-left
-    [0, -len],                      // tip (north)
-    [tipW, -len + headLen],         // arrowhead base-right
-    [halfW, -len + headLen],        // shaft top-right
-    [halfW, len - headLen],         // tail right
-  ]
-  .map(p => p.join(','))
-  .join(' ');
+    const points = [
+      [-halfW, len - headLen],        // tail left
+      [-halfW, -len + headLen],       // shaft top-left
+      [-tipW, -len + headLen],        // arrowhead base-left
+      [0, -len],                      // tip (north)
+      [tipW, -len + headLen],         // arrowhead base-right
+      [halfW, -len + headLen],        // shaft top-right
+      [halfW, len - headLen],         // tail right
+    ]
+    .map(p => p.join(','))
+    .join(' ');
 
-  return (
-    <g>
-      <polygon
-        points={points}
-        fill={colors.needle}
-        stroke={colors.text}
-        strokeWidth={Math.max(1, radius * 0.01)}
-        data-testid="compass-arrow-needle"
-      />
-      {/* Center pivot */}
-      <circle cx={0} cy={0} r={capR} fill="white" stroke={colors.text} strokeWidth={Math.max(1, radius * 0.01)} />
-    </g>
-  );
-};
+    return (
+      <g>
+        <polygon
+          points={points}
+          fill={colors.needle}
+          stroke={colors.text}
+          strokeWidth={Math.max(1, radius * 0.01)}
+          data-testid="compass-arrow-needle"
+        />
+        {/* Center pivot */}
+        <circle cx={0} cy={0} r={capR} fill="white" stroke={colors.text} strokeWidth={Math.max(1, radius * 0.01)} />
+      </g>
+    );
+  };
 
+  // === Ship Profile ===
   const renderShipNeedle = () => {
     const shipHeight = 45;
     const scale = (radius * 0.9) / shipHeight;
@@ -141,17 +178,26 @@ const renderArrowNeedle = () => {
     );
   };
 
+  // === Custom SVG ===
   const renderSvgNeedle = () => {
     const scale = radius / 50;
     return (
       <g
         transform={`scale(${scale})`}
       >
-        <image href={options.needleSvg!} x={-5} y={-25} width={10} height={50} data-testid="compass-svg-needle"/>
+        <image
+          href={options.needleSvg!}
+          x={-5}
+          y={-25}
+          width={10}
+          height={50}
+          data-testid="compass-svg-needle"
+        />
       </g>
     );
   };
 
+  // === Custom PNG ===
   const renderPngNeedle = () => {
     // Scale PNG relative to the dial radius
     const pngWidth = 20;
@@ -171,6 +217,43 @@ const renderArrowNeedle = () => {
           height={pngHeight}
           data-testid="compass-png-needle"
         />
+      </g>
+    );
+  };
+
+  // === Wind arrows ===
+  const renderWindArrow = (angleDeg: number, color: string, label: string) => {
+    const rOuter = radius * 0.9;
+    const rNotch = radius * 0.85;
+    const rInner = radius * 0.4;
+    const rText = radius * 0.75;
+    const rwidthRad = 0.2;
+
+    const angleRad = (angleDeg * Math.PI) / 180;
+    const pNotch = polarToCartesian(rNotch, angleRad);
+    const pOuter1 = polarToCartesian(rOuter, angleRad - rwidthRad / 2);
+    const pOuter2 = polarToCartesian(rOuter, angleRad + rwidthRad / 2);
+    const pInner = polarToCartesian(rInner, angleRad);
+    const pText = polarToCartesian(rText, angleRad);
+
+    return (
+      <g>
+        <polygon
+          points={`${pInner.x},${pInner.y} ${pOuter2.x},${pOuter2.y} ${pNotch.x},${pNotch.y} ${pOuter1.x},${pOuter1.y}`}
+          fill={color}
+          stroke={colors.text}
+        />
+        <text
+          x={pText.x}
+          y={pText.y + radius * 0.025}
+          fontFamily="system-ui, sans-serif"
+          fontSize={radius * 0.075}
+          fill={colors.text}
+          textAnchor="middle"
+          fontWeight="600"
+        >
+          {label}
+        </text>
       </g>
     );
   };
@@ -233,6 +316,15 @@ const renderArrowNeedle = () => {
           strokeWidth={radius * 0.015}
         />
 
+        {/* Needle */}
+        <g
+          transform={options.rotationMode === 'rotate-needle' ? `rotate(${displayHeading})` : undefined}
+          style={options.rotationMode === 'rotate-needle' ? { transition: 'transform 0.6s ease-in-out' } : {}}
+          data-testid="compass-needle"
+        >
+          {renderNeedle()}
+        </g>
+
         <g
           transform={options.rotationMode === 'rotate-dial' ? `rotate(${-displayHeading})` : undefined}
           style={options.rotationMode === 'rotate-dial' ? { transition: 'transform 0.6s ease-in-out' } : {}}
@@ -280,13 +372,33 @@ const renderArrowNeedle = () => {
           data-testid="compass-needle"
         >
 */}
-        <g
-          transform={options.rotationMode === 'rotate-needle' ? `rotate(${displayHeading})` : undefined}
-          style={options.rotationMode === 'rotate-needle' ? { transition: 'transform 0.6s ease-in-out' } : {}}
-          data-testid="compass-needle"
-        >
-          {renderNeedle()}
-        </g>
+
+        {/* Wind arrows */}
+        {options.apparentWindField && (
+          <g
+            transform={
+              options.rotationMode === 'rotate-dial'
+                ? `rotate(${displayApparent - displayHeading})`
+                : `rotate(${displayApparent})`
+            }
+            style={{ transition: 'transform 0.6s ease-in-out' }}
+          >
+            {options.apparentWindField && apparentWind !== null && renderWindArrow(0, colors.apparentWind, 'A')}
+          </g>
+        )}
+
+        {options.trueWindField && (
+          <g
+            transform={
+              options.rotationMode === 'rotate-dial'
+                ? `rotate(${displayTruewind - displayHeading})`
+                : `rotate(${displayTruewind})`
+            }
+            style={{ transition: 'transform 0.6s ease-in-out' }}
+          >
+            {options.trueWindField && trueWind !== null && renderWindArrow(0, colors.trueWind, 'T')}
+          </g>
+        )}
 
         {/* Numeric heading */}
         {options.showHeadingValue && (
@@ -300,7 +412,37 @@ const renderArrowNeedle = () => {
             fontWeight="600"
             data-testid="compass-numeric-heading"
           >
-            {`${Math.round(((rawHeading % 360) + 360) % 360)}°`}
+            {`${Math.round(((heading % 360) + 360) % 360)}°`}
+          </text>
+        )}
+
+        {options.showHeadingValue && options.trueWindField && (
+          <text
+            x={-radius * 0.6}
+            y={radius * 0.95}
+            fontFamily="system-ui, sans-serif"
+            fontSize={radius * 0.15}
+            fill={colors.trueWind}
+            textAnchor="end"
+            fontWeight="600"
+            data-testid="windrose-numeric-truewind"
+          >
+            {`${Math.round(((trueWind % 360) + 360) % 360)}°`}
+          </text>
+        )}
+
+        {options.showHeadingValue && options.apparentWindField && (
+          <text
+            x={radius * 0.6}
+            y={radius * 0.95}
+            fontFamily="system-ui, sans-serif"
+            fontSize={radius * 0.15}
+            fill={colors.apparentWind}
+            textAnchor="start"
+            fontWeight="600"
+            data-testid="windrose-numeric-apparent"
+          >
+            {`${Math.round(((apparentWind % 360) + 360) % 360)}°`}
           </text>
         )}
       </g>

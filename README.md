@@ -4,6 +4,7 @@
 [![License](https://img.shields.io/github/license/OceanDataTools/grafana-compass-panel)](LICENSE)
 
 ## Overview / Introduction
+
 **Compass** is a Grafana visualization plugin for displaying heading or orientation data on a compass dial.  
 It is especially useful for ship navigation, robotics, UAVs, or any time-series data representing direction in degrees (0–360).
 Optionally the panel can display true and/or apparent wind angle.
@@ -42,56 +43,61 @@ Optionally the panel can display true and/or apparent wind angle.
 ## Options
 
 ### Data Options
+
 - **Heading Field**: Select the numeric field in your series that represents heading in degrees.
 
 ### Display Options
+
 - **Show Labels**: Toggle cardinal direction labels (N/E/S/W).
 - **Show Numeric Heading**: Display a numeric degree readout below the compass.
 
 ### Needle Options
-- **Needle Type**  
-  - `Default` – red-tipped classic compass needle  
-  - `Arrow` – stylized arrow needle  
-  - `Ship` – simplified vessel silhouette (points to heading)  
-  - `SVG` – load a custom vector (provide URL or relative path)  
+
+- **Needle Type**
+
+  - `Default` – red-tipped classic compass needle
+  - `Arrow` – stylized arrow needle
+  - `Ship` – simplified vessel silhouette (points to heading)
+  - `SVG` – load a custom vector (provide URL or relative path)
   - `PNG` – load a custom image (provide URL or relative path)
 
-- **Needle Color**: Color of the primary needle.  
-- **Tail Color**: Color of the tail (for default needle).  
-- **Custom SVG**: Path/URL to your own SVG asset.  
-- **Custom PNG**: Path/URL to your own PNG asset.  
+- **Needle Color**: Color of the primary needle.
+- **Tail Color**: Color of the tail (for default needle).
+- **Custom SVG**: Path/URL to your own SVG asset.
+- **Custom PNG**: Path/URL to your own PNG asset.
 
 ### Colors
-- **Dial Color** – background of compass dial.  
-- **Bezel Color** – outer rim.  
-- **Text Color** – labels, ticks, numeric heading.
-- **True Wind Color**: Color of the true wind indicator.  
-- **Apparent Wind Color**: Color of the apparent wind indicator.  
 
+- **Dial Color** – background of compass dial.
+- **Bezel Color** – outer rim.
+- **Text Color** – labels, ticks, numeric heading.
+- **True Wind Color**: Color of the true wind indicator.
+- **Apparent Wind Color**: Color of the apparent wind indicator.
 
 ---
 
 ## Screenshots
+
 ![Default Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-needle.png)
 
-*Arrow needle with labels and numeric heading enabled*
+_Arrow needle with labels and numeric heading enabled_
 
 ![Arrow Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-arrow.png)
 
-*Arrow needle with labels and numeric heading enabled*
+_Arrow needle with labels and numeric heading enabled_
 
 ![Ship Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-ship-profile.png)
 
-*Ship silhouette needle for vessel heading visualization*
+_Ship silhouette needle for vessel heading visualization_
 
 ![Custom Styling](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-custom-styling.png)
 
-*Standard needle compass with custom styling*
+_Standard needle compass with custom styling_
 
 ![North Up Orientation](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/winddial-north-up.png)
 
-*North up orientation for wind dial visualization*
+_North up orientation for wind dial visualization_
 
 ![Bow Up Orientation](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/winddial-bow-up.png)
 
-*Bow up orientation for wind dial visualization*
+_Bow up orientation for wind dial visualization_

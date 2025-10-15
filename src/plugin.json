@@ -14,35 +14,42 @@
       "small": "img/logo.svg",
       "large": "img/logo.svg"
     },
-    "links": [{
-      "name": "Website",
-      "url": "https://oceandatatools.github.io"
-    },
-    {
-      "name": "GitHub",
-      "url": "https://github.com/OceanDataTools/grafana-compass-panel"
-    },
-    {
+    "links": [
+      {
+        "name": "Website",
+        "url": "https://oceandatatools.github.io"
+      },
+      {
+        "name": "GitHub",
+        "url": "https://github.com/OceanDataTools/grafana-compass-panel"
+      },
+      {
         "name": "License",
         "url": "https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/refs/heads/main/LICENSE"
-    },
-    {
+      },
+      {
         "name": "Sponsorship",
         "url": "https://github.com/sponsors/webbpinner"
-    }],
-    "screenshots": [{
-      "name": "Compass with needle",
-      "path": "screenshots/compass-with-needle.png"
-    }, {
-      "name": "Compass with arrow",
-      "path": "screenshots/compass-with-arrow.png"
-    }, {
-      "name": "Compass with ship profile",
-      "path": "screenshots/compass-with-ship-profile.png"
-    }, {
-      "name": "Compass with custom styling",
-      "path": "screenshots/compass-with-custom-styling.png"
-    }],
+      }
+    ],
+    "screenshots": [
+      {
+        "name": "Compass with needle",
+        "path": "screenshots/compass-with-needle.png"
+      },
+      {
+        "name": "Compass with arrow",
+        "path": "screenshots/compass-with-arrow.png"
+      },
+      {
+        "name": "Compass with ship profile",
+        "path": "screenshots/compass-with-ship-profile.png"
+      },
+      {
+        "name": "Compass with custom styling",
+        "path": "screenshots/compass-with-custom-styling.png"
+      }
+    ],
     "version": "%VERSION%",
     "updated": "%TODAY%"
   },

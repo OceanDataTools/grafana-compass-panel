@@ -1,7 +1,11 @@
 export interface SimpleOptions {
   headingField?: string;
-  trueWindField?: string;
-  apparentWindField?: string;
+  trueWindDirField?: string;
+  trueWindSpdField?: string;
+  trueWindSpdUom?: string;
+  apparentWindSpdField?: string;
+  apparentWindDirField?: string;
+  apparentWindSpdUom?: string;
   textColor?: string;
   needleColor?: string;
   tailColor?: string;

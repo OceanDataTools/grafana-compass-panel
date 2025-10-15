@@ -105,8 +105,8 @@ _Standard needle compass with custom styling_
 
 ![North Up Orientation](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/wind-with-spd.png)
 
-_North up orientation for wind dial visualization_
+_North up orientation for wind indicator visualization_
 
 ![Bow Up Orientation](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/wind-without-spd.png)
 
-_Bow up orientation for wind dial visualization_
+_Bow up orientation for wind indicator visualization_

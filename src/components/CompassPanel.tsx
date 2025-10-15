@@ -10,11 +10,13 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
   height,
   options,
   fieldConfig,
-  id
+  id,
 }) => {
   const size = Math.min(width, height);
-  const radius = size / 2;
-  
+  const showWindSpd = options.apparentWindSpdField || options.trueWindSpdField;
+  const radius = showWindSpd ? (size / 2) * 0.925 : size / 2;
+  const h_offset = showWindSpd ? size * 0.0375 : 0;
+
   const theme = useTheme();
 
   // === Extract helpers ===
@@ -32,18 +34,20 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
   };
 
   const heading = extractLatest(options.headingField) ?? 0;
-  const trueWind = extractLatest(options.trueWindField) ?? 0;
-  const apparentWind = extractLatest(options.apparentWindField) ?? 0;
+  const trueWindDir = extractLatest(options.trueWindDirField) ?? 0;
+  const trueWindSpd = extractLatest(options.trueWindSpdField) ?? 0;
+  const apparentWindDir = extractLatest(options.apparentWindDirField) ?? 0;
+  const apparentWindSpd = extractLatest(options.apparentWindSpdField) ?? 0;
 
   // === Smooth direction interpolation ===
   const [displayHeading, setDisplayHeading] = useState(heading);
   const cumulativeHeadingRef = useRef(heading);
 
-  const [displayTruewind, setDisplayTruewind] = useState(trueWind);
-  const cumulativeTruewindRef = useRef(trueWind);
+  const [displayTruewind, setDisplayTruewind] = useState(trueWindDir);
+  const cumulativeTruewindRef = useRef(trueWindDir);
 
-  const [displayApparent, setDisplayApparent] = useState(apparentWind);
-  const cumulativeApparentRef = useRef(apparentWind);
+  const [displayApparent, setDisplayApparent] = useState(apparentWindDir);
+  const cumulativeApparentRef = useRef(apparentWindDir);
 
   function unwrapAngle(prev: number, raw: number): number {
     let delta = raw - (prev % 360);
@@ -67,17 +71,17 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
 
   useEffect(() => {
     const prev = cumulativeTruewindRef.current;
-    const next = unwrapAngle(prev, trueWind);
+    const next = unwrapAngle(prev, trueWindDir);
     cumulativeTruewindRef.current = next;
     setDisplayTruewind(next);
-  }, [trueWind]);
+  }, [trueWindDir]);
 
   useEffect(() => {
     const prev = cumulativeApparentRef.current;
-    const next = unwrapAngle(prev, apparentWind);
+    const next = unwrapAngle(prev, apparentWindDir);
     cumulativeApparentRef.current = next;
     setDisplayApparent(next);
-  }, [apparentWind]);
+  }, [apparentWindDir]);
 
   // === Colors ===
   const colors = {
@@ -105,43 +109,37 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
     strokeWFrac = 0.01
   ) =>
     Array.from({ length: count }).map((_, i) => {
-      if (skip?.(i)) { return null };
+      if (skip?.(i)) {
+        return null;
+      }
       const angle = (i * (360 / count) * Math.PI) / 180;
       const p1 = polarToCartesian(radius * outerFrac, angle);
       const p2 = polarToCartesian(radius * innerFrac, angle);
       return (
-        <line
-          key={i}
-          x1={p1.x}
-          y1={p1.y}
-          x2={p2.x}
-          y2={p2.y}
-          stroke={stroke}
-          strokeWidth={radius * strokeWFrac}
-        />
+        <line key={i} x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y} stroke={stroke} strokeWidth={radius * strokeWFrac} />
       );
     });
 
   // === Needles ===
   // === Arrow ===
   const renderArrowNeedle = () => {
-    const len = radius * 0.7;      // full arrow length
+    const len = radius * 0.7; // full arrow length
     const headLen = radius * 0.25; // arrowhead length
-    const halfW = radius * 0.05;   // shaft half-width
-    const tipW = radius * 0.1;     // arrow tip half-width
+    const halfW = radius * 0.05; // shaft half-width
+    const tipW = radius * 0.1; // arrow tip half-width
     const capR = Math.max(2, radius * 0.025);
 
     const points = [
-      [-halfW, len - headLen],        // tail left
-      [-halfW, -len + headLen],       // shaft top-left
-      [-tipW, -len + headLen],        // arrowhead base-left
-      [0, -len],                      // tip (north)
-      [tipW, -len + headLen],         // arrowhead base-right
-      [halfW, -len + headLen],        // shaft top-right
-      [halfW, len - headLen],         // tail right
+      [-halfW, len - headLen], // tail left
+      [-halfW, -len + headLen], // shaft top-left
+      [-tipW, -len + headLen], // arrowhead base-left
+      [0, -len], // tip (north)
+      [tipW, -len + headLen], // arrowhead base-right
+      [halfW, -len + headLen], // shaft top-right
+      [halfW, len - headLen], // tail right
     ]
-    .map(p => p.join(','))
-    .join(' ');
+      .map((p) => p.join(','))
+      .join(' ');
 
     return (
       <g>
@@ -164,10 +162,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
     const scale = (radius * 0.9) / shipHeight;
     const strokeW = Math.max(0.5, radius * 0.005);
     return (
-      <g
-        transform={`scale(${scale})`}
-        data-testid="compass-ship-needle"
-      >
+      <g transform={`scale(${scale})`} data-testid="compass-ship-needle">
         <path
           d="M 0 -30 Q 8 -25 8 0 L 8 23 Q 8 25 0 25 Q -8 25 -8 23 L -8 0 Q -8 -25 0 -30 Z"
           fill={colors.needle}
@@ -182,17 +177,8 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
   const renderSvgNeedle = () => {
     const scale = radius / 50;
     return (
-      <g
-        transform={`scale(${scale})`}
-      >
-        <image
-          href={options.needleSvg!}
-          x={-5}
-          y={-25}
-          width={10}
-          height={50}
-          data-testid="compass-svg-needle"
-        />
+      <g transform={`scale(${scale})`}>
+        <image href={options.needleSvg!} x={-5} y={-25} width={10} height={50} data-testid="compass-svg-needle" />
       </g>
     );
   };
@@ -203,12 +189,9 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
     const pngWidth = 20;
     const pngHeight = 50;
     const scale = radius / 50;
-  
+
     return (
-      <g
-        transform={`scale(${scale})`}
-        style={{ transformOrigin: '0 0', transition: 'transform 0.6s ease-in-out' }}
-      >
+      <g transform={`scale(${scale})`} style={{ transformOrigin: '0 0', transition: 'transform 0.6s ease-in-out' }}>
         <image
           href={options.needlePng!}
           x={-pngWidth / 2}
@@ -276,10 +259,18 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
   };
 
   const renderNeedle = () => {
-    if (options.needleType === 'arrow') { return renderArrowNeedle() };
-    if (options.needleType === 'ship') { return renderShipNeedle() };
-    if (options.needleType === 'svg' && options.needleSvg) { return renderSvgNeedle() };
-    if (options.needleType === 'png' && options.needlePng) { return renderPngNeedle() };
+    if (options.needleType === 'arrow') {
+      return renderArrowNeedle();
+    }
+    if (options.needleType === 'ship') {
+      return renderShipNeedle();
+    }
+    if (options.needleType === 'svg' && options.needleSvg) {
+      return renderSvgNeedle();
+    }
+    if (options.needleType === 'png' && options.needlePng) {
+      return renderPngNeedle();
+    }
     return renderDefaultNeedle();
   };
 
@@ -289,32 +280,13 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
   }
 
   return (
-    <svg
-      width={width}
-      height={height}
-      viewBox={`0 0 ${width} ${height}`}
-      preserveAspectRatio="xMidYMid meet"
-    >
-      <g transform={`translate(${width / 2}, ${height / 2})`}>
+    <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet">
+      <g transform={`translate(${width / 2}, ${height / 2 - h_offset})`}>
         {/* Outer bezel */}
-        <circle
-          cx={0}
-          cy={0}
-          r={radius * 0.98}
-          fill={colors.bezel}
-          stroke="#9ca3af"
-          strokeWidth={radius * 0.01}
-        />
+        <circle cx={0} cy={0} r={radius * 0.98} fill={colors.bezel} stroke="#9ca3af" strokeWidth={radius * 0.01} />
 
         {/* Dial */}
-        <circle
-          cx={0}
-          cy={0}
-          r={radius * 0.88}
-          fill={colors.dial}
-          stroke={colors.text}
-          strokeWidth={radius * 0.015}
-        />
+        <circle cx={0} cy={0} r={radius * 0.88} fill={colors.dial} stroke={colors.text} strokeWidth={radius * 0.015} />
 
         {/* Needle */}
         <g
@@ -353,28 +325,14 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
           )}
 
           {/* Minor ticks */}
-          {renderTicks(48, 0.80, 0.86, i => i % 12 === 0, colors.text, 0.01)}
+          {renderTicks(48, 0.8, 0.86, (i) => i % 12 === 0, colors.text, 0.01)}
 
           {/* Major ticks (skip cardinal if labels are shown) */}
-          {renderTicks(
-            8,
-            0.72,
-            0.86,
-            i => !!options.showLabels && [0, 2, 4, 6].includes(i),
-            colors.text,
-            0.02
-          )}
+          {renderTicks(8, 0.72, 0.86, (i) => !!options.showLabels && [0, 2, 4, 6].includes(i), colors.text, 0.02)}
         </g>
 
-        {/* Needle */}
-{/*        <g transform={`rotate(${displayHeading})`}
-          style={{ transition: 'transform 0.6s ease-in-out' }}
-          data-testid="compass-needle"
-        >
-*/}
-
         {/* Wind arrows */}
-        {options.apparentWindField && (
+        {options.apparentWindDirField && (
           <g
             transform={
               options.rotationMode === 'rotate-dial'
@@ -383,11 +341,11 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
             }
             style={{ transition: 'transform 0.6s ease-in-out' }}
           >
-            {options.apparentWindField && apparentWind !== null && renderWindArrow(0, colors.apparentWind, 'A')}
+            {options.apparentWindDirField && apparentWindDir !== null && renderWindArrow(0, colors.apparentWind, 'A')}
           </g>
         )}
 
-        {options.trueWindField && (
+        {options.trueWindDirField && (
           <g
             transform={
               options.rotationMode === 'rotate-dial'
@@ -396,7 +354,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
             }
             style={{ transition: 'transform 0.6s ease-in-out' }}
           >
-            {options.trueWindField && trueWind !== null && renderWindArrow(0, colors.trueWind, 'T')}
+            {options.trueWindDirField && trueWindDir !== null && renderWindArrow(0, colors.trueWind, 'T')}
           </g>
         )}
 
@@ -416,33 +374,63 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
           </text>
         )}
 
-        {options.showHeadingValue && options.trueWindField && (
+        {options.showHeadingValue && options.trueWindDirField && (
           <text
-            x={-radius * 0.6}
+            x={-radius}
             y={radius * 0.95}
             fontFamily="system-ui, sans-serif"
             fontSize={radius * 0.15}
             fill={colors.trueWind}
-            textAnchor="end"
+            textAnchor="start"
             fontWeight="600"
-            data-testid="windrose-numeric-truewind"
+            data-testid="windrose-numeric-truewind-dir"
           >
-            {`${Math.round(((trueWind % 360) + 360) % 360)}°`}
+            {`${Math.round(((trueWindDir % 360) + 360) % 360)}°`}
           </text>
         )}
 
-        {options.showHeadingValue && options.apparentWindField && (
+        {options.trueWindSpdField && (
           <text
-            x={radius * 0.6}
+            x={-radius}
+            y={radius * 1.1}
+            fontFamily="system-ui, sans-serif"
+            fontSize={radius * 0.15}
+            fill={colors.trueWind}
+            textAnchor="start"
+            fontWeight="600"
+            data-testid="windrose-numeric-truewind-spd"
+          >
+            {`${trueWindSpd.toFixed(2)} ${options.trueWindSpdUom}`}
+          </text>
+        )}
+
+        {options.showHeadingValue && options.apparentWindDirField && (
+          <text
+            x={radius}
             y={radius * 0.95}
             fontFamily="system-ui, sans-serif"
             fontSize={radius * 0.15}
             fill={colors.apparentWind}
-            textAnchor="start"
+            textAnchor="end"
             fontWeight="600"
-            data-testid="windrose-numeric-apparent"
+            data-testid="windrose-numeric-apparent-dir"
           >
-            {`${Math.round(((apparentWind % 360) + 360) % 360)}°`}
+            {`${Math.round(((apparentWindDir % 360) + 360) % 360)}°`}
+          </text>
+        )}
+
+        {options.apparentWindSpdField && (
+          <text
+            x={radius}
+            y={radius * 1.1}
+            fontFamily="system-ui, sans-serif"
+            fontSize={radius * 0.15}
+            fill={colors.apparentWind}
+            textAnchor="end"
+            fontWeight="600"
+            data-testid="windrose-numeric-apparentwind-spd"
+          >
+            {`${apparentWindSpd.toFixed(2)} ${options.apparentWindSpdUom}`}
           </text>
         )}
       </g>

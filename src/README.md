@@ -1,6 +1,7 @@
 # Compass Panel
 
-![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?logo=grafana&query=$.version&url=https://grafana.com/api/plugins/grafana-compass-panel&label=Marketplace&prefix=v&color=F47A20)
+[![Grafana Marketplace](https://img.shields.io/badge/dynamic/json?logo=grafana&query=$.version&url=https://grafana.com/api/plugins/oceandatatools-compass-panel&label=Marketplace&prefix=v&color=F47A20)](https://grafana.com/grafana/plugins/oceandatatools-compass-panel/)
+[![GitHub Sponsor](https://img.shields.io/github/sponsors/webbpinner?label=Sponsor&logo=GitHub)](https://github.com/sponsors/webbpinner)
 [![License](https://img.shields.io/github/license/OceanDataTools/grafana-compass-panel)](LICENSE)
 
 ## Overview / Introduction

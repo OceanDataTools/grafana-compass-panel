@@ -64,7 +64,7 @@
         "trueWindSpdField": "",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.0.0",
+      "pluginVersion": "2.1.0",
       "targets": [
         {
           "datasource": {
@@ -128,7 +128,7 @@
         "trueWindSpdField": "",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.0.0",
+      "pluginVersion": "2.1.0",
       "targets": [
         {
           "datasource": {
@@ -232,7 +232,7 @@
         "trueWindSpdField": "D-series",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.0.0",
+      "pluginVersion": "2.1.0",
       "targets": [
         {
           "datasource": {
@@ -336,7 +336,7 @@
         "trueWindSpdField": "",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.0.0",
+      "pluginVersion": "2.1.0",
       "targets": [
         {
           "alias": "",
@@ -362,7 +362,7 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 6,
+        "w": 4,
         "x": 0,
         "y": 6
       },
@@ -394,7 +394,7 @@
         "trueWindSpdField": "",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.0.0",
+      "pluginVersion": "2.1.0",
       "targets": [
         {
           "datasource": {
@@ -466,8 +466,8 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 6,
-        "x": 6,
+        "w": 4,
+        "x": 4,
         "y": 6
       },
       "id": 8,
@@ -498,7 +498,7 @@
         "trueWindSpdField": "D-series",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.0.0",
+      "pluginVersion": "2.1.0",
       "targets": [
         {
           "datasource": {
@@ -569,6 +569,214 @@
         "overrides": []
       },
       "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 8,
+        "y": 6
+      },
+      "id": 11,
+      "options": {
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "C-series",
+        "apparentWindField": "C-series",
+        "apparentWindSpdField": "E-series",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "dark-blue",
+        "headingField": "heading",
+        "needleColor": "red",
+        "needlePng": "https://soi-vessel-tracker.web.app/static/Illustration.png",
+        "needleSvg": "",
+        "needleType": "png",
+        "rotationMode": "rotate-dial",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#000000",
+        "trueWindColor": "blue",
+        "trueWindDirField": "B-series",
+        "trueWindField": "B-series",
+        "trueWindSpdField": "D-series",
+        "trueWindSpdUom": "kts"
+      },
+      "pluginVersion": "2.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "trlxrdZVk"
+          },
+          "refId": "A",
+          "scenarioId": "simulation",
+          "sim": {
+            "key": {
+              "tick": 1,
+              "type": "flight"
+            },
+            "stream": true
+          }
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "B",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "150"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "C",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "140"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "D",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "25.014"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "E",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "22.503"
+        }
+      ],
+      "title": "Wind w/spd - PNG Needle",
+      "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 12,
+        "y": 6
+      },
+      "id": 12,
+      "options": {
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "C-series",
+        "apparentWindField": "C-series",
+        "apparentWindSpdField": "E-series",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "heading",
+        "needleColor": "red",
+        "needlePng": "",
+        "needleSvg": "",
+        "needleType": "ship",
+        "rotationMode": "rotate-needle",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "B-series",
+        "trueWindField": "B-series",
+        "trueWindSpdField": "D-series",
+        "trueWindSpdUom": "kts"
+      },
+      "pluginVersion": "2.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "trlxrdZVk"
+          },
+          "refId": "A",
+          "scenarioId": "simulation",
+          "sim": {
+            "key": {
+              "tick": 1,
+              "type": "flight"
+            },
+            "stream": true
+          }
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": true,
+          "refId": "B",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "150"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": true,
+          "refId": "C",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "140"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": true,
+          "refId": "D",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "25.014"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": true,
+          "refId": "E",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "22.503"
+        }
+      ],
+      "title": "Wind w/spd - North Up",
+      "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
         "h": 7,
         "w": 6,
         "x": 0,
@@ -602,7 +810,7 @@
         "trueWindSpdField": "",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.0.0",
+      "pluginVersion": "2.1.0",
       "targets": [
         {
           "datasource": {
@@ -660,7 +868,7 @@
         "trueWindSpdField": "",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.0.0",
+      "pluginVersion": "2.1.0",
       "targets": [
         {
           "datasource": {
@@ -738,7 +946,7 @@
         "trueWindSpdField": "",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.0.0",
+      "pluginVersion": "2.1.0",
       "targets": [
         {
           "datasource": {
@@ -796,7 +1004,7 @@
         "trueWindSpdField": "",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.0.0",
+      "pluginVersion": "2.1.0",
       "targets": [
         {
           "datasource": {
@@ -847,5 +1055,5 @@
   "timezone": "",
   "title": "Provisioned compass-panel dashboard",
   "uid": "a538aeff-5a8a-42a5-901c-938d896fdd6f",
-  "version": 7
+  "version": 11
 }

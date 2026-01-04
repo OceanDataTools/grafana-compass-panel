@@ -20,3 +20,7 @@ Updated links on README pages
 
 Updated "No data" behaviors
 Biased png needle image to better indicate which end of the needle is the front.
+
+## 2.1.3
+
+Fixed: Apparent wind angle corrently displays relative to the vessel heading and NOT the compass dial.

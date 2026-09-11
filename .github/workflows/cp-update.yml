@@ -19,8 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: grafana/plugin-actions/create-plugin-update@main # zizmor: ignore[unpinned-uses] provided by grafana
-        # Uncomment to use a fine-grained personal access token instead of default github token
-        # (For more info on how to generate the token see https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
-        # with:
-        # Make sure to save the token in your repository secrets
-        # token: $
+        with:
+          # The action's `token` input is required with no default - it does not fall back to
+          # `github.token` on its own, despite what the comment above implies. Uncomment the line
+          # below and set a repo-secret PAT instead if a fine-grained personal access token is
+          # ever needed (e.g. to trigger downstream workflows on the PR it opens).
+          # token: ${{ secrets.CREATE_PLUGIN_UPDATE_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}

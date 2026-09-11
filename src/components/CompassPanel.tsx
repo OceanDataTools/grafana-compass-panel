@@ -3,6 +3,17 @@ import { PanelProps } from '@grafana/data';
 import { useTheme } from '@grafana/ui';
 import { PanelDataErrorView } from '@grafana/runtime';
 import { SimpleOptions } from 'types';
+import {
+  DefaultNeedle,
+  ArrowNeedle,
+  ShipNeedle,
+  AirplaneNeedle,
+  HelicopterNeedle,
+  UnderwaterDroneNeedle,
+  QuadcopterNeedle,
+  SvgNeedle,
+  PngNeedle,
+} from './needles';
 
 export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
   data,
@@ -132,299 +143,6 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
       );
     });
 
-  // === Needles ===
-  // === Arrow ===
-  const renderArrowNeedle = () => {
-    const len = radius * 0.7; // full arrow length
-    const headLen = radius * 0.25; // arrowhead length
-    const halfW = radius * 0.05; // shaft half-width
-    const tipW = radius * 0.1; // arrow tip half-width
-    const capR = Math.max(2, radius * 0.025);
-
-    const points = [
-      [-halfW, len - headLen], // tail left
-      [-halfW, -len + headLen], // shaft top-left
-      [-tipW, -len + headLen], // arrowhead base-left
-      [0, -len], // tip (north)
-      [tipW, -len + headLen], // arrowhead base-right
-      [halfW, -len + headLen], // shaft top-right
-      [halfW, len - headLen], // tail right
-    ]
-      .map((p) => p.join(','))
-      .join(' ');
-
-    return (
-      <g>
-        <polygon
-          points={points}
-          fill={colors.needle}
-          stroke={colors.text}
-          strokeWidth={Math.max(1, radius * 0.01)}
-          data-testid="compass-arrow-needle"
-        />
-        {/* Center pivot */}
-        <circle cx={0} cy={0} r={capR} fill="white" stroke={colors.text} strokeWidth={Math.max(1, radius * 0.01)} />
-      </g>
-    );
-  };
-
-  // === Ship Profile ===
-  const renderShipNeedle = () => {
-    const shipHeight = 45;
-    const scale = (radius * 0.9) / shipHeight;
-    const strokeW = Math.max(0.5, radius * 0.005);
-    return (
-      <g transform={`scale(${scale})`} data-testid="compass-ship-needle">
-        <path
-          d="M 0 -30 Q 8 -25 8 0 L 8 23 Q 8 25 0 25 Q -8 25 -8 23 L -8 0 Q -8 -25 0 -30 Z"
-          fill={colors.needle}
-          stroke={colors.text}
-          strokeWidth={strokeW}
-        />
-      </g>
-    );
-  };
-
-  // === Airplane ===
-  // Icon: Font Awesome Free 7.3.1 "plane" (https://fontawesome.com), CC BY 4.0
-  // (https://fontawesome.com/license/free). Drawn nose-right in its native 640x640
-  // viewBox, so it's centered on origin and rotated -90deg to point up (heading 0).
-  const renderAirplaneNeedle = () => {
-    const scale = radius / 500;
-
-    return (
-      <path
-        d="M552 264C582.9 264 608 289.1 608 320C608 350.9 582.9 376 552 376L424.7 376L265.5 549.6C259.4 556.2 250.9 560 241.9 560L198.2 560C187.3 560 179.6 549.3 183 538.9L237.3 376L137.6 376L84.8 442C81.8 445.8 77.2 448 72.3 448L52.5 448C42.1 448 34.5 438.2 37 428.1L64 320L37 211.9C34.4 201.8 42.1 192 52.5 192L72.3 192C77.2 192 81.8 194.2 84.8 198L137.6 264L237.3 264L183 101.1C179.6 90.7 187.3 80 198.2 80L241.9 80C250.9 80 259.4 83.8 265.5 90.4L424.7 264L552 264z"
-        fill={colors.needle}
-        stroke={colors.text}
-        strokeWidth={6}
-        transform={`scale(${scale}) rotate(-90) translate(-320,-320)`}
-        data-testid="compass-airplane-needle"
-      />
-    );
-  };
-
-  // === Helicopter ===
-  const renderHelicopterNeedle = () => {
-    const bodyRx = radius * 0.09;
-    const bodyRy = radius * 0.2;
-    const bodyCy = -radius * 0.05;
-    const tailStartY = bodyCy + bodyRy * 0.7;
-    const tailEndY = radius * 0.5;
-    const bodyStroke = Math.max(1, radius * 0.01);
-
-    // Main rotor: 4 solid X-shaped blades meeting at a small hub, instead of a
-    // dashed "spinning blur" circle - reads more like a helicopter at a glance.
-    const bladeLen = radius * 0.42;
-    const bladeWidth = Math.max(2, radius * 0.05);
-    const hubR = radius * 0.045;
-    const bladeDiag = bladeLen * Math.SQRT1_2;
-    const bladeAngles: Array<[number, number]> = [
-      [bladeDiag, -bladeDiag],
-      [bladeDiag, bladeDiag],
-      [-bladeDiag, bladeDiag],
-      [-bladeDiag, -bladeDiag],
-    ];
-
-    // Tail rotor: a small T-shaped crossbar at the end of the tail boom, instead
-    // of a small circle.
-    const tailRotorHalfWidth = radius * 0.08;
-    const tailRotorStroke = Math.max(1.5, radius * 0.03);
-
-    return (
-      <g data-testid="compass-helicopter-needle">
-        {bladeAngles.map(([dx, dy], i) => (
-          <line
-            key={`blade-${i}`}
-            x1={0}
-            y1={bodyCy}
-            x2={dx}
-            y2={bodyCy + dy}
-            stroke={colors.text}
-            strokeWidth={bladeWidth}
-            strokeLinecap="round"
-          />
-        ))}
-        <circle cx={0} cy={bodyCy} r={hubR} fill={colors.text} />
-        <line
-          x1={0}
-          y1={tailStartY}
-          x2={0}
-          y2={tailEndY}
-          stroke={colors.needle}
-          strokeWidth={Math.max(1, radius * 0.02)}
-        />
-        <line
-          x1={-tailRotorHalfWidth}
-          y1={tailEndY}
-          x2={tailRotorHalfWidth}
-          y2={tailEndY}
-          stroke={colors.text}
-          strokeWidth={tailRotorStroke}
-          strokeLinecap="round"
-        />
-        <ellipse cx={0} cy={bodyCy} rx={bodyRx} ry={bodyRy} fill={colors.needle} stroke={colors.text} strokeWidth={bodyStroke} />
-      </g>
-    );
-  };
-
-  // === Underwater Drone (ROV/AUV) ===
-  const renderUnderwaterDroneNeedle = () => {
-    const noseY = -radius * 0.55;
-    const bodyTopY = -radius * 0.35;
-    const bodyBottomY = radius * 0.35;
-    const tailY = radius * 0.55;
-    const bodyHalfW = radius * 0.12;
-    const strokeW = Math.max(1, radius * 0.01);
-
-    // Mid-body X-wing, positioned like an underwater glider's main wing rather than a
-    // tail fin. A rounded "bowtie" - one continuous path with curved lobes and tips
-    // instead of a sharp-cornered diamond, matching the rounded style of the ship/plane
-    // needles. (An earlier attempt with two mirrored triangle polygons only rendered one
-    // side, for reasons that weren't fully pinned down - a single closed path avoids that.)
-    const roundedBowtie = (centerY: number, halfChord: number, tipX: number) => {
-      const nearTipX = tipX * 0.85;
-      const nearChord = halfChord * 0.35;
-      return `M 0 ${centerY - halfChord}
-        Q ${nearTipX} ${centerY - nearChord} ${tipX} ${centerY}
-        Q ${nearTipX} ${centerY + nearChord} 0 ${centerY + halfChord}
-        Q ${-nearTipX} ${centerY + nearChord} ${-tipX} ${centerY}
-        Q ${-nearTipX} ${centerY - nearChord} 0 ${centerY - halfChord}
-        Z`;
-    };
-
-    const wingPath = roundedBowtie(radius * 0.18, radius * 0.12, radius * 0.45);
-
-    // Small tail fin (rudder) right at the back, separate from the main wing
-    const tailFinFrontY = radius * 0.42;
-    const tailFinPath = roundedBowtie((tailFinFrontY + tailY) / 2, (tailY - tailFinFrontY) / 2, radius * 0.14);
-
-    // Gentle outward bulge on the sides (instead of straight edges) for a smoother,
-    // more torpedo-like silhouette, matching the ship needle's fully-curved profile.
-    const bodyBulge = bodyHalfW * 1.08;
-    const bodyMidY = bodyBottomY / 2;
-    const bodyPath = `M 0 ${noseY}
-      Q ${bodyHalfW} ${bodyTopY} ${bodyHalfW} 0
-      Q ${bodyBulge} ${bodyMidY} ${bodyHalfW} ${bodyBottomY}
-      Q ${bodyHalfW} ${tailY} 0 ${tailY}
-      Q ${-bodyHalfW} ${tailY} ${-bodyHalfW} ${bodyBottomY}
-      Q ${-bodyBulge} ${bodyMidY} ${-bodyHalfW} 0
-      Q ${-bodyHalfW} ${bodyTopY} 0 ${noseY}
-      Z`;
-
-    // Small darker nose cap, kept narrower than the body outline at that point so it
-    // reads as a two-tone nose without needing to clip it to the body's curve.
-    const noseCapLen = radius * 0.12;
-    const noseCapHalfW = bodyHalfW * 0.6;
-    const noseCapPath = `M 0 ${noseY} L ${noseCapHalfW} ${noseY + noseCapLen} L ${-noseCapHalfW} ${noseY + noseCapLen} Z`;
-
-    return (
-      <g data-testid="compass-underwater-drone-needle">
-        <path d={wingPath} fill={colors.tail} stroke={colors.text} strokeWidth={strokeW} />
-        <path d={tailFinPath} fill={colors.tail} stroke={colors.text} strokeWidth={strokeW} />
-        <path d={bodyPath} fill={colors.needle} stroke={colors.text} strokeWidth={strokeW} />
-        <path d={noseCapPath} fill={colors.text} />
-      </g>
-    );
-  };
-
-  // === Quadcopter ===
-  const renderQuadcopterNeedle = () => {
-    const armLen = radius * 0.4125;
-    const diag = armLen * Math.SQRT1_2;
-    const rotorR = radius * 0.17;
-    const rotorStroke = Math.max(1.5, radius * 0.03);
-    const armStroke = Math.max(1, radius * 0.03);
-    const bodySize = radius * 0.275;
-    const bodyRadius = bodySize * 0.35;
-    const bladeLen = rotorR * 0.6;
-    const bladeStroke = Math.max(1, radius * 0.015);
-
-    // X-frame arms: front-left/front-right are colored with needleColor, rear two with
-    // tailColor - mirrors how real multirotor drones mark front vs. rear with LED color.
-    const arms: Array<{ x: number; y: number; front: boolean }> = [
-      { x: diag, y: -diag, front: true }, // front-right
-      { x: -diag, y: -diag, front: true }, // front-left
-      { x: -diag, y: diag, front: false }, // rear-left
-      { x: diag, y: diag, front: false }, // rear-right
-    ];
-
-    return (
-      <g data-testid="compass-quadcopter-needle">
-        {arms.map((arm, i) => (
-          <line key={`arm-${i}`} x1={0} y1={0} x2={arm.x} y2={arm.y} stroke={colors.text} strokeWidth={armStroke} />
-        ))}
-        <rect
-          x={-bodySize / 2}
-          y={-bodySize / 2}
-          width={bodySize}
-          height={bodySize}
-          rx={bodyRadius}
-          fill={colors.text}
-        />
-        {arms.map((arm, i) => (
-          <g key={`rotor-${i}`}>
-            <circle
-              cx={arm.x}
-              cy={arm.y}
-              r={rotorR}
-              fill="none"
-              stroke={arm.front ? colors.needle : colors.tail}
-              strokeWidth={rotorStroke}
-            />
-            <line
-              x1={arm.x - bladeLen}
-              y1={arm.y - bladeLen}
-              x2={arm.x + bladeLen}
-              y2={arm.y + bladeLen}
-              stroke={colors.text}
-              strokeWidth={bladeStroke}
-            />
-            <line
-              x1={arm.x - bladeLen}
-              y1={arm.y + bladeLen}
-              x2={arm.x + bladeLen}
-              y2={arm.y - bladeLen}
-              stroke={colors.text}
-              strokeWidth={bladeStroke}
-            />
-          </g>
-        ))}
-      </g>
-    );
-  };
-
-  // === Custom SVG ===
-  const renderSvgNeedle = () => {
-    const scale = radius / 50;
-    return (
-      <g transform={`scale(${scale})`}>
-        <image href={options.needleSvg!} x={-5} y={-25} width={10} height={50} data-testid="compass-svg-needle" />
-      </g>
-    );
-  };
-
-  // === Custom PNG ===
-  const renderPngNeedle = () => {
-    // Scale PNG relative to the dial radius
-    const pngWidth = 20;
-    const pngHeight = 50;
-    const scale = radius / 42;
-
-    return (
-      <g transform={`scale(${scale})`} style={{ transformOrigin: '0 0', ...transitionStyle }}>
-        <image
-          href={options.needlePng!}
-          x={-pngWidth / 2}
-          y={-pngHeight / 1.7}
-          width={pngWidth}
-          height={pngHeight}
-          data-testid="compass-png-needle"
-        />
-      </g>
-    );
-  };
-
   // === Wind arrows ===
   const renderWindArrow = (angleDeg: number, color: string, label: string) => {
     const rOuter = radius * 0.9;
@@ -462,49 +180,32 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
     );
   };
 
-  const renderDefaultNeedle = () => {
-    const lenN = radius * 0.7;
-    const lenS = radius * 0.45;
-    const halfW = Math.max(2, radius * 0.06);
-    const notch = Math.max(3, radius * 0.08);
-    const capR = Math.max(2, radius * 0.05);
-    const capStroke = Math.max(1, radius * 0.01);
-
-    return (
-      <g>
-        <polygon points={`0,${-lenN} ${halfW},0 0,${-notch} ${-halfW},0`} fill={colors.needle} />
-        <polygon points={`0,${lenS} ${halfW},0 0,${notch} ${-halfW},0`} fill={colors.tail} />
-        <circle cx={0} cy={0} r={capR} fill="white" stroke="#111827" strokeWidth={capStroke} />
-      </g>
-    );
-  };
-
   const renderNeedle = () => {
     if (options.needleType === 'arrow') {
-      return renderArrowNeedle();
+      return <ArrowNeedle radius={radius} colors={colors} />;
     }
     if (options.needleType === 'ship') {
-      return renderShipNeedle();
+      return <ShipNeedle radius={radius} colors={colors} />;
     }
     if (options.needleType === 'airplane') {
-      return renderAirplaneNeedle();
+      return <AirplaneNeedle radius={radius} colors={colors} />;
     }
     if (options.needleType === 'helicopter') {
-      return renderHelicopterNeedle();
+      return <HelicopterNeedle radius={radius} colors={colors} />;
     }
     if (options.needleType === 'underwater-drone') {
-      return renderUnderwaterDroneNeedle();
+      return <UnderwaterDroneNeedle radius={radius} colors={colors} />;
     }
     if (options.needleType === 'quadcopter') {
-      return renderQuadcopterNeedle();
+      return <QuadcopterNeedle radius={radius} colors={colors} />;
     }
     if (options.needleType === 'svg' && options.needleSvg) {
-      return renderSvgNeedle();
+      return <SvgNeedle radius={radius} needleSvg={options.needleSvg} />;
     }
     if (options.needleType === 'png' && options.needlePng) {
-      return renderPngNeedle();
+      return <PngNeedle radius={radius} needlePng={options.needlePng} transitionStyle={transitionStyle} />;
     }
-    return renderDefaultNeedle();
+    return <DefaultNeedle radius={radius} colors={colors} />;
   };
 
   // Early return if no data

@@ -186,43 +186,19 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
   };
 
   // === Airplane ===
+  // Icon: Font Awesome Free 7.3.1 "plane" (https://fontawesome.com), CC BY 4.0
+  // (https://fontawesome.com/license/free). Drawn nose-right in its native 640x640
+  // viewBox, so it's centered on origin and rotated -90deg to point up (heading 0).
   const renderAirplaneNeedle = () => {
-    const noseY = -radius * 0.65;
-    const tailY = radius * 0.55;
-    const wingSweepY = -radius * 0.05;
-    const wingRootY = radius * 0.18;
-    const wingTipX = radius * 0.5;
-    const wingRootX = radius * 0.08;
-    const bodyHalfW = radius * 0.06;
-    const tailWingTipX = radius * 0.22;
-    const tailWingY = tailY - radius * 0.12;
-    const strokeW = Math.max(1, radius * 0.01);
-
-    const points = [
-      [0, noseY],
-      [bodyHalfW, wingSweepY],
-      [wingTipX, wingRootY - radius * 0.02],
-      [wingRootX, wingRootY + radius * 0.05],
-      [bodyHalfW, tailWingY],
-      [tailWingTipX, tailY - radius * 0.02],
-      [bodyHalfW * 0.6, tailY],
-      [0, tailY + radius * 0.03],
-      [-bodyHalfW * 0.6, tailY],
-      [-tailWingTipX, tailY - radius * 0.02],
-      [-bodyHalfW, tailWingY],
-      [-wingRootX, wingRootY + radius * 0.05],
-      [-wingTipX, wingRootY - radius * 0.02],
-      [-bodyHalfW, wingSweepY],
-    ]
-      .map((p) => p.join(','))
-      .join(' ');
+    const scale = radius / 500;
 
     return (
-      <polygon
-        points={points}
+      <path
+        d="M552 264C582.9 264 608 289.1 608 320C608 350.9 582.9 376 552 376L424.7 376L265.5 549.6C259.4 556.2 250.9 560 241.9 560L198.2 560C187.3 560 179.6 549.3 183 538.9L237.3 376L137.6 376L84.8 442C81.8 445.8 77.2 448 72.3 448L52.5 448C42.1 448 34.5 438.2 37 428.1L64 320L37 211.9C34.4 201.8 42.1 192 52.5 192L72.3 192C77.2 192 81.8 194.2 84.8 198L137.6 264L237.3 264L183 101.1C179.6 90.7 187.3 80 198.2 80L241.9 80C250.9 80 259.4 83.8 265.5 90.4L424.7 264L552 264z"
         fill={colors.needle}
         stroke={colors.text}
-        strokeWidth={strokeW}
+        strokeWidth={6}
+        transform={`scale(${scale}) rotate(-90) translate(-320,-320)`}
         data-testid="compass-airplane-needle"
       />
     );
@@ -230,27 +206,46 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
 
   // === Helicopter ===
   const renderHelicopterNeedle = () => {
-    const rotorR = radius * 0.42;
     const bodyRx = radius * 0.09;
     const bodyRy = radius * 0.2;
     const bodyCy = -radius * 0.05;
     const tailStartY = bodyCy + bodyRy * 0.7;
     const tailEndY = radius * 0.5;
-    const tailRotorR = radius * 0.06;
-    const rotorStroke = Math.max(1, radius * 0.015);
     const bodyStroke = Math.max(1, radius * 0.01);
+
+    // Main rotor: 4 solid X-shaped blades meeting at a small hub, instead of a
+    // dashed "spinning blur" circle - reads more like a helicopter at a glance.
+    const bladeLen = radius * 0.42;
+    const bladeWidth = Math.max(2, radius * 0.05);
+    const hubR = radius * 0.045;
+    const bladeDiag = bladeLen * Math.SQRT1_2;
+    const bladeAngles: Array<[number, number]> = [
+      [bladeDiag, -bladeDiag],
+      [bladeDiag, bladeDiag],
+      [-bladeDiag, bladeDiag],
+      [-bladeDiag, -bladeDiag],
+    ];
+
+    // Tail rotor: a small T-shaped crossbar at the end of the tail boom, instead
+    // of a small circle.
+    const tailRotorHalfWidth = radius * 0.08;
+    const tailRotorStroke = Math.max(1.5, radius * 0.03);
 
     return (
       <g data-testid="compass-helicopter-needle">
-        <circle
-          cx={0}
-          cy={bodyCy}
-          r={rotorR}
-          fill="none"
-          stroke={colors.text}
-          strokeWidth={rotorStroke}
-          strokeDasharray={`${rotorR * 0.35} ${rotorR * 0.25}`}
-        />
+        {bladeAngles.map(([dx, dy], i) => (
+          <line
+            key={`blade-${i}`}
+            x1={0}
+            y1={bodyCy}
+            x2={dx}
+            y2={bodyCy + dy}
+            stroke={colors.text}
+            strokeWidth={bladeWidth}
+            strokeLinecap="round"
+          />
+        ))}
+        <circle cx={0} cy={bodyCy} r={hubR} fill={colors.text} />
         <line
           x1={0}
           y1={tailStartY}
@@ -259,7 +254,15 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
           stroke={colors.needle}
           strokeWidth={Math.max(1, radius * 0.02)}
         />
-        <circle cx={0} cy={tailEndY} r={tailRotorR} fill="none" stroke={colors.text} strokeWidth={bodyStroke} />
+        <line
+          x1={-tailRotorHalfWidth}
+          y1={tailEndY}
+          x2={tailRotorHalfWidth}
+          y2={tailEndY}
+          stroke={colors.text}
+          strokeWidth={tailRotorStroke}
+          strokeLinecap="round"
+        />
         <ellipse cx={0} cy={bodyCy} rx={bodyRx} ry={bodyRy} fill={colors.needle} stroke={colors.text} strokeWidth={bodyStroke} />
       </g>
     );
@@ -272,63 +275,121 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
     const bodyBottomY = radius * 0.35;
     const tailY = radius * 0.55;
     const bodyHalfW = radius * 0.12;
-    const finFrontY = radius * 0.32;
-    const finTipY = radius * 0.5;
-    const finTipX = radius * 0.4;
     const strokeW = Math.max(1, radius * 0.01);
 
-    const bodyPath = `M 0 ${noseY} Q ${bodyHalfW} ${bodyTopY} ${bodyHalfW} 0 L ${bodyHalfW} ${bodyBottomY} Q ${bodyHalfW} ${tailY} 0 ${tailY} Q ${-bodyHalfW} ${tailY} ${-bodyHalfW} ${bodyBottomY} L ${-bodyHalfW} 0 Q ${-bodyHalfW} ${bodyTopY} 0 ${noseY} Z`;
+    // Mid-body X-wing, positioned like an underwater glider's main wing rather than a
+    // tail fin. A rounded "bowtie" - one continuous path with curved lobes and tips
+    // instead of a sharp-cornered diamond, matching the rounded style of the ship/plane
+    // needles. (An earlier attempt with two mirrored triangle polygons only rendered one
+    // side, for reasons that weren't fully pinned down - a single closed path avoids that.)
+    const roundedBowtie = (centerY: number, halfChord: number, tipX: number) => {
+      const nearTipX = tipX * 0.85;
+      const nearChord = halfChord * 0.35;
+      return `M 0 ${centerY - halfChord}
+        Q ${nearTipX} ${centerY - nearChord} ${tipX} ${centerY}
+        Q ${nearTipX} ${centerY + nearChord} 0 ${centerY + halfChord}
+        Q ${-nearTipX} ${centerY + nearChord} ${-tipX} ${centerY}
+        Q ${-nearTipX} ${centerY - nearChord} 0 ${centerY - halfChord}
+        Z`;
+    };
 
-    // Single diamond-shaped tail fin cluster, like a torpedo/AUV's cruciform tail seen from above
-    const finPoints = [
-      [0, finFrontY],
-      [finTipX, finTipY],
-      [0, tailY],
-      [-finTipX, finTipY],
-    ]
-      .map((p) => p.join(','))
-      .join(' ');
+    const wingPath = roundedBowtie(radius * 0.18, radius * 0.12, radius * 0.45);
+
+    // Small tail fin (rudder) right at the back, separate from the main wing
+    const tailFinFrontY = radius * 0.42;
+    const tailFinPath = roundedBowtie((tailFinFrontY + tailY) / 2, (tailY - tailFinFrontY) / 2, radius * 0.14);
+
+    // Gentle outward bulge on the sides (instead of straight edges) for a smoother,
+    // more torpedo-like silhouette, matching the ship needle's fully-curved profile.
+    const bodyBulge = bodyHalfW * 1.08;
+    const bodyMidY = bodyBottomY / 2;
+    const bodyPath = `M 0 ${noseY}
+      Q ${bodyHalfW} ${bodyTopY} ${bodyHalfW} 0
+      Q ${bodyBulge} ${bodyMidY} ${bodyHalfW} ${bodyBottomY}
+      Q ${bodyHalfW} ${tailY} 0 ${tailY}
+      Q ${-bodyHalfW} ${tailY} ${-bodyHalfW} ${bodyBottomY}
+      Q ${-bodyBulge} ${bodyMidY} ${-bodyHalfW} 0
+      Q ${-bodyHalfW} ${bodyTopY} 0 ${noseY}
+      Z`;
+
+    // Small darker nose cap, kept narrower than the body outline at that point so it
+    // reads as a two-tone nose without needing to clip it to the body's curve.
+    const noseCapLen = radius * 0.12;
+    const noseCapHalfW = bodyHalfW * 0.6;
+    const noseCapPath = `M 0 ${noseY} L ${noseCapHalfW} ${noseY + noseCapLen} L ${-noseCapHalfW} ${noseY + noseCapLen} Z`;
 
     return (
       <g data-testid="compass-underwater-drone-needle">
-        <polygon points={finPoints} fill={colors.tail} stroke={colors.text} strokeWidth={strokeW} />
+        <path d={wingPath} fill={colors.tail} stroke={colors.text} strokeWidth={strokeW} />
+        <path d={tailFinPath} fill={colors.tail} stroke={colors.text} strokeWidth={strokeW} />
         <path d={bodyPath} fill={colors.needle} stroke={colors.text} strokeWidth={strokeW} />
+        <path d={noseCapPath} fill={colors.text} />
       </g>
     );
   };
 
   // === Quadcopter ===
   const renderQuadcopterNeedle = () => {
-    const armLen = radius * 0.55;
-    const rotorR = radius * 0.14;
-    const bodyR = radius * 0.07;
-    const armStroke = Math.max(1, radius * 0.025);
-    const rotorStroke = Math.max(1, radius * 0.01);
+    const armLen = radius * 0.4125;
+    const diag = armLen * Math.SQRT1_2;
+    const rotorR = radius * 0.17;
+    const rotorStroke = Math.max(1.5, radius * 0.03);
+    const armStroke = Math.max(1, radius * 0.03);
+    const bodySize = radius * 0.275;
+    const bodyRadius = bodySize * 0.35;
+    const bladeLen = rotorR * 0.6;
+    const bladeStroke = Math.max(1, radius * 0.015);
 
-    const arms: Array<{ x: number; y: number; front?: boolean }> = [
-      { x: 0, y: -armLen, front: true },
-      { x: armLen, y: 0 },
-      { x: 0, y: armLen },
-      { x: -armLen, y: 0 },
+    // X-frame arms: front-left/front-right are colored with needleColor, rear two with
+    // tailColor - mirrors how real multirotor drones mark front vs. rear with LED color.
+    const arms: Array<{ x: number; y: number; front: boolean }> = [
+      { x: diag, y: -diag, front: true }, // front-right
+      { x: -diag, y: -diag, front: true }, // front-left
+      { x: -diag, y: diag, front: false }, // rear-left
+      { x: diag, y: diag, front: false }, // rear-right
     ];
 
     return (
       <g data-testid="compass-quadcopter-needle">
         {arms.map((arm, i) => (
-          <line key={i} x1={0} y1={0} x2={arm.x} y2={arm.y} stroke={colors.text} strokeWidth={armStroke} />
+          <line key={`arm-${i}`} x1={0} y1={0} x2={arm.x} y2={arm.y} stroke={colors.text} strokeWidth={armStroke} />
         ))}
+        <rect
+          x={-bodySize / 2}
+          y={-bodySize / 2}
+          width={bodySize}
+          height={bodySize}
+          rx={bodyRadius}
+          fill={colors.text}
+        />
         {arms.map((arm, i) => (
-          <circle
-            key={i}
-            cx={arm.x}
-            cy={arm.y}
-            r={rotorR}
-            fill={arm.front ? colors.needle : colors.tail}
-            stroke={colors.text}
-            strokeWidth={rotorStroke}
-          />
+          <g key={`rotor-${i}`}>
+            <circle
+              cx={arm.x}
+              cy={arm.y}
+              r={rotorR}
+              fill="none"
+              stroke={arm.front ? colors.needle : colors.tail}
+              strokeWidth={rotorStroke}
+            />
+            <line
+              x1={arm.x - bladeLen}
+              y1={arm.y - bladeLen}
+              x2={arm.x + bladeLen}
+              y2={arm.y + bladeLen}
+              stroke={colors.text}
+              strokeWidth={bladeStroke}
+            />
+            <line
+              x1={arm.x - bladeLen}
+              y1={arm.y + bladeLen}
+              x2={arm.x + bladeLen}
+              y2={arm.y - bladeLen}
+              stroke={colors.text}
+              strokeWidth={bladeStroke}
+            />
+          </g>
         ))}
-        <circle cx={0} cy={0} r={bodyR} fill={colors.needle} stroke={colors.text} strokeWidth={rotorStroke} />
       </g>
     );
   };

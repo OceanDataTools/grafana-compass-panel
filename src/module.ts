@@ -181,5 +181,13 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
         ],
       },
       defaultValue: 'rotate-needle',
+    })
+    .addNumberInput({
+      path: 'animationDurationMs',
+      name: 'Animation Duration (ms)',
+      description:
+        'How long needle/dial/wind-arrow rotations take to animate. Lower this (or set to 0 to disable animation) for high-frequency live data where the default speed lags behind incoming updates.',
+      defaultValue: 600,
+      settings: { min: 0, max: 2000, step: 50 },
     });
 });

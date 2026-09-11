@@ -67,3 +67,29 @@ describe('CompassPanel', () => {
     expect(screen.getByTestId('windrose-numeric-apparentwind-spd')).toHaveTextContent('0.00 kts');
   });
 });
+
+describe('CompassPanel animation duration', () => {
+  it('defaults the needle transition to 600ms when unset', () => {
+    const props = makeProps({ fields: { heading: [90] } });
+    render(<CompassPanel {...props} />);
+
+    const needle = screen.getByTestId('compass-needle');
+    expect(needle.getAttribute('style')).toContain('600ms');
+  });
+
+  it('uses the configured animationDurationMs', () => {
+    const props = makeProps({ fields: { heading: [90] }, options: { animationDurationMs: 100 } });
+    render(<CompassPanel {...props} />);
+
+    const needle = screen.getByTestId('compass-needle');
+    expect(needle.getAttribute('style')).toContain('100ms');
+  });
+
+  it('disables the transition entirely when animationDurationMs is 0', () => {
+    const props = makeProps({ fields: { heading: [90] }, options: { animationDurationMs: 0 } });
+    render(<CompassPanel {...props} />);
+
+    const needle = screen.getByTestId('compass-needle');
+    expect(needle.getAttribute('style')).toBeFalsy();
+  });
+});

@@ -19,6 +19,9 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
 
   const theme = useTheme();
 
+  const animationMs = options.animationDurationMs ?? 600;
+  const transitionStyle = animationMs > 0 ? { transition: `transform ${animationMs}ms ease-in-out` } : {};
+
   // === Extract helpers ===
   const extractLatest = (fieldName?: string): number | null => {
     if (!fieldName) {
@@ -200,7 +203,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
     const scale = radius / 42;
 
     return (
-      <g transform={`scale(${scale})`} style={{ transformOrigin: '0 0', transition: 'transform 0.6s ease-in-out' }}>
+      <g transform={`scale(${scale})`} style={{ transformOrigin: '0 0', ...transitionStyle }}>
         <image
           href={options.needlePng!}
           x={-pngWidth / 2}
@@ -300,7 +303,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
         {/* Needle */}
         <g
           transform={options.rotationMode === 'rotate-needle' ? `rotate(${displayHeading})` : undefined}
-          style={options.rotationMode === 'rotate-needle' ? { transition: 'transform 0.6s ease-in-out' } : {}}
+          style={options.rotationMode === 'rotate-needle' ? transitionStyle : {}}
           data-testid="compass-needle"
         >
           {heading !== null && renderNeedle()}
@@ -310,7 +313,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
           transform={
             options.rotationMode === 'rotate-dial' && displayHeading !== null ? `rotate(${-displayHeading})` : undefined
           }
-          style={options.rotationMode === 'rotate-dial' ? { transition: 'transform 0.6s ease-in-out' } : {}}
+          style={options.rotationMode === 'rotate-dial' ? transitionStyle : {}}
           data-testid="compass-dial"
         >
           {/* Labels */}
@@ -350,7 +353,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
                 ? `rotate(${displayApparent + displayHeading})`
                 : `rotate(${displayApparent})`
             }
-            style={{ transition: 'transform 0.6s ease-in-out' }}
+            style={transitionStyle}
           >
             {options.apparentWindDirField && apparentWindDir !== null && renderWindArrow(0, colors.apparentWind, 'A')}
           </g>
@@ -363,7 +366,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
                 ? `rotate(${displayTruewind - displayHeading})`
                 : `rotate(${displayTruewind})`
             }
-            style={{ transition: 'transform 0.6s ease-in-out' }}
+            style={transitionStyle}
           >
             {options.trueWindDirField && trueWindDir !== null && renderWindArrow(0, colors.trueWind, 'T')}
           </g>

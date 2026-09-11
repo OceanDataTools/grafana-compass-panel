@@ -16,7 +16,16 @@ export interface SimpleOptions {
   showLabels?: boolean;
   showHeadingValue?: boolean;
 
-  needleType?: 'needle' | 'arrow' | 'ship' | 'svg' | 'png';
+  needleType?:
+    | 'needle'
+    | 'arrow'
+    | 'ship'
+    | 'airplane'
+    | 'helicopter'
+    | 'underwater-drone'
+    | 'quadcopter'
+    | 'svg'
+    | 'png';
   needleSvg?: string;
   needlePng?: string;
 

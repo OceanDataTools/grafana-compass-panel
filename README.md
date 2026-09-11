@@ -21,6 +21,10 @@ Optionally the panel can display true and/or apparent wind angle.
   - **Default**: classic north/south needle with red tip.
   - **Arrow**: bold arrow-style needle.
   - **Ship**: minimal ship silhouette pointing forward.
+  - **Airplane**: swept-wing top-down aircraft silhouette.
+  - **Helicopter**: rotor disk, fuselage, and tail rotor.
+  - **Underwater Drone**: torpedo-shaped ROV/AUV body with a tail fin cluster.
+  - **Quadcopter**: four-arm drone frame with a distinctly colored front rotor.
   - **Custom SVG**: load your own vector as a needle.
   - **Custom PNG**: load your own bitmap as a needle.
 - Cardinal direction labels (N/E/S/W).
@@ -69,11 +73,15 @@ Optionally the panel can display true and/or apparent wind angle.
   - `Default` – Red-tipped classic compass needle
   - `Arrow` – Stylized arrow needle
   - `Ship` – Simplified vessel silhouette (points to heading)
+  - `Airplane` – Top-down aircraft silhouette (points to heading)
+  - `Helicopter` – Rotor disk, fuselage, and tail rotor (points to heading)
+  - `Underwater Drone` – Torpedo-shaped ROV/AUV silhouette with tail fins (points to heading)
+  - `Quadcopter` – Four-arm drone frame; the front rotor is drawn in the Needle Color, the other three in the Tail Color (points to heading)
   - `SVG` – Load a custom vector (provide URL or relative path)
   - `PNG` – Load a custom image (provide URL or relative path)
 
-- **Needle Color**: Color of the primary needle.
-- **Tail Color**: Color of the tail (for default needle).
+- **Needle Color**: Color of the primary needle (or the front rotor, for the quadcopter).
+- **Tail Color**: Color of the tail (for the default needle), the non-front rotors (quadcopter), or the tail fins (underwater drone).
 - **Custom SVG**: Path/URL to your own SVG asset.
 - **Custom PNG**: Path/URL to your own PNG asset.
 
@@ -100,6 +108,22 @@ _Arrow needle with labels and numeric heading enabled_
 ![Ship Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-ship-profile.png)
 
 _Ship silhouette needle for vessel heading visualization_
+
+![Airplane Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-airplane.png)
+
+_Airplane needle for aircraft heading visualization_
+
+![Helicopter Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-helicopter.png)
+
+_Helicopter needle for rotorcraft heading visualization_
+
+![Underwater Drone Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-underwater-drone.png)
+
+_Underwater drone needle for ROV/AUV heading visualization_
+
+![Quadcopter Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-quadcopter.png)
+
+_Quadcopter needle, front rotor highlighted, for drone heading visualization_
 
 ![Custom Styling](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-custom-styling.png)
 

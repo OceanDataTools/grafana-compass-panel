@@ -185,6 +185,154 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
     );
   };
 
+  // === Airplane ===
+  const renderAirplaneNeedle = () => {
+    const noseY = -radius * 0.65;
+    const tailY = radius * 0.55;
+    const wingSweepY = -radius * 0.05;
+    const wingRootY = radius * 0.18;
+    const wingTipX = radius * 0.5;
+    const wingRootX = radius * 0.08;
+    const bodyHalfW = radius * 0.06;
+    const tailWingTipX = radius * 0.22;
+    const tailWingY = tailY - radius * 0.12;
+    const strokeW = Math.max(1, radius * 0.01);
+
+    const points = [
+      [0, noseY],
+      [bodyHalfW, wingSweepY],
+      [wingTipX, wingRootY - radius * 0.02],
+      [wingRootX, wingRootY + radius * 0.05],
+      [bodyHalfW, tailWingY],
+      [tailWingTipX, tailY - radius * 0.02],
+      [bodyHalfW * 0.6, tailY],
+      [0, tailY + radius * 0.03],
+      [-bodyHalfW * 0.6, tailY],
+      [-tailWingTipX, tailY - radius * 0.02],
+      [-bodyHalfW, tailWingY],
+      [-wingRootX, wingRootY + radius * 0.05],
+      [-wingTipX, wingRootY - radius * 0.02],
+      [-bodyHalfW, wingSweepY],
+    ]
+      .map((p) => p.join(','))
+      .join(' ');
+
+    return (
+      <polygon
+        points={points}
+        fill={colors.needle}
+        stroke={colors.text}
+        strokeWidth={strokeW}
+        data-testid="compass-airplane-needle"
+      />
+    );
+  };
+
+  // === Helicopter ===
+  const renderHelicopterNeedle = () => {
+    const rotorR = radius * 0.42;
+    const bodyRx = radius * 0.09;
+    const bodyRy = radius * 0.2;
+    const bodyCy = -radius * 0.05;
+    const tailStartY = bodyCy + bodyRy * 0.7;
+    const tailEndY = radius * 0.5;
+    const tailRotorR = radius * 0.06;
+    const rotorStroke = Math.max(1, radius * 0.015);
+    const bodyStroke = Math.max(1, radius * 0.01);
+
+    return (
+      <g data-testid="compass-helicopter-needle">
+        <circle
+          cx={0}
+          cy={bodyCy}
+          r={rotorR}
+          fill="none"
+          stroke={colors.text}
+          strokeWidth={rotorStroke}
+          strokeDasharray={`${rotorR * 0.35} ${rotorR * 0.25}`}
+        />
+        <line
+          x1={0}
+          y1={tailStartY}
+          x2={0}
+          y2={tailEndY}
+          stroke={colors.needle}
+          strokeWidth={Math.max(1, radius * 0.02)}
+        />
+        <circle cx={0} cy={tailEndY} r={tailRotorR} fill="none" stroke={colors.text} strokeWidth={bodyStroke} />
+        <ellipse cx={0} cy={bodyCy} rx={bodyRx} ry={bodyRy} fill={colors.needle} stroke={colors.text} strokeWidth={bodyStroke} />
+      </g>
+    );
+  };
+
+  // === Underwater Drone (ROV/AUV) ===
+  const renderUnderwaterDroneNeedle = () => {
+    const noseY = -radius * 0.55;
+    const bodyTopY = -radius * 0.35;
+    const bodyBottomY = radius * 0.35;
+    const tailY = radius * 0.55;
+    const bodyHalfW = radius * 0.12;
+    const finFrontY = radius * 0.32;
+    const finTipY = radius * 0.5;
+    const finTipX = radius * 0.4;
+    const strokeW = Math.max(1, radius * 0.01);
+
+    const bodyPath = `M 0 ${noseY} Q ${bodyHalfW} ${bodyTopY} ${bodyHalfW} 0 L ${bodyHalfW} ${bodyBottomY} Q ${bodyHalfW} ${tailY} 0 ${tailY} Q ${-bodyHalfW} ${tailY} ${-bodyHalfW} ${bodyBottomY} L ${-bodyHalfW} 0 Q ${-bodyHalfW} ${bodyTopY} 0 ${noseY} Z`;
+
+    // Single diamond-shaped tail fin cluster, like a torpedo/AUV's cruciform tail seen from above
+    const finPoints = [
+      [0, finFrontY],
+      [finTipX, finTipY],
+      [0, tailY],
+      [-finTipX, finTipY],
+    ]
+      .map((p) => p.join(','))
+      .join(' ');
+
+    return (
+      <g data-testid="compass-underwater-drone-needle">
+        <polygon points={finPoints} fill={colors.tail} stroke={colors.text} strokeWidth={strokeW} />
+        <path d={bodyPath} fill={colors.needle} stroke={colors.text} strokeWidth={strokeW} />
+      </g>
+    );
+  };
+
+  // === Quadcopter ===
+  const renderQuadcopterNeedle = () => {
+    const armLen = radius * 0.55;
+    const rotorR = radius * 0.14;
+    const bodyR = radius * 0.07;
+    const armStroke = Math.max(1, radius * 0.025);
+    const rotorStroke = Math.max(1, radius * 0.01);
+
+    const arms: Array<{ x: number; y: number; front?: boolean }> = [
+      { x: 0, y: -armLen, front: true },
+      { x: armLen, y: 0 },
+      { x: 0, y: armLen },
+      { x: -armLen, y: 0 },
+    ];
+
+    return (
+      <g data-testid="compass-quadcopter-needle">
+        {arms.map((arm, i) => (
+          <line key={i} x1={0} y1={0} x2={arm.x} y2={arm.y} stroke={colors.text} strokeWidth={armStroke} />
+        ))}
+        {arms.map((arm, i) => (
+          <circle
+            key={i}
+            cx={arm.x}
+            cy={arm.y}
+            r={rotorR}
+            fill={arm.front ? colors.needle : colors.tail}
+            stroke={colors.text}
+            strokeWidth={rotorStroke}
+          />
+        ))}
+        <circle cx={0} cy={0} r={bodyR} fill={colors.needle} stroke={colors.text} strokeWidth={rotorStroke} />
+      </g>
+    );
+  };
+
   // === Custom SVG ===
   const renderSvgNeedle = () => {
     const scale = radius / 50;
@@ -276,6 +424,18 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
     }
     if (options.needleType === 'ship') {
       return renderShipNeedle();
+    }
+    if (options.needleType === 'airplane') {
+      return renderAirplaneNeedle();
+    }
+    if (options.needleType === 'helicopter') {
+      return renderHelicopterNeedle();
+    }
+    if (options.needleType === 'underwater-drone') {
+      return renderUnderwaterDroneNeedle();
+    }
+    if (options.needleType === 'quadcopter') {
+      return renderQuadcopterNeedle();
     }
     if (options.needleType === 'svg' && options.needleSvg) {
       return renderSvgNeedle();

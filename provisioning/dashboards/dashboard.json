@@ -1038,6 +1038,238 @@
       ],
       "title": "Wind - Apparent Only",
       "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 0,
+        "y": 28
+      },
+      "id": 13,
+      "options": {
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "",
+        "apparentWindField": "",
+        "apparentWindSpdField": "",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "A-series",
+        "needleColor": "red",
+        "needlePng": "",
+        "needleSvg": "",
+        "needleType": "airplane",
+        "rotationMode": "rotate-needle",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "",
+        "trueWindField": "",
+        "trueWindSpdField": "",
+        "trueWindSpdUom": "kts"
+      },
+      "pluginVersion": "2.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "refId": "A",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "45"
+        }
+      ],
+      "title": "Compass - Airplane",
+      "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 6,
+        "y": 28
+      },
+      "id": 14,
+      "options": {
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "",
+        "apparentWindField": "",
+        "apparentWindSpdField": "",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "A-series",
+        "needleColor": "orange",
+        "needlePng": "",
+        "needleSvg": "",
+        "needleType": "helicopter",
+        "rotationMode": "rotate-needle",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "",
+        "trueWindField": "",
+        "trueWindSpdField": "",
+        "trueWindSpdUom": "kts"
+      },
+      "pluginVersion": "2.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "refId": "A",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "45"
+        }
+      ],
+      "title": "Compass - Helicopter",
+      "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 12,
+        "y": 28
+      },
+      "id": 15,
+      "options": {
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "",
+        "apparentWindField": "",
+        "apparentWindSpdField": "",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "A-series",
+        "needleColor": "teal",
+        "needlePng": "",
+        "needleSvg": "",
+        "needleType": "underwater-drone",
+        "rotationMode": "rotate-needle",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "",
+        "trueWindField": "",
+        "trueWindSpdField": "",
+        "trueWindSpdUom": "kts"
+      },
+      "pluginVersion": "2.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "refId": "A",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "45"
+        }
+      ],
+      "title": "Compass - Underwater Drone",
+      "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 18,
+        "y": 28
+      },
+      "id": 16,
+      "options": {
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "",
+        "apparentWindField": "",
+        "apparentWindSpdField": "",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "A-series",
+        "needleColor": "red",
+        "needlePng": "",
+        "needleSvg": "",
+        "needleType": "quadcopter",
+        "rotationMode": "rotate-needle",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "",
+        "trueWindField": "",
+        "trueWindSpdField": "",
+        "trueWindSpdUom": "kts"
+      },
+      "pluginVersion": "2.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "refId": "A",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "45"
+        }
+      ],
+      "title": "Compass - Quadcopter",
+      "type": "oceandatatools-compass-panel"
     }
   ],
   "preload": false,
@@ -1055,5 +1287,5 @@
   "timezone": "",
   "title": "Provisioned compass-panel dashboard",
   "uid": "a538aeff-5a8a-42a5-901c-938d896fdd6f",
-  "version": 11
+  "version": 12
 }

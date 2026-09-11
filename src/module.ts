@@ -14,7 +14,8 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
     .addFieldNamePicker({
       path: 'trueWindDirField',
       name: 'Truewind Direction Field',
-      description: 'Select which field contains the true wind direction value',
+      description:
+        'Select which field contains the true wind direction, as an absolute compass bearing (0-360°, independent of the ship\'s heading)',
       defaultValue: '',
     })
     .addFieldNamePicker({
@@ -42,7 +43,8 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
     .addFieldNamePicker({
       path: 'apparentWindDirField',
       name: 'Apparent wind Direction Field',
-      description: 'Select which field contains the apparent wind value',
+      description:
+        'Select which field contains the apparent wind angle, relative to the ship\'s bow (0-360°, as read directly off a wind vane/anemometer) — NOT an absolute compass bearing',
       defaultValue: '',
     })
     .addFieldNamePicker({

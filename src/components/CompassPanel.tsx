@@ -306,12 +306,12 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
           style={options.rotationMode === 'rotate-needle' ? transitionStyle : {}}
           data-testid="compass-needle"
         >
-          {heading && renderNeedle()}
+          {heading !== null && renderNeedle()}
         </g>
 
         <g
           transform={
-            options.rotationMode === 'rotate-dial' && displayHeading ? `rotate(${-displayHeading})` : undefined
+            options.rotationMode === 'rotate-dial' && displayHeading !== null ? `rotate(${-displayHeading})` : undefined
           }
           style={options.rotationMode === 'rotate-dial' ? transitionStyle : {}}
           data-testid="compass-dial"
@@ -349,7 +349,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
         {options.apparentWindDirField && (
           <g
             transform={
-              options.rotationMode !== 'rotate-dial' && displayHeading && displayApparent
+              options.rotationMode !== 'rotate-dial' && displayHeading !== null && displayApparent !== null
                 ? `rotate(${displayApparent + displayHeading})`
                 : `rotate(${displayApparent})`
             }
@@ -362,7 +362,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
         {options.trueWindDirField && (
           <g
             transform={
-              options.rotationMode === 'rotate-dial' && displayHeading && displayTruewind
+              options.rotationMode === 'rotate-dial' && displayHeading !== null && displayTruewind !== null
                 ? `rotate(${displayTruewind - displayHeading})`
                 : `rotate(${displayTruewind})`
             }
@@ -384,7 +384,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
             fontWeight="600"
             data-testid="compass-numeric-heading"
           >
-            {heading ? `${Math.round(((heading % 360) + 360) % 360)}°` : 'No data'}
+            {heading !== null ? `${Math.round(((heading % 360) + 360) % 360)}°` : 'No data'}
           </text>
         )}
 
@@ -399,7 +399,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
             fontWeight="600"
             data-testid="windrose-numeric-truewind-dir"
           >
-            {trueWindDir ? `${Math.round(((trueWindDir % 360) + 360) % 360)}°` : 'No data'}
+            {trueWindDir !== null ? `${Math.round(((trueWindDir % 360) + 360) % 360)}°` : 'No data'}
           </text>
         )}
 
@@ -414,7 +414,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
             fontWeight="600"
             data-testid="windrose-numeric-truewind-spd"
           >
-            {trueWindSpd ? `${trueWindSpd.toFixed(2)} ${options.trueWindSpdUom}` : 'No data'}
+            {trueWindSpd !== null ? `${trueWindSpd.toFixed(2)} ${options.trueWindSpdUom}` : 'No data'}
           </text>
         )}
 
@@ -429,7 +429,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
             fontWeight="600"
             data-testid="windrose-numeric-apparent-dir"
           >
-            {apparentWindDir ? `${Math.round(((apparentWindDir % 360) + 360) % 360)}°` : 'No data'}
+            {apparentWindDir !== null ? `${Math.round(((apparentWindDir % 360) + 360) % 360)}°` : 'No data'}
           </text>
         )}
 
@@ -444,7 +444,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
             fontWeight="600"
             data-testid="windrose-numeric-apparentwind-spd"
           >
-            {apparentWindSpd ? `${apparentWindSpd.toFixed(2)} ${options.apparentWindSpdUom}` : 'No data'}
+            {apparentWindSpd !== null ? `${apparentWindSpd.toFixed(2)} ${options.apparentWindSpdUom}` : 'No data'}
           </text>
         )}
       </g>

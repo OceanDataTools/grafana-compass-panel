@@ -48,9 +48,9 @@ Optionally the panel can display true and/or apparent wind angle.
 ### Data Options
 
 - **Heading Field**: Select the numeric field in your series that represents heading in degrees.
-- **Truewind Direction Field**: Select the numeric field in your series that represents truewind direction in degrees.
+- **Truewind Direction Field**: Select the numeric field in your series that represents true wind direction, as an **absolute compass bearing** (0-360°, independent of the ship's heading).
 - **Truewind Velocity Field**: Select the numeric field in your series that represents truewind velocity in degrees.
-- **Apparent wind Direction Field**: Select the numeric field in your series that represents apparent wind direction in degrees.
+- **Apparent wind Direction Field**: Select the numeric field in your series that represents apparent wind angle, **relative to the ship's bow** (0-360°, as read directly off a wind vane/anemometer). This is *not* an absolute compass bearing — a rotational wind sensor can only measure angle relative to the bow it's mounted on, so the panel combines it with the Heading Field to compute the wind's true position on the compass. If your data source already outputs an absolute apparent wind direction (e.g. some chartplotters/NMEA multiplexers compute this for you), subtract the heading from it upstream to get a bow-relative angle before wiring it in here.
 - **Apparent wind Velocity Field**: Select the numeric field in your series that represents apparent wind velocity in degrees.
 
 ### Display Options

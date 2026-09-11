@@ -46,3 +46,6 @@ ci/
 .eslintcache
 
 **/.DS_Store
+
+# Local-only Claude Code guidance, not shared via the repo
+/CLAUDE.md

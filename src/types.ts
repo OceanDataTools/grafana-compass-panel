@@ -21,4 +21,6 @@ export interface SimpleOptions {
   needlePng?: string;
 
   rotationMode?: 'rotate-needle' | 'rotate-dial';
+
+  animationDurationMs?: number;
 }

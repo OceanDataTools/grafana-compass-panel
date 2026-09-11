@@ -60,6 +60,7 @@ Optionally the panel can display true and/or apparent wind angle.
 - **Truewind Velocity UOM**: Select the unit of measure for the truewind.
 - **Apparent wind Velocity UOM**: Select the unit of measure for the apparent wind.
 - **Rotation Mode**: Select to rotate the needle (North up) or rotate the dial (Bow up).
+- **Animation Duration (ms)**: How long needle/dial/wind-arrow rotations take to animate (default 600ms). Lower this, or set it to 0 to disable animation, for high-frequency live data (e.g. Grafana Live streams updating tens of times per second) where the default speed lags behind incoming updates.
 
 ### Needle Options
 

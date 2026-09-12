@@ -36,72 +36,9 @@
         "x": 0,
         "y": 0
       },
-      "id": 1,
-      "options": {
-        "apparentWindColor": "yellow",
-        "apparentWindDirField": "",
-        "apparentWindField": "",
-        "apparentWindSpdField": "",
-        "apparentWindSpdUom": "kts",
-        "bezelColor": "#c6c6c6",
-        "dialColor": "white",
-        "headingField": "heading",
-        "needleColor": "red",
-        "needlePng": "",
-        "needleSvg": "",
-        "needleType": "needle",
-        "rotationMode": "rotate-needle",
-        "seriesCountSize": "sm",
-        "showHeadingValue": true,
-        "showLabels": true,
-        "showSeriesCount": false,
-        "tailColor": "gray",
-        "text": "Default value of text input option",
-        "textColor": "#111827",
-        "trueWindColor": "blue",
-        "trueWindDirField": "",
-        "trueWindField": "",
-        "trueWindSpdField": "",
-        "trueWindSpdUom": "kts"
-      },
-      "pluginVersion": "2.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "grafana-testdata-datasource",
-            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
-          },
-          "refId": "A",
-          "scenarioId": "simulation",
-          "sim": {
-            "key": {
-              "tick": 1,
-              "type": "flight"
-            },
-            "stream": true
-          }
-        }
-      ],
-      "title": "Compass - Default",
-      "type": "oceandatatools-compass-panel"
-    },
-    {
-      "datasource": {
-        "type": "grafana-testdata-datasource",
-        "uid": "trlxrdZVk"
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 4,
-        "x": 4,
-        "y": 0
-      },
       "id": 10,
       "options": {
+        "animationDurationMs": 600,
         "apparentWindColor": "yellow",
         "apparentWindDirField": "C-series",
         "apparentWindField": "C-series",
@@ -128,7 +65,7 @@
         "trueWindSpdField": "",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.1.0",
+      "pluginVersion": "2.1.3",
       "targets": [
         {
           "datasource": {
@@ -201,11 +138,117 @@
       "gridPos": {
         "h": 6,
         "w": 4,
+        "x": 4,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "animationDurationMs": 600,
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "C-series",
+        "apparentWindField": "C-series",
+        "apparentWindSpdField": "",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "heading",
+        "needleColor": "red",
+        "needlePng": "",
+        "needleSvg": "",
+        "needleType": "ship",
+        "rotationMode": "rotate-dial",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "B-series",
+        "trueWindField": "B-series",
+        "trueWindSpdField": "",
+        "trueWindSpdUom": "kts"
+      },
+      "pluginVersion": "2.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "trlxrdZVk"
+          },
+          "refId": "A",
+          "scenarioId": "simulation",
+          "sim": {
+            "key": {
+              "tick": 1,
+              "type": "flight"
+            },
+            "stream": true
+          }
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "B",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "150"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "C",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "140"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "D",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "25.014"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "E",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "22.503"
+        }
+      ],
+      "title": "Wind - Bow Up",
+      "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
         "x": 8,
         "y": 0
       },
       "id": 9,
       "options": {
+        "animationDurationMs": 600,
         "apparentWindColor": "yellow",
         "apparentWindDirField": "C-series",
         "apparentWindField": "C-series",
@@ -232,7 +275,7 @@
         "trueWindSpdField": "D-series",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.1.0",
+      "pluginVersion": "2.1.3",
       "targets": [
         {
           "datasource": {
@@ -308,170 +351,9 @@
         "x": 12,
         "y": 0
       },
-      "id": 2,
-      "options": {
-        "apparentWindColor": "yellow",
-        "apparentWindDirField": "",
-        "apparentWindField": "",
-        "apparentWindSpdField": "",
-        "apparentWindSpdUom": "kts",
-        "bezelColor": "#c6c6c6",
-        "dialColor": "white",
-        "headingField": "",
-        "needleColor": "red",
-        "needlePng": "",
-        "needleSvg": "",
-        "needleType": "needle",
-        "rotationMode": "rotate-needle",
-        "seriesCountSize": "sm",
-        "showHeadingValue": true,
-        "showLabels": true,
-        "showSeriesCount": false,
-        "tailColor": "gray",
-        "text": "Default value of text input option",
-        "textColor": "#111827",
-        "trueWindColor": "blue",
-        "trueWindDirField": "",
-        "trueWindField": "",
-        "trueWindSpdField": "",
-        "trueWindSpdUom": "kts"
-      },
-      "pluginVersion": "2.1.0",
-      "targets": [
-        {
-          "alias": "",
-          "datasource": {
-            "type": "grafana-testdata-datasource",
-            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
-          },
-          "refId": "A",
-          "scenarioId": "no_data_points"
-        }
-      ],
-      "title": "No Data",
-      "type": "oceandatatools-compass-panel"
-    },
-    {
-      "datasource": {
-        "type": "grafana-testdata-datasource",
-        "uid": "trlxrdZVk"
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 4,
-        "x": 0,
-        "y": 6
-      },
-      "id": 5,
-      "options": {
-        "apparentWindColor": "yellow",
-        "apparentWindDirField": "C-series",
-        "apparentWindField": "C-series",
-        "apparentWindSpdField": "",
-        "apparentWindSpdUom": "kts",
-        "bezelColor": "#c6c6c6",
-        "dialColor": "white",
-        "headingField": "heading",
-        "needleColor": "red",
-        "needlePng": "",
-        "needleSvg": "",
-        "needleType": "ship",
-        "rotationMode": "rotate-dial",
-        "seriesCountSize": "sm",
-        "showHeadingValue": true,
-        "showLabels": true,
-        "showSeriesCount": false,
-        "tailColor": "gray",
-        "text": "Default value of text input option",
-        "textColor": "#111827",
-        "trueWindColor": "blue",
-        "trueWindDirField": "B-series",
-        "trueWindField": "B-series",
-        "trueWindSpdField": "",
-        "trueWindSpdUom": "kts"
-      },
-      "pluginVersion": "2.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "grafana-testdata-datasource",
-            "uid": "trlxrdZVk"
-          },
-          "refId": "A",
-          "scenarioId": "simulation",
-          "sim": {
-            "key": {
-              "tick": 1,
-              "type": "flight"
-            },
-            "stream": true
-          }
-        },
-        {
-          "datasource": {
-            "type": "grafana-testdata-datasource",
-            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
-          },
-          "hide": false,
-          "refId": "B",
-          "scenarioId": "csv_metric_values",
-          "stringInput": "150"
-        },
-        {
-          "datasource": {
-            "type": "grafana-testdata-datasource",
-            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
-          },
-          "hide": false,
-          "refId": "C",
-          "scenarioId": "csv_metric_values",
-          "stringInput": "140"
-        },
-        {
-          "datasource": {
-            "type": "grafana-testdata-datasource",
-            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
-          },
-          "hide": false,
-          "refId": "D",
-          "scenarioId": "csv_metric_values",
-          "stringInput": "25.014"
-        },
-        {
-          "datasource": {
-            "type": "grafana-testdata-datasource",
-            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
-          },
-          "hide": false,
-          "refId": "E",
-          "scenarioId": "csv_metric_values",
-          "stringInput": "22.503"
-        }
-      ],
-      "title": "Wind - Bow Up",
-      "type": "oceandatatools-compass-panel"
-    },
-    {
-      "datasource": {
-        "type": "grafana-testdata-datasource",
-        "uid": "trlxrdZVk"
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 4,
-        "x": 4,
-        "y": 6
-      },
       "id": 8,
       "options": {
+        "animationDurationMs": 600,
         "apparentWindColor": "yellow",
         "apparentWindDirField": "C-series",
         "apparentWindField": "C-series",
@@ -498,7 +380,7 @@
         "trueWindSpdField": "D-series",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.1.0",
+      "pluginVersion": "2.1.3",
       "targets": [
         {
           "datasource": {
@@ -569,117 +451,14 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 6,
         "w": 4,
-        "x": 8,
-        "y": 6
-      },
-      "id": 11,
-      "options": {
-        "apparentWindColor": "yellow",
-        "apparentWindDirField": "C-series",
-        "apparentWindField": "C-series",
-        "apparentWindSpdField": "E-series",
-        "apparentWindSpdUom": "kts",
-        "bezelColor": "#c6c6c6",
-        "dialColor": "dark-blue",
-        "headingField": "heading",
-        "needleColor": "red",
-        "needlePng": "https://soi-vessel-tracker.web.app/static/Illustration.png",
-        "needleSvg": "",
-        "needleType": "png",
-        "rotationMode": "rotate-dial",
-        "seriesCountSize": "sm",
-        "showHeadingValue": true,
-        "showLabels": true,
-        "showSeriesCount": false,
-        "tailColor": "gray",
-        "text": "Default value of text input option",
-        "textColor": "#000000",
-        "trueWindColor": "blue",
-        "trueWindDirField": "B-series",
-        "trueWindField": "B-series",
-        "trueWindSpdField": "D-series",
-        "trueWindSpdUom": "kts"
-      },
-      "pluginVersion": "2.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "grafana-testdata-datasource",
-            "uid": "trlxrdZVk"
-          },
-          "refId": "A",
-          "scenarioId": "simulation",
-          "sim": {
-            "key": {
-              "tick": 1,
-              "type": "flight"
-            },
-            "stream": true
-          }
-        },
-        {
-          "datasource": {
-            "type": "grafana-testdata-datasource",
-            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
-          },
-          "hide": false,
-          "refId": "B",
-          "scenarioId": "csv_metric_values",
-          "stringInput": "150"
-        },
-        {
-          "datasource": {
-            "type": "grafana-testdata-datasource",
-            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
-          },
-          "hide": false,
-          "refId": "C",
-          "scenarioId": "csv_metric_values",
-          "stringInput": "140"
-        },
-        {
-          "datasource": {
-            "type": "grafana-testdata-datasource",
-            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
-          },
-          "hide": false,
-          "refId": "D",
-          "scenarioId": "csv_metric_values",
-          "stringInput": "25.014"
-        },
-        {
-          "datasource": {
-            "type": "grafana-testdata-datasource",
-            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
-          },
-          "hide": false,
-          "refId": "E",
-          "scenarioId": "csv_metric_values",
-          "stringInput": "22.503"
-        }
-      ],
-      "title": "Wind w/spd - PNG Needle",
-      "type": "oceandatatools-compass-panel"
-    },
-    {
-      "datasource": {
-        "type": "grafana-testdata-datasource",
-        "uid": "trlxrdZVk"
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 4,
-        "x": 12,
-        "y": 6
+        "x": 16,
+        "y": 0
       },
       "id": 12,
       "options": {
+        "animationDurationMs": 600,
         "apparentWindColor": "yellow",
         "apparentWindDirField": "C-series",
         "apparentWindField": "C-series",
@@ -706,7 +485,7 @@
         "trueWindSpdField": "D-series",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.1.0",
+      "pluginVersion": "2.1.3",
       "targets": [
         {
           "datasource": {
@@ -777,13 +556,14 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 0,
-        "y": 14
+        "h": 6,
+        "w": 4,
+        "x": 20,
+        "y": 0
       },
-      "id": 3,
+      "id": 2,
       "options": {
+        "animationDurationMs": 600,
         "apparentWindColor": "yellow",
         "apparentWindDirField": "",
         "apparentWindField": "",
@@ -791,11 +571,11 @@
         "apparentWindSpdUom": "kts",
         "bezelColor": "#c6c6c6",
         "dialColor": "white",
-        "headingField": "A-series",
+        "headingField": "",
         "needleColor": "red",
         "needlePng": "",
         "needleSvg": "",
-        "needleType": "arrow",
+        "needleType": "needle",
         "rotationMode": "rotate-needle",
         "seriesCountSize": "sm",
         "showHeadingValue": true,
@@ -810,19 +590,19 @@
         "trueWindSpdField": "",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.1.0",
+      "pluginVersion": "2.1.3",
       "targets": [
         {
+          "alias": "",
           "datasource": {
             "type": "grafana-testdata-datasource",
             "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
           },
           "refId": "A",
-          "scenarioId": "csv_metric_values",
-          "stringInput": "45"
+          "scenarioId": "no_data_points"
         }
       ],
-      "title": "Compass - Arrow Needle",
+      "title": "No Data",
       "type": "oceandatatools-compass-panel"
     },
     {
@@ -835,13 +615,14 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 6,
-        "y": 14
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 6
       },
       "id": 6,
       "options": {
+        "animationDurationMs": 600,
         "apparentWindColor": "yellow",
         "apparentWindDirField": "",
         "apparentWindField": "",
@@ -868,7 +649,7 @@
         "trueWindSpdField": "",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.1.0",
+      "pluginVersion": "2.1.3",
       "targets": [
         {
           "datasource": {
@@ -913,71 +694,14 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 0,
-        "y": 21
-      },
-      "id": 4,
-      "options": {
-        "apparentWindColor": "yellow",
-        "apparentWindDirField": "",
-        "apparentWindField": "",
-        "apparentWindSpdField": "",
-        "apparentWindSpdUom": "kts",
-        "bezelColor": "#c6c6c6",
-        "dialColor": "white",
-        "headingField": "A-series",
-        "needleColor": "red",
-        "needlePng": "",
-        "needleSvg": "",
-        "needleType": "ship",
-        "rotationMode": "rotate-needle",
-        "seriesCountSize": "sm",
-        "showHeadingValue": true,
-        "showLabels": true,
-        "showSeriesCount": false,
-        "tailColor": "gray",
-        "text": "Default value of text input option",
-        "textColor": "#111827",
-        "trueWindColor": "blue",
-        "trueWindDirField": "",
-        "trueWindField": "",
-        "trueWindSpdField": "",
-        "trueWindSpdUom": "kts"
-      },
-      "pluginVersion": "2.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "grafana-testdata-datasource",
-            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
-          },
-          "refId": "A",
-          "scenarioId": "csv_metric_values",
-          "stringInput": "45"
-        }
-      ],
-      "title": "Compass - Ship Outline",
-      "type": "oceandatatools-compass-panel"
-    },
-    {
-      "datasource": {
-        "type": "grafana-testdata-datasource",
-        "uid": "trlxrdZVk"
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 6,
-        "y": 21
+        "h": 6,
+        "w": 4,
+        "x": 4,
+        "y": 6
       },
       "id": 7,
       "options": {
+        "animationDurationMs": 600,
         "apparentWindColor": "yellow",
         "apparentWindDirField": "C-series",
         "apparentWindField": "C-series",
@@ -1004,7 +728,7 @@
         "trueWindSpdField": "",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.1.0",
+      "pluginVersion": "2.1.3",
       "targets": [
         {
           "datasource": {
@@ -1049,13 +773,132 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 0,
-        "y": 28
+        "h": 6,
+        "w": 4,
+        "x": 8,
+        "y": 6
       },
-      "id": 13,
+      "id": 3,
       "options": {
+        "animationDurationMs": 600,
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "",
+        "apparentWindField": "",
+        "apparentWindSpdField": "",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "A-series",
+        "needleColor": "red",
+        "needlePng": "",
+        "needleSvg": "",
+        "needleType": "needle",
+        "rotationMode": "rotate-needle",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "",
+        "trueWindField": "",
+        "trueWindSpdField": "",
+        "trueWindSpdUom": "kts"
+      },
+      "pluginVersion": "2.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "refId": "A",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "45"
+        }
+      ],
+      "title": "Default Needle",
+      "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 12,
+        "y": 6
+      },
+      "id": 17,
+      "options": {
+        "animationDurationMs": 600,
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "",
+        "apparentWindField": "",
+        "apparentWindSpdField": "",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "A-series",
+        "needleColor": "red",
+        "needlePng": "",
+        "needleSvg": "",
+        "needleType": "arrow",
+        "rotationMode": "rotate-needle",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "",
+        "trueWindField": "",
+        "trueWindSpdField": "",
+        "trueWindSpdUom": "kts"
+      },
+      "pluginVersion": "2.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "refId": "A",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "45"
+        }
+      ],
+      "title": "Arrow Needle",
+      "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 16,
+        "y": 6
+      },
+      "id": 18,
+      "options": {
+        "animationDurationMs": 600,
         "apparentWindColor": "yellow",
         "apparentWindDirField": "",
         "apparentWindField": "",
@@ -1082,7 +925,7 @@
         "trueWindSpdField": "",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.1.0",
+      "pluginVersion": "2.1.3",
       "targets": [
         {
           "datasource": {
@@ -1094,7 +937,7 @@
           "stringInput": "45"
         }
       ],
-      "title": "Compass - Airplane",
+      "title": "Airplane Needle",
       "type": "oceandatatools-compass-panel"
     },
     {
@@ -1107,13 +950,14 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 6,
-        "y": 28
+        "h": 6,
+        "w": 4,
+        "x": 20,
+        "y": 6
       },
-      "id": 14,
+      "id": 19,
       "options": {
+        "animationDurationMs": 600,
         "apparentWindColor": "yellow",
         "apparentWindDirField": "",
         "apparentWindField": "",
@@ -1122,7 +966,7 @@
         "bezelColor": "#c6c6c6",
         "dialColor": "white",
         "headingField": "A-series",
-        "needleColor": "orange",
+        "needleColor": "red",
         "needlePng": "",
         "needleSvg": "",
         "needleType": "helicopter",
@@ -1140,7 +984,7 @@
         "trueWindSpdField": "",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.1.0",
+      "pluginVersion": "2.1.3",
       "targets": [
         {
           "datasource": {
@@ -1152,7 +996,7 @@
           "stringInput": "45"
         }
       ],
-      "title": "Compass - Helicopter",
+      "title": "Helicopter Needle",
       "type": "oceandatatools-compass-panel"
     },
     {
@@ -1165,13 +1009,14 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 12,
-        "y": 28
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 12
       },
-      "id": 15,
+      "id": 22,
       "options": {
+        "animationDurationMs": 600,
         "apparentWindColor": "yellow",
         "apparentWindDirField": "",
         "apparentWindField": "",
@@ -1180,10 +1025,10 @@
         "bezelColor": "#c6c6c6",
         "dialColor": "white",
         "headingField": "A-series",
-        "needleColor": "teal",
+        "needleColor": "red",
         "needlePng": "",
         "needleSvg": "",
-        "needleType": "underwater-drone",
+        "needleType": "rov",
         "rotationMode": "rotate-needle",
         "seriesCountSize": "sm",
         "showHeadingValue": true,
@@ -1198,7 +1043,7 @@
         "trueWindSpdField": "",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.1.0",
+      "pluginVersion": "2.1.3",
       "targets": [
         {
           "datasource": {
@@ -1210,7 +1055,7 @@
           "stringInput": "45"
         }
       ],
-      "title": "Compass - Underwater Drone",
+      "title": "ROV Needle",
       "type": "oceandatatools-compass-panel"
     },
     {
@@ -1223,13 +1068,14 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 18,
-        "y": 28
+        "h": 6,
+        "w": 4,
+        "x": 4,
+        "y": 12
       },
-      "id": 16,
+      "id": 21,
       "options": {
+        "animationDurationMs": 600,
         "apparentWindColor": "yellow",
         "apparentWindDirField": "",
         "apparentWindField": "",
@@ -1256,7 +1102,7 @@
         "trueWindSpdField": "",
         "trueWindSpdUom": "kts"
       },
-      "pluginVersion": "2.1.0",
+      "pluginVersion": "2.1.3",
       "targets": [
         {
           "datasource": {
@@ -1268,13 +1114,230 @@
           "stringInput": "45"
         }
       ],
-      "title": "Compass - Quadcopter",
+      "title": "Quadcopter Needle",
+      "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 8,
+        "y": 12
+      },
+      "id": 20,
+      "options": {
+        "animationDurationMs": 600,
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "",
+        "apparentWindField": "",
+        "apparentWindSpdField": "",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "A-series",
+        "needleColor": "red",
+        "needlePng": "",
+        "needleSvg": "",
+        "needleType": "underwater-drone",
+        "rotationMode": "rotate-needle",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "",
+        "trueWindField": "",
+        "trueWindSpdField": "",
+        "trueWindSpdUom": "kts"
+      },
+      "pluginVersion": "2.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "refId": "A",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "45"
+        }
+      ],
+      "title": "Underwater Drone Needle",
+      "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 12,
+        "y": 12
+      },
+      "id": 11,
+      "options": {
+        "animationDurationMs": 600,
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "C-series",
+        "apparentWindField": "C-series",
+        "apparentWindSpdField": "E-series",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "dark-blue",
+        "headingField": "A-series",
+        "needleColor": "red",
+        "needlePng": "https://soi-vessel-tracker.web.app/static/Illustration.png",
+        "needleSvg": "",
+        "needleType": "png",
+        "rotationMode": "rotate-needle",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#000000",
+        "trueWindColor": "blue",
+        "trueWindDirField": "B-series",
+        "trueWindField": "B-series",
+        "trueWindSpdField": "D-series",
+        "trueWindSpdUom": "kts"
+      },
+      "pluginVersion": "2.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "trlxrdZVk"
+          },
+          "refId": "A",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "45"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "B",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "150"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "C",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "140"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "D",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "25.014"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "E",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "22.503"
+        }
+      ],
+      "title": "Custom PNG Needle",
+      "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 16,
+        "y": 12
+      },
+      "id": 14,
+      "options": {
+        "animationDurationMs": 600,
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "",
+        "apparentWindField": "",
+        "apparentWindSpdField": "",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "dark-green",
+        "dialColor": "super-light-yellow",
+        "headingField": "A-series",
+        "needleColor": "orange",
+        "needlePng": "",
+        "needleSvg": "",
+        "needleType": "needle",
+        "rotationMode": "rotate-needle",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "dark-blue",
+        "text": "Default value of text input option",
+        "textColor": "dark-red",
+        "trueWindColor": "blue",
+        "trueWindDirField": "",
+        "trueWindField": "",
+        "trueWindSpdField": "",
+        "trueWindSpdUom": "kts"
+      },
+      "pluginVersion": "2.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "refId": "A",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "45"
+        }
+      ],
+      "title": "Custom Color Needle",
       "type": "oceandatatools-compass-panel"
     }
   ],
   "preload": false,
   "refresh": "",
-  "schemaVersion": 41,
+  "schemaVersion": 42,
   "tags": [],
   "templating": {
     "list": []
@@ -1287,5 +1350,5 @@
   "timezone": "",
   "title": "Provisioned compass-panel dashboard",
   "uid": "a538aeff-5a8a-42a5-901c-938d896fdd6f",
-  "version": 12
+  "version": 1
 }

@@ -22,9 +22,10 @@ Optionally the panel can display true and/or apparent wind angle.
   - **Arrow**: bold arrow-style needle.
   - **Ship**: minimal ship silhouette pointing forward.
   - **Airplane**: swept-wing top-down aircraft silhouette.
-  - **Helicopter**: rotor disk, fuselage, and tail rotor.
-  - **Underwater Drone**: torpedo-shaped ROV/AUV body with a tail fin cluster.
-  - **Quadcopter**: four-arm drone frame with a distinctly colored front rotor.
+  - **Helicopter**: 4-blade helicopter silhouette.
+  - **Underwater Drone**: glider-shaped AUV silhouette.
+  - **Quadcopter**: four-arm drone frame and rotor silhouette.
+  - **ROV**: Remotely Operated Vehicle silhouette.
   - **Custom SVG**: load your own vector as a needle.
   - **Custom PNG**: load your own bitmap as a needle.
 - Cardinal direction labels (N/E/S/W).
@@ -70,18 +71,19 @@ Optionally the panel can display true and/or apparent wind angle.
 
 - **Needle Type**
 
-  - `Default` – Red-tipped classic compass needle
-  - `Arrow` – Stylized arrow needle
-  - `Ship` – Simplified vessel silhouette (points to heading)
-  - `Airplane` – Top-down aircraft silhouette (points to heading)
-  - `Helicopter` – Rotor disk, fuselage, and tail rotor (points to heading)
-  - `Underwater Drone` – Torpedo-shaped ROV/AUV silhouette with tail fins (points to heading)
-  - `Quadcopter` – Four-arm drone frame; the front rotor is drawn in the Needle Color, the other three in the Tail Color (points to heading)
-  - `SVG` – Load a custom vector (provide URL or relative path)
-  - `PNG` – Load a custom image (provide URL or relative path)
+  - `Default` - classic north/south needle with red tip.
+  - `Arrow` - bold arrow-style needle.
+  - `Ship` - minimal ship silhouette pointing forward.
+  - `Airplane` - swept-wing top-down aircraft silhouette.
+  - `Helicopter` - 4-blade helicopter silhouette.
+  - `Underwater Drone` - glider-shaped AUV silhouette.
+  - `Quadcopter` - four-arm drone frame and rotor silhouette.
+  - `ROV` - Remotely Operated Vehicle silhouette.
+  - `Custom SVG` – Load a custom vector (provide URL or relative path)
+  - `Custom PNG` – Load a custom image (provide URL or relative path)
 
 - **Needle Color**: Color of the primary needle (or the front rotor, for the quadcopter).
-- **Tail Color**: Color of the tail (for the default needle), the non-front rotors (quadcopter), or the tail fins (underwater drone).
+- **Tail Color**: Color of the tail (for the default needle).
 - **Custom SVG**: Path/URL to your own SVG asset.
 - **Custom PNG**: Path/URL to your own PNG asset.
 
@@ -99,7 +101,7 @@ Optionally the panel can display true and/or apparent wind angle.
 
 ![Default Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-needle.png)
 
-_Arrow needle with labels and numeric heading enabled_
+_Default needle with labels and numeric heading enabled_
 
 ![Arrow Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-arrow.png)
 
@@ -123,11 +125,19 @@ _Underwater drone needle for ROV/AUV heading visualization_
 
 ![Quadcopter Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-quadcopter.png)
 
-_Quadcopter needle, front rotor highlighted, for drone heading visualization_
+_Quadcopter needle for rotorcraft heading visualization_
+
+![ROV Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-rov.png)
+
+_ROV needle for underwater vehicle heading visualization_
 
 ![Custom Styling](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-custom-styling.png)
 
-_Standard needle compass with custom styling_
+_Default needle with custom styling visualization_
+
+![Custom PNG Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-custom-png-needle.png)
+
+_Custom PNG needle styling visualization_
 
 ![North Up Orientation](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/wind-with-spd.png)
 

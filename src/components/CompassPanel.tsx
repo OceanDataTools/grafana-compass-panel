@@ -11,6 +11,7 @@ import {
   HelicopterNeedle,
   UnderwaterDroneNeedle,
   QuadcopterNeedle,
+  ROVNeedle,
   SvgNeedle,
   PngNeedle,
 } from './needles';
@@ -195,6 +196,9 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
     }
     if (options.needleType === 'underwater-drone') {
       return <UnderwaterDroneNeedle radius={radius} colors={colors} />;
+    }
+    if (options.needleType === 'rov') {
+      return <ROVNeedle radius={radius} colors={colors} />;
     }
     if (options.needleType === 'quadcopter') {
       return <QuadcopterNeedle radius={radius} colors={colors} />;

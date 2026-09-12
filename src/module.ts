@@ -84,7 +84,7 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
       description: 'Color of the north-pointing side of the needle',
       defaultValue: 'red',
       showIf: (opts) =>
-        ['needle', 'arrow', 'ship', 'airplane', 'helicopter', 'underwater-drone', 'quadcopter'].includes(
+        ['needle', 'arrow', 'ship', 'airplane', 'helicopter', 'underwater-drone', 'quadcopter', 'rov'].includes(
           opts.needleType || ''
         ),
       settings: { showAlpha: true, mode: 'hue' },
@@ -93,10 +93,9 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
       path: 'tailColor',
       name: 'Needle Tail Color',
       category: ['Coloring'],
-      description:
-        'Color of the south-pointing side of the needle (the non-front rotors for the quadcopter, or the tail fins for the underwater drone)',
+      description: 'Color of the south-pointing side of the needle',
       defaultValue: 'gray',
-      showIf: (opts) => ['needle', 'quadcopter', 'underwater-drone'].includes(opts.needleType || ''),
+      showIf: (opts) => ['needle'].includes(opts.needleType || ''),
       settings: { showAlpha: true, mode: 'hue' },
     })
     .addColorPicker({
@@ -159,6 +158,7 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
           { value: 'helicopter', label: 'Helicopter' },
           { value: 'underwater-drone', label: 'Underwater Drone' },
           { value: 'quadcopter', label: 'Quadcopter' },
+          { value: 'rov', label: 'ROV' },
           { value: 'svg', label: 'Custom SVG' },
           { value: 'png', label: 'Custom PNG' },
         ],

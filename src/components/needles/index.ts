@@ -5,6 +5,7 @@ export { AirplaneNeedle } from './AirplaneNeedle';
 export { HelicopterNeedle } from './HelicopterNeedle';
 export { UnderwaterDroneNeedle } from './UnderwaterDroneNeedle';
 export { QuadcopterNeedle } from './QuadcopterNeedle';
+export { ROVNeedle } from './ROVNeedle';
 export { SvgNeedle } from './SvgNeedle';
 export { PngNeedle } from './PngNeedle';
 export type { NeedleColors, NeedleProps } from './types';

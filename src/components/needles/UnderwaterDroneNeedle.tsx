@@ -1,61 +1,21 @@
 import React from 'react';
 import { NeedleProps } from './types';
 
+// Icon: derived from Font Awesome Free 7.3.1 "plane" (https://fontawesome.com),
+// CC BY 4.0 (https://fontawesome.com/license/free), with the tail removed and the
+// path recentered on origin to read as a tailless underwater drone silhouette.
+// Rotated -90deg to point up (heading 0).
 export const UnderwaterDroneNeedle: React.FC<NeedleProps> = ({ radius, colors }) => {
-  const noseY = -radius * 0.55;
-  const bodyTopY = -radius * 0.35;
-  const bodyBottomY = radius * 0.35;
-  const tailY = radius * 0.55;
-  const bodyHalfW = radius * 0.12;
-  const strokeW = Math.max(1, radius * 0.01);
-
-  // Mid-body X-wing, positioned like an underwater glider's main wing rather than a
-  // tail fin. A rounded "bowtie" - one continuous path with curved lobes and tips
-  // instead of a sharp-cornered diamond, matching the rounded style of the ship/plane
-  // needles. (An earlier attempt with two mirrored triangle polygons only rendered one
-  // side, for reasons that weren't fully pinned down - a single closed path avoids that.)
-  const roundedBowtie = (centerY: number, halfChord: number, tipX: number) => {
-    const nearTipX = tipX * 0.85;
-    const nearChord = halfChord * 0.35;
-    return `M 0 ${centerY - halfChord}
-      Q ${nearTipX} ${centerY - nearChord} ${tipX} ${centerY}
-      Q ${nearTipX} ${centerY + nearChord} 0 ${centerY + halfChord}
-      Q ${-nearTipX} ${centerY + nearChord} ${-tipX} ${centerY}
-      Q ${-nearTipX} ${centerY - nearChord} 0 ${centerY - halfChord}
-      Z`;
-  };
-
-  const wingPath = roundedBowtie(radius * 0.18, radius * 0.12, radius * 0.45);
-
-  // Small tail fin (rudder) right at the back, separate from the main wing
-  const tailFinFrontY = radius * 0.42;
-  const tailFinPath = roundedBowtie((tailFinFrontY + tailY) / 2, (tailY - tailFinFrontY) / 2, radius * 0.14);
-
-  // Gentle outward bulge on the sides (instead of straight edges) for a smoother,
-  // more torpedo-like silhouette, matching the ship needle's fully-curved profile.
-  const bodyBulge = bodyHalfW * 1.08;
-  const bodyMidY = bodyBottomY / 2;
-  const bodyPath = `M 0 ${noseY}
-    Q ${bodyHalfW} ${bodyTopY} ${bodyHalfW} 0
-    Q ${bodyBulge} ${bodyMidY} ${bodyHalfW} ${bodyBottomY}
-    Q ${bodyHalfW} ${tailY} 0 ${tailY}
-    Q ${-bodyHalfW} ${tailY} ${-bodyHalfW} ${bodyBottomY}
-    Q ${-bodyBulge} ${bodyMidY} ${-bodyHalfW} 0
-    Q ${-bodyHalfW} ${bodyTopY} 0 ${noseY}
-    Z`;
-
-  // Small darker nose cap, kept narrower than the body outline at that point so it
-  // reads as a two-tone nose without needing to clip it to the body's curve.
-  const noseCapLen = radius * 0.12;
-  const noseCapHalfW = bodyHalfW * 0.6;
-  const noseCapPath = `M 0 ${noseY} L ${noseCapHalfW} ${noseY + noseCapLen} L ${-noseCapHalfW} ${noseY + noseCapLen} Z`;
+  const scale = radius / 500;
 
   return (
-    <g data-testid="compass-underwater-drone-needle">
-      <path d={wingPath} fill={colors.tail} stroke={colors.text} strokeWidth={strokeW} />
-      <path d={tailFinPath} fill={colors.tail} stroke={colors.text} strokeWidth={strokeW} />
-      <path d={bodyPath} fill={colors.needle} stroke={colors.text} strokeWidth={strokeW} />
-      <path d={noseCapPath} fill={colors.text} />
-    </g>
+    <path
+      d="m52.0139-68.9983-115.1945-115.17c-2.7098-2.7093-6.385-4.2312-10.2168-4.2308l-70.6993.0075c-3.8318.0004-7.5068 1.523-10.216 4.2329-5.6418 5.6431-5.6409 14.7912.0022 20.4329l94.7474 94.7273h-169.3097c-50.8835 0-64.2469 31.0457-64.2469 69.947 0 38.9012 13.3634 70.9994 64.2469 70.9994h169.3097l-94.7474 94.7273c-5.6431 5.6418-5.6439 14.79-.0022 20.4329 2.7092 2.7099 6.3841 4.2325 10.216 4.2329l70.6993.0075c3.8318.0004 7.5071-1.5214 10.2168-4.2308L52.0139 71.9481H201.3015c50.8835 0 92.1802-31.572 92.1802-70.4732s-41.2967-70.4732-92.1802-70.4732z"
+      fill={colors.needle}
+      stroke={colors.text}
+      strokeWidth={6}
+      transform={`scale(${scale}) rotate(-90) translate(0,0)`}
+      data-testid="compass-underwaterdrone-needle"
+    />
   );
 };

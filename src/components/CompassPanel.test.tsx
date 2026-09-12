@@ -98,8 +98,9 @@ describe('CompassPanel needle shapes', () => {
   it.each([
     ['airplane', 'compass-airplane-needle'],
     ['helicopter', 'compass-helicopter-needle'],
-    ['underwater-drone', 'compass-underwater-drone-needle'],
+    ['underwater-drone', 'compass-underwaterdrone-needle'],
     ['quadcopter', 'compass-quadcopter-needle'],
+    ['rov', 'compass-rov-needle'],
   ] as const)('renders the %s needle shape', (needleType, testId) => {
     const props = makeProps({ fields: { heading: [90] }, options: { needleType } });
     render(<CompassPanel {...props} />);

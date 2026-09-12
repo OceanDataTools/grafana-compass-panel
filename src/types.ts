@@ -24,6 +24,7 @@ export interface SimpleOptions {
     | 'helicopter'
     | 'underwater-drone'
     | 'quadcopter'
+    | 'rov'
     | 'svg'
     | 'png';
   needleSvg?: string;

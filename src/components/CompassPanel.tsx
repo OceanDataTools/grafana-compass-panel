@@ -277,7 +277,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
             transform={
               options.rotationMode !== 'rotate-dial' && displayHeading !== null && displayApparent !== null
                 ? `rotate(${displayApparent + displayHeading})`
-                : `rotate(${displayApparent})`
+                : `rotate(${displayApparent ?? 0})`
             }
             style={transitionStyle}
           >
@@ -290,7 +290,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
             transform={
               options.rotationMode === 'rotate-dial' && displayHeading !== null && displayTruewind !== null
                 ? `rotate(${displayTruewind - displayHeading})`
-                : `rotate(${displayTruewind})`
+                : `rotate(${displayTruewind ?? 0})`
             }
             style={transitionStyle}
           >

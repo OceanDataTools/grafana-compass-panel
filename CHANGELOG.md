@@ -21,6 +21,9 @@ or need to act on — e.g. a new minimum supported Grafana version.
 - The needle and numeric readouts (heading, true/apparent wind direction, wind
   speed) no longer disappear or incorrectly show "No data" when the actual
   value is exactly 0° or 0 speed. (#11)
+- The true/apparent wind arrow no longer renders an invalid `rotate(null)`
+  transform (logged as a console error on every render) when a wind
+  direction field is configured but its current value is null. (#21)
 
 ### Changed
 

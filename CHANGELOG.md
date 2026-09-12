@@ -38,6 +38,15 @@ or need to act on — e.g. a new minimum supported Grafana version.
   version that supports externalizing the JSX runtime:
   `>=12.0.10 <12.1 || >=12.1.7 <12.2 || >=12.2.5`). (#12)
 
+### Breaking
+
+- Raised the minimum supported Grafana version from `>=12.0.0` to
+  `>=12.0.10 <12.1 || >=12.1.7 <12.2 || >=12.2.5` (see the SDK upgrade above).
+  This isn't just a higher floor — it also excludes Grafana 12.1.0–12.1.6 and
+  12.2.0–12.2.4, since those releases predate Grafana's JSX-runtime
+  externalization support. Instances on an excluded version must upgrade
+  Grafana before installing this plugin release. (#12)
+
 ## 2.1.3 - 2026-01-04
 
 ### Fixed

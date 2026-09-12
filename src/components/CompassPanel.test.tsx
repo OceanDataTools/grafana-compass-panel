@@ -66,6 +66,16 @@ describe('CompassPanel', () => {
 
     expect(screen.getByTestId('windrose-numeric-apparentwind-spd')).toHaveTextContent('0.00 kts');
   });
+
+  it('does not render an invalid rotate(null) transform when wind direction data is absent', () => {
+    const props = makeProps({
+      fields: { heading: [90], apparentWindDir: [], trueWindDir: [] },
+      options: { apparentWindDirField: 'apparentWindDir', trueWindDirField: 'trueWindDir' },
+    });
+    const { container } = render(<CompassPanel {...props} />);
+
+    expect(container.innerHTML).not.toContain('rotate(null)');
+  });
 });
 
 describe('CompassPanel animation duration', () => {

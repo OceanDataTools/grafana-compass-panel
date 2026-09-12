@@ -21,6 +21,11 @@ Optionally the panel can display true and/or apparent wind angle.
   - **Default**: classic north/south needle with red tip.
   - **Arrow**: bold arrow-style needle.
   - **Ship**: minimal ship silhouette pointing forward.
+  - **Airplane**: swept-wing top-down aircraft silhouette.
+  - **Helicopter**: 4-blade helicopter silhouette.
+  - **Underwater Drone**: glider-shaped AUV silhouette.
+  - **Quadcopter**: four-arm drone frame and rotor silhouette.
+  - **ROV**: Remotely Operated Vehicle silhouette.
   - **Custom SVG**: load your own vector as a needle.
   - **Custom PNG**: load your own bitmap as a needle.
 - Cardinal direction labels (N/E/S/W).
@@ -48,9 +53,9 @@ Optionally the panel can display true and/or apparent wind angle.
 ### Data Options
 
 - **Heading Field**: Select the numeric field in your series that represents heading in degrees.
-- **Truewind Direction Field**: Select the numeric field in your series that represents truewind direction in degrees.
+- **Truewind Direction Field**: Select the numeric field in your series that represents true wind direction, as an **absolute compass bearing** (0-360°, independent of the ship's heading).
 - **Truewind Velocity Field**: Select the numeric field in your series that represents truewind velocity in degrees.
-- **Apparent wind Direction Field**: Select the numeric field in your series that represents apparent wind direction in degrees.
+- **Apparent wind Direction Field**: Select the numeric field in your series that represents apparent wind angle, **relative to the ship's bow** (0-360°, as read directly off a wind vane/anemometer). This is *not* an absolute compass bearing — a rotational wind sensor can only measure angle relative to the bow it's mounted on, so the panel combines it with the Heading Field to compute the wind's true position on the compass. If your data source already outputs an absolute apparent wind direction (e.g. some chartplotters/NMEA multiplexers compute this for you), subtract the heading from it upstream to get a bow-relative angle before wiring it in here.
 - **Apparent wind Velocity Field**: Select the numeric field in your series that represents apparent wind velocity in degrees.
 
 ### Display Options
@@ -60,19 +65,25 @@ Optionally the panel can display true and/or apparent wind angle.
 - **Truewind Velocity UOM**: Select the unit of measure for the truewind.
 - **Apparent wind Velocity UOM**: Select the unit of measure for the apparent wind.
 - **Rotation Mode**: Select to rotate the needle (North up) or rotate the dial (Bow up).
+- **Animation Duration (ms)**: How long needle/dial/wind-arrow rotations take to animate (default 600ms). Lower this, or set it to 0 to disable animation, for high-frequency live data (e.g. Grafana Live streams updating tens of times per second) where the default speed lags behind incoming updates.
 
 ### Needle Options
 
 - **Needle Type**
 
-  - `Default` – Red-tipped classic compass needle
-  - `Arrow` – Stylized arrow needle
-  - `Ship` – Simplified vessel silhouette (points to heading)
-  - `SVG` – Load a custom vector (provide URL or relative path)
-  - `PNG` – Load a custom image (provide URL or relative path)
+  - `Default` - classic north/south needle with red tip.
+  - `Arrow` - bold arrow-style needle.
+  - `Ship` - minimal ship silhouette pointing forward.
+  - `Airplane` - swept-wing top-down aircraft silhouette.
+  - `Helicopter` - 4-blade helicopter silhouette.
+  - `Underwater Drone` - glider-shaped AUV silhouette.
+  - `Quadcopter` - four-arm drone frame and rotor silhouette.
+  - `ROV` - Remotely Operated Vehicle silhouette.
+  - `Custom SVG` – Load a custom vector (provide URL or relative path)
+  - `Custom PNG` – Load a custom image (provide URL or relative path)
 
-- **Needle Color**: Color of the primary needle.
-- **Tail Color**: Color of the tail (for default needle).
+- **Needle Color**: Color of the primary needle (or the front rotor, for the quadcopter).
+- **Tail Color**: Color of the tail (for the default needle).
 - **Custom SVG**: Path/URL to your own SVG asset.
 - **Custom PNG**: Path/URL to your own PNG asset.
 
@@ -90,7 +101,7 @@ Optionally the panel can display true and/or apparent wind angle.
 
 ![Default Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-needle.png)
 
-_Arrow needle with labels and numeric heading enabled_
+_Default needle with labels and numeric heading enabled_
 
 ![Arrow Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-arrow.png)
 
@@ -100,9 +111,33 @@ _Arrow needle with labels and numeric heading enabled_
 
 _Ship silhouette needle for vessel heading visualization_
 
+![Airplane Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-airplane.png)
+
+_Airplane needle for aircraft heading visualization_
+
+![Helicopter Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-helicopter.png)
+
+_Helicopter needle for rotorcraft heading visualization_
+
+![Underwater Drone Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-underwater-drone.png)
+
+_Underwater drone needle for ROV/AUV heading visualization_
+
+![Quadcopter Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-quadcopter.png)
+
+_Quadcopter needle for rotorcraft heading visualization_
+
+![ROV Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-rov.png)
+
+_ROV needle for underwater vehicle heading visualization_
+
 ![Custom Styling](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-custom-styling.png)
 
-_Standard needle compass with custom styling_
+_Default needle with custom styling visualization_
+
+![Custom PNG Needle](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/compass-with-custom-png-needle.png)
+
+_Custom PNG needle styling visualization_
 
 ![North Up Orientation](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/wind-with-spd.png)
 

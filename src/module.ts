@@ -14,7 +14,8 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
     .addFieldNamePicker({
       path: 'trueWindDirField',
       name: 'Truewind Direction Field',
-      description: 'Select which field contains the true wind direction value',
+      description:
+        'Select which field contains the true wind direction, as an absolute compass bearing (0-360°, independent of the ship\'s heading)',
       defaultValue: '',
     })
     .addFieldNamePicker({
@@ -42,7 +43,8 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
     .addFieldNamePicker({
       path: 'apparentWindDirField',
       name: 'Apparent wind Direction Field',
-      description: 'Select which field contains the apparent wind value',
+      description:
+        'Select which field contains the apparent wind angle, relative to the ship\'s bow (0-360°, as read directly off a wind vane/anemometer) — NOT an absolute compass bearing',
       defaultValue: '',
     })
     .addFieldNamePicker({
@@ -81,7 +83,10 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
       category: ['Coloring'],
       description: 'Color of the north-pointing side of the needle',
       defaultValue: 'red',
-      showIf: (opts) => ['needle', 'arrow', 'ship'].includes(opts.needleType || ''),
+      showIf: (opts) =>
+        ['needle', 'arrow', 'ship', 'airplane', 'helicopter', 'underwater-drone', 'quadcopter', 'rov'].includes(
+          opts.needleType || ''
+        ),
       settings: { showAlpha: true, mode: 'hue' },
     })
     .addColorPicker({
@@ -90,7 +95,7 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
       category: ['Coloring'],
       description: 'Color of the south-pointing side of the needle',
       defaultValue: 'gray',
-      showIf: (opts) => opts.needleType === 'needle',
+      showIf: (opts) => ['needle'].includes(opts.needleType || ''),
       settings: { showAlpha: true, mode: 'hue' },
     })
     .addColorPicker({
@@ -149,6 +154,11 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
           { value: 'needle', label: 'Needle' },
           { value: 'arrow', label: 'Arrow' },
           { value: 'ship', label: 'Ship Outline' },
+          { value: 'airplane', label: 'Airplane' },
+          { value: 'helicopter', label: 'Helicopter' },
+          { value: 'underwater-drone', label: 'Underwater Drone' },
+          { value: 'quadcopter', label: 'Quadcopter' },
+          { value: 'rov', label: 'ROV' },
           { value: 'svg', label: 'Custom SVG' },
           { value: 'png', label: 'Custom PNG' },
         ],
@@ -179,5 +189,13 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
         ],
       },
       defaultValue: 'rotate-needle',
+    })
+    .addNumberInput({
+      path: 'animationDurationMs',
+      name: 'Animation Duration (ms)',
+      description:
+        'How long needle/dial/wind-arrow rotations take to animate. Lower this (or set to 0 to disable animation) for high-frequency live data where the default speed lags behind incoming updates.',
+      defaultValue: 600,
+      settings: { min: 0, max: 2000, step: 50 },
     });
 });

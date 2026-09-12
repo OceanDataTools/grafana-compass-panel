@@ -16,9 +16,21 @@ export interface SimpleOptions {
   showLabels?: boolean;
   showHeadingValue?: boolean;
 
-  needleType?: 'needle' | 'arrow' | 'ship' | 'svg' | 'png';
+  needleType?:
+    | 'needle'
+    | 'arrow'
+    | 'ship'
+    | 'airplane'
+    | 'helicopter'
+    | 'underwater-drone'
+    | 'quadcopter'
+    | 'rov'
+    | 'svg'
+    | 'png';
   needleSvg?: string;
   needlePng?: string;
 
   rotationMode?: 'rotate-needle' | 'rotate-dial';
+
+  animationDurationMs?: number;
 }

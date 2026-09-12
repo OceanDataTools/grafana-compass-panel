@@ -34,6 +34,7 @@ export default defineConfig([
       '**/.idea',
       '**/.eslintcache',
       '**/.DS_Store',
+      'CLAUDE.md',
     ],
   },
   ...baseConfig,

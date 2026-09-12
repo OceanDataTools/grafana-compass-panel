@@ -93,3 +93,18 @@ describe('CompassPanel animation duration', () => {
     expect(needle.getAttribute('style')).toBeFalsy();
   });
 });
+
+describe('CompassPanel needle shapes', () => {
+  it.each([
+    ['airplane', 'compass-airplane-needle'],
+    ['helicopter', 'compass-helicopter-needle'],
+    ['underwater-drone', 'compass-underwaterdrone-needle'],
+    ['quadcopter', 'compass-quadcopter-needle'],
+    ['rov', 'compass-rov-needle'],
+  ] as const)('renders the %s needle shape', (needleType, testId) => {
+    const props = makeProps({ fields: { heading: [90] }, options: { needleType } });
+    render(<CompassPanel {...props} />);
+
+    expect(screen.getByTestId('compass-needle').querySelector(`[data-testid="${testId}"]`)).not.toBeNull();
+  });
+});

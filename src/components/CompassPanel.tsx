@@ -3,6 +3,18 @@ import { PanelProps } from '@grafana/data';
 import { useTheme } from '@grafana/ui';
 import { PanelDataErrorView } from '@grafana/runtime';
 import { SimpleOptions } from 'types';
+import {
+  DefaultNeedle,
+  ArrowNeedle,
+  ShipNeedle,
+  AirplaneNeedle,
+  HelicopterNeedle,
+  UnderwaterDroneNeedle,
+  QuadcopterNeedle,
+  ROVNeedle,
+  SvgNeedle,
+  PngNeedle,
+} from './needles';
 
 export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
   data,
@@ -132,90 +144,6 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
       );
     });
 
-  // === Needles ===
-  // === Arrow ===
-  const renderArrowNeedle = () => {
-    const len = radius * 0.7; // full arrow length
-    const headLen = radius * 0.25; // arrowhead length
-    const halfW = radius * 0.05; // shaft half-width
-    const tipW = radius * 0.1; // arrow tip half-width
-    const capR = Math.max(2, radius * 0.025);
-
-    const points = [
-      [-halfW, len - headLen], // tail left
-      [-halfW, -len + headLen], // shaft top-left
-      [-tipW, -len + headLen], // arrowhead base-left
-      [0, -len], // tip (north)
-      [tipW, -len + headLen], // arrowhead base-right
-      [halfW, -len + headLen], // shaft top-right
-      [halfW, len - headLen], // tail right
-    ]
-      .map((p) => p.join(','))
-      .join(' ');
-
-    return (
-      <g>
-        <polygon
-          points={points}
-          fill={colors.needle}
-          stroke={colors.text}
-          strokeWidth={Math.max(1, radius * 0.01)}
-          data-testid="compass-arrow-needle"
-        />
-        {/* Center pivot */}
-        <circle cx={0} cy={0} r={capR} fill="white" stroke={colors.text} strokeWidth={Math.max(1, radius * 0.01)} />
-      </g>
-    );
-  };
-
-  // === Ship Profile ===
-  const renderShipNeedle = () => {
-    const shipHeight = 45;
-    const scale = (radius * 0.9) / shipHeight;
-    const strokeW = Math.max(0.5, radius * 0.005);
-    return (
-      <g transform={`scale(${scale})`} data-testid="compass-ship-needle">
-        <path
-          d="M 0 -30 Q 8 -25 8 0 L 8 23 Q 8 25 0 25 Q -8 25 -8 23 L -8 0 Q -8 -25 0 -30 Z"
-          fill={colors.needle}
-          stroke={colors.text}
-          strokeWidth={strokeW}
-        />
-      </g>
-    );
-  };
-
-  // === Custom SVG ===
-  const renderSvgNeedle = () => {
-    const scale = radius / 50;
-    return (
-      <g transform={`scale(${scale})`}>
-        <image href={options.needleSvg!} x={-5} y={-25} width={10} height={50} data-testid="compass-svg-needle" />
-      </g>
-    );
-  };
-
-  // === Custom PNG ===
-  const renderPngNeedle = () => {
-    // Scale PNG relative to the dial radius
-    const pngWidth = 20;
-    const pngHeight = 50;
-    const scale = radius / 42;
-
-    return (
-      <g transform={`scale(${scale})`} style={{ transformOrigin: '0 0', ...transitionStyle }}>
-        <image
-          href={options.needlePng!}
-          x={-pngWidth / 2}
-          y={-pngHeight / 1.7}
-          width={pngWidth}
-          height={pngHeight}
-          data-testid="compass-png-needle"
-        />
-      </g>
-    );
-  };
-
   // === Wind arrows ===
   const renderWindArrow = (angleDeg: number, color: string, label: string) => {
     const rOuter = radius * 0.9;
@@ -253,37 +181,35 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
     );
   };
 
-  const renderDefaultNeedle = () => {
-    const lenN = radius * 0.7;
-    const lenS = radius * 0.45;
-    const halfW = Math.max(2, radius * 0.06);
-    const notch = Math.max(3, radius * 0.08);
-    const capR = Math.max(2, radius * 0.05);
-    const capStroke = Math.max(1, radius * 0.01);
-
-    return (
-      <g>
-        <polygon points={`0,${-lenN} ${halfW},0 0,${-notch} ${-halfW},0`} fill={colors.needle} />
-        <polygon points={`0,${lenS} ${halfW},0 0,${notch} ${-halfW},0`} fill={colors.tail} />
-        <circle cx={0} cy={0} r={capR} fill="white" stroke="#111827" strokeWidth={capStroke} />
-      </g>
-    );
-  };
-
   const renderNeedle = () => {
     if (options.needleType === 'arrow') {
-      return renderArrowNeedle();
+      return <ArrowNeedle radius={radius} colors={colors} />;
     }
     if (options.needleType === 'ship') {
-      return renderShipNeedle();
+      return <ShipNeedle radius={radius} colors={colors} />;
+    }
+    if (options.needleType === 'airplane') {
+      return <AirplaneNeedle radius={radius} colors={colors} />;
+    }
+    if (options.needleType === 'helicopter') {
+      return <HelicopterNeedle radius={radius} colors={colors} />;
+    }
+    if (options.needleType === 'underwater-drone') {
+      return <UnderwaterDroneNeedle radius={radius} colors={colors} />;
+    }
+    if (options.needleType === 'rov') {
+      return <ROVNeedle radius={radius} colors={colors} />;
+    }
+    if (options.needleType === 'quadcopter') {
+      return <QuadcopterNeedle radius={radius} colors={colors} />;
     }
     if (options.needleType === 'svg' && options.needleSvg) {
-      return renderSvgNeedle();
+      return <SvgNeedle radius={radius} needleSvg={options.needleSvg} />;
     }
     if (options.needleType === 'png' && options.needlePng) {
-      return renderPngNeedle();
+      return <PngNeedle radius={radius} needlePng={options.needlePng} transitionStyle={transitionStyle} />;
     }
-    return renderDefaultNeedle();
+    return <DefaultNeedle radius={radius} colors={colors} />;
   };
 
   // Early return if no data

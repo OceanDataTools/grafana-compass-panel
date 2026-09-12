@@ -15,6 +15,8 @@ or need to act on — e.g. a new minimum supported Grafana version.
 - Configurable animation duration for needle/dial/wind-arrow rotations (default
   600ms, 0 disables animation), for high-frequency live data sources such as
   Grafana Live streams updating tens of times per second. (#10)
+- Five new built-in needle shapes: Airplane, Helicopter, Underwater Drone,
+  Quadcopter, and ROV. (#17, #28)
 
 ### Fixed
 

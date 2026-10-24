@@ -48,6 +48,10 @@
       {
         "name": "Compass with custom styling",
         "path": "screenshots/compass-with-custom-styling.png"
+      },
+      {
+        "name": "Compass with wind and water current",
+        "path": "screenshots/wind-and-current.png"
       }
     ],
     "version": "%VERSION%",

@@ -158,3 +158,23 @@ _North up orientation for wind indicator visualization_
 ![Bow Up Orientation](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/wind-without-spd.png)
 
 _Bow up orientation for wind indicator visualization_
+
+![Water Current - North Up](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/current-north-up.png)
+
+_Water current set (direction) and drift (speed), north up. The current arrow is centered on the vessel and points toward where the water is flowing; the set/drift readouts are in the top-left corner_
+
+![Water Current - Bow Up](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/current-bow-up.png)
+
+_The same water current in bow up orientation_
+
+![Wind and Water Current](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/wind-and-current.png)
+
+_Water current shown alongside true and apparent wind, with speed readouts_
+
+![Current Arrow at Slack Water](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/current-scaled-slow.png)
+
+_Current arrow scaled by speed: small in slack water (0.53 kts)..._
+
+![Current Arrow at Full Speed](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/current-scaled-fast.png)
+
+_...and at its largest at the configured full-size speed (here 2.5 kts), stopping just inside the tick marks_

@@ -201,6 +201,21 @@ describe('CompassPanel water current', () => {
     expect(tipY('compass-arrow-truewind')).toBe(Math.max(...ys('compass-arrow-truewind')));
   });
 
+  it('centers the current arrow on the needle pivot', () => {
+    const props = makeProps({ fields: { heading: [0], currentDir: [0] }, options: currentOptions });
+    render(<CompassPanel {...props} />);
+
+    const ys = screen
+      .getByTestId('compass-arrow-current')
+      .querySelector('polygon')!
+      .getAttribute('points')!
+      .split(' ')
+      .map((p) => Number(p.split(',')[1]));
+
+    // Tip and tail are equidistant from the origin, the point the needle rotates around.
+    expect(Math.min(...ys) + Math.max(...ys)).toBeCloseTo(0);
+  });
+
   it('shows "No data" and no rotate(null) when current values are absent', () => {
     const props = makeProps({ fields: { heading: [90], currentDir: [], currentSpd: [] }, options: currentOptions });
     const { container } = render(<CompassPanel {...props} />);

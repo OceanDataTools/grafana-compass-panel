@@ -203,12 +203,12 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
     );
   };
 
-  // 'to' arrows start near the center and point outward, toward where the flow is going.
+  // 'to' arrows are centered on the needle's pivot and point toward where the flow is going.
   const renderCurrentArrow = (angleDeg: number, color: string, label: string) => {
-    const rTip = radius * 0.9;
-    const rHeadBase = radius * 0.66;
-    const rTail = radius * 0.4;
-    const rText = radius * 0.73;
+    const rTip = radius * 0.5;
+    const rHeadBase = radius * 0.26;
+    const rTail = -rTip;
+    const rText = radius * 0.33;
     const headHalfWidth = radius * 0.11;
     const shaftHalfWidth = radius * 0.03;
 

@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { ImageNeedle, ImageNeedlePivot } from './ImageNeedle';
+import { normalizeSvgSource, svgAspect } from './svgSource';
 
 interface SvgNeedleProps {
   radius: number;
   needleSvg: string;
+  size?: number;
+  pivot?: ImageNeedlePivot;
 }
 
-export const SvgNeedle: React.FC<SvgNeedleProps> = ({ radius, needleSvg }) => {
-  const scale = radius / 50;
+export const SvgNeedle: React.FC<SvgNeedleProps> = ({ radius, needleSvg, size, pivot }) => {
+  const href = useMemo(() => normalizeSvgSource(needleSvg), [needleSvg]);
+  const aspect = useMemo(() => svgAspect(needleSvg), [needleSvg]);
   return (
-    <g transform={`scale(${scale})`}>
-      <image href={needleSvg} x={-5} y={-25} width={10} height={50} data-testid="compass-svg-needle" />
-    </g>
+    <ImageNeedle radius={radius} href={href} size={size} pivot={pivot} aspect={aspect} testId="compass-svg-needle" />
   );
 };

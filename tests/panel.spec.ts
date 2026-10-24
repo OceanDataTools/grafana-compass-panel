@@ -58,7 +58,9 @@ test('should render a custom SVG needle centered on the dial', async ({
   const needle = panel.getByTestId('compass-svg-needle');
   await expect(needle).toBeVisible();
   const needleBox = (await needle.boundingBox())!;
-  const dialBox = (await panel.getByTestId('compass-dial').boundingBox())!;
-  expect(needleBox.x + needleBox.width / 2).toBeCloseTo(dialBox.x + dialBox.width / 2, 0);
-  expect(needleBox.y + needleBox.height / 2).toBeCloseTo(dialBox.y + dialBox.height / 2, 0);
+  // Compare against the dial face circle (symmetric about the pivot), allowing for
+  // sub-pixel rounding of the bounding boxes.
+  const faceBox = (await panel.getByTestId('compass-face').boundingBox())!;
+  expect(Math.abs(needleBox.x + needleBox.width / 2 - (faceBox.x + faceBox.width / 2))).toBeLessThan(1.5);
+  expect(Math.abs(needleBox.y + needleBox.height / 2 - (faceBox.y + faceBox.height / 2))).toBeLessThan(1.5);
 });

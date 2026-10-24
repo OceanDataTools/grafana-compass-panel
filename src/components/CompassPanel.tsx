@@ -316,7 +316,15 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
         <circle cx={0} cy={0} r={radius * 0.98} fill={colors.bezel} stroke="#9ca3af" strokeWidth={radius * 0.01} />
 
         {/* Dial */}
-        <circle cx={0} cy={0} r={radius * 0.88} fill={colors.dial} stroke={colors.text} strokeWidth={radius * 0.015} />
+        <circle
+          cx={0}
+          cy={0}
+          r={radius * 0.88}
+          fill={colors.dial}
+          stroke={colors.text}
+          strokeWidth={radius * 0.015}
+          data-testid="compass-face"
+        />
 
         {/* Needle */}
         <g

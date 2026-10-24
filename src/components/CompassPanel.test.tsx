@@ -376,7 +376,8 @@ describe('CompassPanel custom image needles', () => {
   });
 
   describe('never extends past the dial face', () => {
-    const dialRadius = (container: HTMLElement) => Number(container.querySelectorAll('circle')[1].getAttribute('r'));
+    const dialRadius = (container: HTMLElement) =>
+      Number(container.querySelector('[data-testid="compass-face"]')!.getAttribute('r'));
     const tallSvg = 'data:image/svg+xml;base64,' + Buffer.from('<svg viewBox="0 0 20 100"/>').toString('base64');
 
     it.each([

@@ -186,8 +186,8 @@ describe('CompassPanel water current', () => {
     });
     render(<CompassPanel {...props} />);
 
-    // Unrotated, "outward" is toward negative y. The current arrow's tip is its
-    // outermost point; the wind arrow's tip is its innermost point.
+    // Unrotated, "outward" is toward negative y. Both arrows list their tip first;
+    // the current arrow's tip is its outermost point, the wind arrow's its innermost.
     const ys = (testId: string) =>
       screen
         .getByTestId(testId)
@@ -195,7 +195,7 @@ describe('CompassPanel water current', () => {
         .getAttribute('points')!
         .split(' ')
         .map((p) => Number(p.split(',')[1]));
-    const tipY = (testId: string) => ys(testId)[testId === 'compass-arrow-current' ? 3 : 0];
+    const tipY = (testId: string) => ys(testId)[0];
 
     expect(tipY('compass-arrow-current')).toBe(Math.min(...ys('compass-arrow-current')));
     expect(tipY('compass-arrow-truewind')).toBe(Math.max(...ys('compass-arrow-truewind')));

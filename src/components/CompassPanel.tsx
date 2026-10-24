@@ -203,29 +203,21 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
     );
   };
 
-  // 'to' arrows are centered on the needle's pivot and point toward where the flow is going.
+  // 'to' arrows use the same notched shape and size as the wind arrows, but are centered
+  // on the needle's pivot and point toward where the flow is going.
   const renderCurrentArrow = (angleDeg: number, color: string, label: string) => {
-    const rTip = radius * 0.5;
-    const rHeadBase = radius * 0.26;
-    const rTail = -rTip;
-    const rText = radius * 0.33;
-    const headHalfWidth = radius * 0.11;
-    const shaftHalfWidth = radius * 0.03;
+    const rTip = radius * 0.25;
+    const rWings = -rTip;
+    const rNotch = rWings + radius * 0.05;
+    const rText = rWings + radius * 0.15;
+    const wingHalfWidth = radius * 0.9 * Math.sin(0.1);
 
     const angleRad = (angleDeg * Math.PI) / 180;
     const along = (r: number, offset: number) => {
       const p = polarToCartesian(r, angleRad);
       return { x: p.x + offset * Math.cos(angleRad), y: p.y + offset * Math.sin(angleRad) };
     };
-    const points = [
-      along(rTail, -shaftHalfWidth),
-      along(rHeadBase, -shaftHalfWidth),
-      along(rHeadBase, -headHalfWidth),
-      along(rTip, 0),
-      along(rHeadBase, headHalfWidth),
-      along(rHeadBase, shaftHalfWidth),
-      along(rTail, shaftHalfWidth),
-    ];
+    const points = [along(rTip, 0), along(rWings, wingHalfWidth), along(rNotch, 0), along(rWings, -wingHalfWidth)];
     const pText = polarToCartesian(rText, angleRad);
 
     return (

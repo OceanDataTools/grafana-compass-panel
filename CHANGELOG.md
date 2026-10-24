@@ -14,12 +14,12 @@ or need to act on — e.g. a new minimum supported Grafana version.
 
 - Optional water current overlay: pick a current set (direction) field and,
   optionally, a drift (speed) field with its own unit (kts, m/s, cm/s, kph)
-  and color. Current is drawn as an arrow centered on the needle's pivot,
-  pointing toward the set bearing (oceanographic "flowing to" convention,
-  unlike wind's "coming from"),
-  with set/drift readouts in the top-left corner. Works with or without the
-  wind overlays, in both rotation modes. The arrow's opacity is adjustable
-  so the needle underneath stays visible. (#39)
+  and color. Current is drawn with the same notched arrow shape as wind,
+  centered on the needle's pivot and pointing toward the set bearing
+  (oceanographic "flowing to" convention, unlike wind's "coming from"), with
+  set/drift readouts in the top-left corner. Works with or without the wind
+  overlays, in both rotation modes. The arrow's opacity is adjustable so the
+  needle underneath stays visible. (#39)
 
 ## 2.2.0 - 2026-09-12
 

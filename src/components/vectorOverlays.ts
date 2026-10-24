@@ -97,3 +97,14 @@ export function computeLayout(size: number, rowsAbove: number, rowsBelow: number
     hOffset: size * 0.0375 * (rowsBelow - rowsAbove),
   };
 }
+
+// Size factor for a speed-scaled arrow: grows linearly from minScale at rest to
+// maxScale at maxSpd, and stays at maxScale above it. Returns 1 (normal size)
+// when there's no speed reading or no usable upper limit.
+export function speedScale(spd: number | null, maxSpd: number | undefined, minScale: number, maxScale: number): number {
+  if (spd === null || !maxSpd || maxSpd <= 0) {
+    return 1;
+  }
+  const t = Math.min(Math.abs(spd) / maxSpd, 1);
+  return minScale + (maxScale - minScale) * t;
+}

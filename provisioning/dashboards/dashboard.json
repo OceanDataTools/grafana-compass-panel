@@ -1880,6 +1880,135 @@
           }
         }
       ]
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 20,
+        "y": 18
+      },
+      "id": 28,
+      "options": {
+        "animationDurationMs": 600,
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "",
+        "apparentWindField": "",
+        "apparentWindSpdField": "",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "A-series",
+        "needleColor": "red",
+        "needlePng": "",
+        "needleSvg": "",
+        "needleType": "ship",
+        "rotationMode": "rotate-needle",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "",
+        "trueWindField": "",
+        "trueWindSpdField": "",
+        "trueWindSpdUom": "kts",
+        "currentColor": "green",
+        "currentDirField": "current_set",
+        "currentSpdField": "current_drift",
+        "currentSpdUom": "kts",
+        "currentOpacity": 0.85,
+        "currentScaleBySpeed": true,
+        "currentScaleMaxSpd": 2.5
+      },
+      "pluginVersion": "2.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "trlxrdZVk"
+          },
+          "refId": "A",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "45"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "trlxrdZVk"
+          },
+          "refId": "F",
+          "scenarioId": "simulation",
+          "sim": {
+            "key": {
+              "tick": 1,
+              "type": "sine",
+              "uid": "current"
+            },
+            "stream": true
+          }
+        }
+      ],
+      "title": "Current - Live, scaled by speed",
+      "type": "oceandatatools-compass-panel",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "binary",
+            "alias": "set_offset",
+            "binary": {
+              "left": "Value",
+              "operator": "*",
+              "right": "30"
+            },
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "binary",
+            "alias": "current_set",
+            "binary": {
+              "left": "set_offset",
+              "operator": "+",
+              "right": "200"
+            },
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "binary",
+            "alias": "current_drift",
+            "binary": {
+              "left": "Value",
+              "operator": "+",
+              "right": "1.5"
+            },
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        }
+      ]
     }
   ],
   "preload": false,

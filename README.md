@@ -68,6 +68,8 @@ Optionally the panel can display true and/or apparent wind angle, and water curr
 - **Truewind Velocity UOM**: Select the unit of measure for the truewind.
 - **Apparent wind Velocity UOM**: Select the unit of measure for the apparent wind.
 - **Current UOM**: Select the unit of measure for the water current drift (kts, m/s, cm/s, kph).
+- **Scale Current Arrow by Speed**: Grow the current arrow with the current drift instead of drawing it at a fixed size. It shrinks to 40% of its normal size in slack water and grows to its largest size — just inside the tick marks and cardinal labels, so it never covers them — at the speed set below.
+- **Current Speed at Full Size**: Shown when scaling is enabled. The drift (in the Current UOM) at which the arrow reaches its largest size; faster currents are drawn at that same size. Default 3.
 - **Rotation Mode**: Select to rotate the needle (North up) or rotate the dial (Bow up).
 - **Animation Duration (ms)**: How long needle/dial/wind-arrow rotations take to animate (default 600ms). Lower this, or set it to 0 to disable animation, for high-frequency live data (e.g. Grafana Live streams updating tens of times per second) where the default speed lags behind incoming updates.
 

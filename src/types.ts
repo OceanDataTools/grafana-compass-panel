@@ -9,6 +9,8 @@ export interface SimpleOptions {
   currentDirField?: string;
   currentSpdField?: string;
   currentSpdUom?: string;
+  currentScaleBySpeed?: boolean;
+  currentScaleMaxSpd?: number;
   textColor?: string;
   needleColor?: string;
   tailColor?: string;

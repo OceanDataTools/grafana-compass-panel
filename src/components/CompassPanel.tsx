@@ -15,7 +15,14 @@ import {
   SvgNeedle,
   PngNeedle,
 } from './needles';
-import { VectorOverlay, useUnwrappedAngle, normalizeDegrees, overlayRotation, computeLayout } from './vectorOverlays';
+import {
+  VectorOverlay,
+  useUnwrappedAngle,
+  normalizeDegrees,
+  overlayRotation,
+  computeLayout,
+  speedScale,
+} from './vectorOverlays';
 
 export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
   data,
@@ -204,8 +211,9 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
   };
 
   // 'to' arrows use the same notched shape and size as the wind arrows, but are centered
-  // on the needle's pivot and point toward where the flow is going.
-  const renderCurrentArrow = (angleDeg: number, color: string, label: string) => {
+  // on the needle's pivot and point toward where the flow is going. Optionally they
+  // grow with speed, up to the size where they'd reach the major ticks / cardinal labels.
+  const renderCurrentArrow = (angleDeg: number, color: string, label: string, spd: number | null) => {
     const rTip = radius * 0.25;
     const rWings = -rTip;
     const rNotch = rWings + radius * 0.05;
@@ -220,9 +228,22 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
     const points = [along(rTip, 0), along(rWings, wingHalfWidth), along(rNotch, 0), along(rWings, -wingHalfWidth)];
     const pText = polarToCartesian(rText, angleRad);
 
+    const scaled = options.currentScaleBySpeed && options.currentSpdField;
+    const maxScale = (radius * 0.7) / Math.hypot(rWings, wingHalfWidth);
+    const scale = scaled ? speedScale(spd, options.currentScaleMaxSpd ?? 3, 0.4, maxScale) : 1;
+
     return (
-      <g opacity={options.currentOpacity ?? 0.85}>
-        <polygon points={points.map((p) => `${p.x},${p.y}`).join(' ')} fill={color} stroke={colors.text} />
+      <g
+        opacity={options.currentOpacity ?? 0.85}
+        transform={scaled ? `scale(${scale})` : undefined}
+        style={scaled ? transitionStyle : undefined}
+      >
+        <polygon
+          points={points.map((p) => `${p.x},${p.y}`).join(' ')}
+          fill={color}
+          stroke={colors.text}
+          vectorEffect={scaled ? 'non-scaling-stroke' : undefined}
+        />
         <text
           x={pText.x}
           y={pText.y + radius * 0.025}
@@ -345,7 +366,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
               >
                 {o.dir !== null &&
                   (o.convention === 'to'
-                    ? renderCurrentArrow(0, o.color, o.label)
+                    ? renderCurrentArrow(0, o.color, o.label, o.spd)
                     : renderWindArrow(0, o.color, o.label))}
               </g>
             )

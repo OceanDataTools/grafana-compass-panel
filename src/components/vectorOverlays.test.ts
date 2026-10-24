@@ -1,5 +1,12 @@
 import { renderHook } from '@testing-library/react';
-import { unwrapAngle, useUnwrappedAngle, normalizeDegrees, overlayRotation, computeLayout } from './vectorOverlays';
+import {
+  unwrapAngle,
+  useUnwrappedAngle,
+  normalizeDegrees,
+  overlayRotation,
+  computeLayout,
+  speedScale,
+} from './vectorOverlays';
 
 describe('unwrapAngle', () => {
   it('initializes to the raw value on the first reading', () => {
@@ -85,5 +92,30 @@ describe('computeLayout', () => {
     const { radius, hOffset } = computeLayout(400, 1, 1);
     expect(radius).toBeCloseTo(170);
     expect(hOffset).toBeCloseTo(0);
+  });
+});
+
+describe('speedScale', () => {
+  it('uses the minimum scale at rest', () => {
+    expect(speedScale(0, 3, 0.4, 2.5)).toBeCloseTo(0.4);
+  });
+
+  it('grows linearly with speed', () => {
+    expect(speedScale(1.5, 3, 0.4, 2.4)).toBeCloseTo(1.4);
+  });
+
+  it('caps at the maximum scale at and above the upper limit', () => {
+    expect(speedScale(3, 3, 0.4, 2.5)).toBeCloseTo(2.5);
+    expect(speedScale(10, 3, 0.4, 2.5)).toBeCloseTo(2.5);
+  });
+
+  it('treats negative speeds by magnitude', () => {
+    expect(speedScale(-1.5, 3, 0.4, 2.4)).toBeCloseTo(1.4);
+  });
+
+  it('falls back to normal size without a speed or a usable limit', () => {
+    expect(speedScale(null, 3, 0.4, 2.5)).toBe(1);
+    expect(speedScale(1, 0, 0.4, 2.5)).toBe(1);
+    expect(speedScale(1, undefined, 0.4, 2.5)).toBe(1);
   });
 });

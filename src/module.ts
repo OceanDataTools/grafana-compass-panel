@@ -98,6 +98,22 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
       },
       showIf: (opts) => opts.currentSpdField !== '',
     })
+    .addBooleanSwitch({
+      path: 'currentScaleBySpeed',
+      name: 'Scale Current Arrow by Speed',
+      description: 'Grow the current arrow with the current speed instead of drawing it at a fixed size',
+      defaultValue: false,
+      showIf: (opts) => !!opts.currentSpdField,
+    })
+    .addNumberInput({
+      path: 'currentScaleMaxSpd',
+      name: 'Current Speed at Full Size',
+      description:
+        'Current speed (in the Current UOM) at which the arrow reaches its largest size, just inside the tick marks. Faster currents are drawn at that same size.',
+      defaultValue: 3,
+      settings: { min: 0 },
+      showIf: (opts) => !!opts.currentSpdField && !!opts.currentScaleBySpeed,
+    })
     .addColorPicker({
       path: 'textColor',
       name: 'Text Color',

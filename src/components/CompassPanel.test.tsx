@@ -218,6 +218,75 @@ describe('CompassPanel water current', () => {
     expect(screen.getByTestId('compass-arrow-current').querySelector('g')!.getAttribute('opacity')).toBe('0.4');
   });
 
+  describe('scaling by speed', () => {
+    const scaleOptions: Partial<SimpleOptions> = {
+      ...currentOptions,
+      currentScaleBySpeed: true,
+      currentScaleMaxSpd: 3,
+    };
+    const arrowGroup = () => screen.getByTestId('compass-arrow-current').querySelector('g')!;
+    const scaleOf = () => Number(/scale\(([^)]+)\)/.exec(arrowGroup().getAttribute('transform') ?? '')![1]);
+
+    it('does not scale the arrow unless enabled', () => {
+      const props = makeProps({ fields: { heading: [0], currentDir: [0], currentSpd: [3] }, options: currentOptions });
+      render(<CompassPanel {...props} />);
+
+      expect(arrowGroup().getAttribute('transform')).toBeNull();
+    });
+
+    it('shrinks the arrow when the current is slack', () => {
+      const props = makeProps({ fields: { heading: [0], currentDir: [0], currentSpd: [0] }, options: scaleOptions });
+      render(<CompassPanel {...props} />);
+
+      expect(scaleOf()).toBeCloseTo(0.4);
+    });
+
+    it('grows with speed', () => {
+      const slow = makeProps({ fields: { heading: [0], currentDir: [0], currentSpd: [1] }, options: scaleOptions });
+      const { unmount } = render(<CompassPanel {...slow} />);
+      const slowScale = scaleOf();
+      unmount();
+
+      const fast = makeProps({ fields: { heading: [0], currentDir: [0], currentSpd: [2] }, options: scaleOptions });
+      render(<CompassPanel {...fast} />);
+      expect(scaleOf()).toBeGreaterThan(slowScale);
+    });
+
+    it.each([3, 50])('never reaches the major tick marks (speed %d, limit 3)', (spd) => {
+      const props = makeProps({ fields: { heading: [0], currentDir: [0], currentSpd: [spd] }, options: scaleOptions });
+      const { container } = render(<CompassPanel {...props} />);
+
+      const extent =
+        scaleOf() *
+        Math.max(
+          ...arrowGroup()
+            .querySelector('polygon')!
+            .getAttribute('points')!
+            .split(' ')
+            .map((p) => Math.hypot(...p.split(',').map(Number)))
+        );
+
+      // Major ticks are the thickest tick lines; their inner end is the closest any tick gets.
+      const ticks = Array.from(container.querySelectorAll('[data-testid="compass-dial"] line'));
+      const majorWidth = Math.max(...ticks.map((l) => Number(l.getAttribute('stroke-width'))));
+      const tickInner = Math.min(
+        ...ticks
+          .filter((l) => Number(l.getAttribute('stroke-width')) === majorWidth)
+          .map((l) => Math.hypot(Number(l.getAttribute('x2')), Number(l.getAttribute('y2'))))
+      );
+
+      expect(extent).toBeLessThan(tickInner);
+      expect(extent).toBeGreaterThan(tickInner * 0.9);
+    });
+
+    it('draws the arrow at normal size when the speed is missing', () => {
+      const props = makeProps({ fields: { heading: [0], currentDir: [0], currentSpd: [] }, options: scaleOptions });
+      render(<CompassPanel {...props} />);
+
+      expect(scaleOf()).toBe(1);
+    });
+  });
+
   it('centers the current arrow on the needle pivot', () => {
     const props = makeProps({ fields: { heading: [0], currentDir: [0] }, options: currentOptions });
     render(<CompassPanel {...props} />);

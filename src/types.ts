@@ -6,6 +6,11 @@ export interface SimpleOptions {
   apparentWindSpdField?: string;
   apparentWindDirField?: string;
   apparentWindSpdUom?: string;
+  currentDirField?: string;
+  currentSpdField?: string;
+  currentSpdUom?: string;
+  currentScaleBySpeed?: boolean;
+  currentScaleMaxSpd?: number;
   textColor?: string;
   needleColor?: string;
   tailColor?: string;
@@ -13,6 +18,8 @@ export interface SimpleOptions {
   bezelColor?: string;
   trueWindColor?: string;
   apparentWindColor?: string;
+  currentColor?: string;
+  currentOpacity?: number;
   showLabels?: boolean;
   showHeadingValue?: boolean;
 

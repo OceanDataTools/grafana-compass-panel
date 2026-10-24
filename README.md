@@ -8,7 +8,7 @@
 
 **Compass** is a Grafana visualization plugin for displaying heading or orientation data on a compass dial.  
 It is especially useful for ship navigation, robotics, UAVs, or any time-series data representing direction in degrees (0–360).
-Optionally the panel can display true and/or apparent wind angle.
+Optionally the panel can display true and/or apparent wind angle, and water current set and drift.
 
 ![Compass with Wind Indicators Example](https://raw.githubusercontent.com/OceanDataTools/grafana-compass-panel/main/src/screenshots/wind-with-spd.png)
 
@@ -36,6 +36,7 @@ Optionally the panel can display true and/or apparent wind angle.
 - Optional indicator and numeric heading for apparent wind direction.
 - Optional numeric display for true wind speed.
 - Optional numeric display for apparent wind speed.
+- Optional indicator and numeric readout for water current set (direction) and drift (speed).
 
 ---
 
@@ -57,6 +58,8 @@ Optionally the panel can display true and/or apparent wind angle.
 - **Truewind Velocity Field**: Select the numeric field in your series that represents truewind velocity in degrees.
 - **Apparent wind Direction Field**: Select the numeric field in your series that represents apparent wind angle, **relative to the ship's bow** (0-360°, as read directly off a wind vane/anemometer). This is *not* an absolute compass bearing — a rotational wind sensor can only measure angle relative to the bow it's mounted on, so the panel combines it with the Heading Field to compute the wind's true position on the compass. If your data source already outputs an absolute apparent wind direction (e.g. some chartplotters/NMEA multiplexers compute this for you), subtract the heading from it upstream to get a bow-relative angle before wiring it in here.
 - **Apparent wind Velocity Field**: Select the numeric field in your series that represents apparent wind velocity in degrees.
+- **Current Set (Direction) Field**: Select the numeric field in your series that represents the water current set, as an **absolute compass bearing the current is flowing toward** (0-360°). Note this is the opposite of the wind convention: wind direction is where the wind comes *from*, current set is where the water is going *to*. The current arrow uses the same notched shape as the wind arrows, drawn centered on the needle's pivot and pointing toward the set bearing, while wind arrows point inward from the direction the wind is coming from.
+- **Current Drift (Speed) Field**: Select the numeric field in your series that represents the water current drift (speed).
 
 ### Display Options
 
@@ -64,6 +67,9 @@ Optionally the panel can display true and/or apparent wind angle.
 - **Show Numeric Heading**: Display a numeric degree readout below the compass.
 - **Truewind Velocity UOM**: Select the unit of measure for the truewind.
 - **Apparent wind Velocity UOM**: Select the unit of measure for the apparent wind.
+- **Current UOM**: Select the unit of measure for the water current drift (kts, m/s, cm/s, kph).
+- **Scale Current Arrow by Speed**: Grow the current arrow with the current drift instead of drawing it at a fixed size. It shrinks to 40% of its normal size in slack water and grows to its largest size — just inside the tick marks and cardinal labels, so it never covers them — at the speed set below.
+- **Current Speed at Full Size**: Shown when scaling is enabled. The drift (in the Current UOM) at which the arrow reaches its largest size; faster currents are drawn at that same size. Default 3.
 - **Rotation Mode**: Select to rotate the needle (North up) or rotate the dial (Bow up).
 - **Animation Duration (ms)**: How long needle/dial/wind-arrow rotations take to animate (default 600ms). Lower this, or set it to 0 to disable animation, for high-frequency live data (e.g. Grafana Live streams updating tens of times per second) where the default speed lags behind incoming updates.
 
@@ -94,6 +100,8 @@ Optionally the panel can display true and/or apparent wind angle.
 - **Text Color** – Color of labels, ticks, numeric heading.
 - **True Wind Color**: Color of the true wind indicator and labels.
 - **Apparent Wind Color**: Color of the apparent wind indicator and labels.
+- **Current Color**: Color of the water current indicator and labels.
+- **Current Arrow Opacity**: Opacity of the water current arrow (0–1, default 0.85), so the needle underneath it stays visible.
 
 ---
 

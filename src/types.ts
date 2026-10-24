@@ -17,6 +17,7 @@ export interface SimpleOptions {
   trueWindColor?: string;
   apparentWindColor?: string;
   currentColor?: string;
+  currentOpacity?: number;
   showLabels?: boolean;
   showHeadingValue?: boolean;
 

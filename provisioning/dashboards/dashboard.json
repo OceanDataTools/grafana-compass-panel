@@ -1380,7 +1380,8 @@
         "currentColor": "green",
         "currentDirField": "F-series",
         "currentSpdField": "G-series",
-        "currentSpdUom": "cm/s"
+        "currentSpdUom": "cm/s",
+        "currentOpacity": 1
       },
       "pluginVersion": "2.1.3",
       "targets": [
@@ -1464,7 +1465,8 @@
         "currentColor": "green",
         "currentDirField": "F-series",
         "currentSpdField": "G-series",
-        "currentSpdUom": "cm/s"
+        "currentSpdUom": "cm/s",
+        "currentOpacity": 1
       },
       "pluginVersion": "2.1.3",
       "targets": [
@@ -1548,7 +1550,8 @@
         "currentColor": "green",
         "currentDirField": "F-series",
         "currentSpdField": "G-series",
-        "currentSpdUom": "cm/s"
+        "currentSpdUom": "cm/s",
+        "currentOpacity": 1
       },
       "pluginVersion": "2.1.3",
       "targets": [
@@ -1672,7 +1675,8 @@
         "currentColor": "green",
         "currentDirField": "F-series",
         "currentSpdField": "G-series",
-        "currentSpdUom": "cm/s"
+        "currentSpdUom": "cm/s",
+        "currentOpacity": 0.6
       },
       "pluginVersion": "2.1.3",
       "targets": [

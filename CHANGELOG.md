@@ -18,7 +18,8 @@ or need to act on — e.g. a new minimum supported Grafana version.
   pointing toward the set bearing (oceanographic "flowing to" convention,
   unlike wind's "coming from"),
   with set/drift readouts in the top-left corner. Works with or without the
-  wind overlays, in both rotation modes. (#39)
+  wind overlays, in both rotation modes. The arrow's opacity is adjustable
+  so the needle underneath stays visible. (#39)
 
 ## 2.2.0 - 2026-09-12
 

@@ -15,7 +15,7 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
       path: 'trueWindDirField',
       name: 'Truewind Direction Field',
       description:
-        'Select which field contains the true wind direction, as an absolute compass bearing (0-360°, independent of the ship\'s heading)',
+        "Select which field contains the true wind direction, as an absolute compass bearing (0-360°, independent of the ship's heading)",
       defaultValue: '',
     })
     .addFieldNamePicker({
@@ -44,7 +44,7 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
       path: 'apparentWindDirField',
       name: 'Apparent wind Direction Field',
       description:
-        'Select which field contains the apparent wind angle, relative to the ship\'s bow (0-360°, as read directly off a wind vane/anemometer) — NOT an absolute compass bearing',
+        "Select which field contains the apparent wind angle, relative to the ship's bow (0-360°, as read directly off a wind vane/anemometer) — NOT an absolute compass bearing",
       defaultValue: '',
     })
     .addFieldNamePicker({
@@ -169,6 +169,16 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
       defaultValue: 'green',
       showIf: (opts) => opts.currentDirField !== '',
       settings: { showAlpha: true, mode: 'hue' },
+    })
+    .addSliderInput({
+      path: 'currentOpacity',
+      name: 'Current Arrow Opacity',
+      category: ['Coloring'],
+      description:
+        'Opacity of the water current arrow, so the needle underneath stays visible (0 = transparent, 1 = opaque)',
+      defaultValue: 1,
+      showIf: (opts) => opts.currentDirField !== '',
+      settings: { min: 0, max: 1, step: 0.05 },
     })
     .addBooleanSwitch({
       path: 'showLabels',

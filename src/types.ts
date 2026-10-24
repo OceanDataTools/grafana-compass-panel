@@ -6,6 +6,9 @@ export interface SimpleOptions {
   apparentWindSpdField?: string;
   apparentWindDirField?: string;
   apparentWindSpdUom?: string;
+  currentDirField?: string;
+  currentSpdField?: string;
+  currentSpdUom?: string;
   textColor?: string;
   needleColor?: string;
   tailColor?: string;
@@ -13,6 +16,7 @@ export interface SimpleOptions {
   bezelColor?: string;
   trueWindColor?: string;
   apparentWindColor?: string;
+  currentColor?: string;
   showLabels?: boolean;
   showHeadingValue?: boolean;
 

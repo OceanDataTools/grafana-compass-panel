@@ -69,6 +69,35 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
       },
       showIf: (opts) => opts.apparentWindSpdField !== '',
     })
+    .addFieldNamePicker({
+      path: 'currentDirField',
+      name: 'Current Set (Direction) Field',
+      description:
+        'Select which field contains the water current set — the absolute compass bearing (0-360°) the current is flowing TOWARD (the opposite of the wind\'s "from" convention)',
+      defaultValue: '',
+    })
+    .addFieldNamePicker({
+      path: 'currentSpdField',
+      name: 'Current Drift (Speed) Field',
+      description: 'Select which field contains the water current drift (speed) value',
+      defaultValue: '',
+      showIf: (opts) => opts.currentDirField !== '',
+    })
+    .addSelect({
+      path: 'currentSpdUom',
+      name: 'Current UOM',
+      description: 'Select the water current speed unit of measure',
+      defaultValue: 'kts',
+      settings: {
+        options: [
+          { value: 'kts', label: 'kts' },
+          { value: 'm/s', label: 'm/s' },
+          { value: 'cm/s', label: 'cm/s' },
+          { value: 'kph', label: 'kph' },
+        ],
+      },
+      showIf: (opts) => opts.currentSpdField !== '',
+    })
     .addColorPicker({
       path: 'textColor',
       name: 'Text Color',
@@ -130,6 +159,15 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
       description: 'Color of the ship profile',
       defaultValue: 'yellow',
       showIf: (opts) => opts.apparentWindDirField !== '',
+      settings: { showAlpha: true, mode: 'hue' },
+    })
+    .addColorPicker({
+      path: 'currentColor',
+      name: 'Current Color',
+      category: ['Coloring'],
+      description: 'Color of the water current indicator and labels',
+      defaultValue: 'green',
+      showIf: (opts) => opts.currentDirField !== '',
       settings: { showAlpha: true, mode: 'hue' },
     })
     .addBooleanSwitch({

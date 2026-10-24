@@ -118,3 +118,104 @@ describe('CompassPanel needle shapes', () => {
     expect(screen.getByTestId('compass-needle').querySelector(`[data-testid="${testId}"]`)).not.toBeNull();
   });
 });
+
+describe('CompassPanel water current', () => {
+  const currentOptions: Partial<SimpleOptions> = {
+    currentDirField: 'currentDir',
+    currentSpdField: 'currentSpd',
+    currentSpdUom: 'cm/s',
+  };
+
+  it('renders nothing current-related when no current field is configured', () => {
+    const props = makeProps({ fields: { heading: [90], currentDir: [45] } });
+    render(<CompassPanel {...props} />);
+
+    expect(screen.queryByTestId('compass-arrow-current')).toBeNull();
+    expect(screen.queryByTestId('currentrose-numeric-current-dir')).toBeNull();
+    expect(screen.queryByTestId('currentrose-numeric-current-spd')).toBeNull();
+  });
+
+  it('renders the current arrow and readouts without any wind configured', () => {
+    const props = makeProps({
+      fields: { heading: [90], currentDir: [45], currentSpd: [12.5] },
+      options: currentOptions,
+    });
+    render(<CompassPanel {...props} />);
+
+    expect(screen.getByTestId('compass-arrow-current').querySelector('polygon')).not.toBeNull();
+    expect(screen.getByTestId('currentrose-numeric-current-dir')).toHaveTextContent('45°');
+    expect(screen.getByTestId('currentrose-numeric-current-spd')).toHaveTextContent('12.50 cm/s');
+    expect(screen.queryByTestId('compass-arrow-truewind')).toBeNull();
+  });
+
+  it('renders current alongside true and apparent wind', () => {
+    const props = makeProps({
+      fields: { heading: [90], currentDir: [45], currentSpd: [1], trueWindDir: [170], apparentWindDir: [80] },
+      options: { ...currentOptions, trueWindDirField: 'trueWindDir', apparentWindDirField: 'apparentWindDir' },
+    });
+    render(<CompassPanel {...props} />);
+
+    expect(screen.getByTestId('compass-arrow-current')).toBeInTheDocument();
+    expect(screen.getByTestId('compass-arrow-truewind')).toBeInTheDocument();
+    expect(screen.getByTestId('compass-arrow-apparentwind')).toBeInTheDocument();
+    expect(screen.getByTestId('currentrose-numeric-current-dir')).toHaveTextContent('45°');
+    expect(screen.getByTestId('windrose-numeric-truewind-dir')).toHaveTextContent('170°');
+  });
+
+  it('draws the current set as an earth-referenced bearing in both rotation modes', () => {
+    const northUp = makeProps({
+      fields: { heading: [90], currentDir: [45] },
+      options: { ...currentOptions, rotationMode: 'rotate-needle' },
+    });
+    const { unmount } = render(<CompassPanel {...northUp} />);
+    expect(screen.getByTestId('compass-arrow-current').getAttribute('transform')).toBe('rotate(45)');
+    unmount();
+
+    const bowUp = makeProps({
+      fields: { heading: [90], currentDir: [45] },
+      options: { ...currentOptions, rotationMode: 'rotate-dial' },
+    });
+    render(<CompassPanel {...bowUp} />);
+    expect(screen.getByTestId('compass-arrow-current').getAttribute('transform')).toBe('rotate(-45)');
+  });
+
+  it('points the current arrow outward (toward the set) rather than inward like wind', () => {
+    const props = makeProps({
+      fields: { heading: [0], currentDir: [0], trueWindDir: [0] },
+      options: { ...currentOptions, trueWindDirField: 'trueWindDir' },
+    });
+    render(<CompassPanel {...props} />);
+
+    // Unrotated, "outward" is toward negative y. The current arrow's tip is its
+    // outermost point; the wind arrow's tip is its innermost point.
+    const ys = (testId: string) =>
+      screen
+        .getByTestId(testId)
+        .querySelector('polygon')!
+        .getAttribute('points')!
+        .split(' ')
+        .map((p) => Number(p.split(',')[1]));
+    const tipY = (testId: string) => ys(testId)[testId === 'compass-arrow-current' ? 3 : 0];
+
+    expect(tipY('compass-arrow-current')).toBe(Math.min(...ys('compass-arrow-current')));
+    expect(tipY('compass-arrow-truewind')).toBe(Math.max(...ys('compass-arrow-truewind')));
+  });
+
+  it('shows "No data" and no rotate(null) when current values are absent', () => {
+    const props = makeProps({ fields: { heading: [90], currentDir: [], currentSpd: [] }, options: currentOptions });
+    const { container } = render(<CompassPanel {...props} />);
+
+    expect(container.innerHTML).not.toContain('rotate(null)');
+    expect(screen.getByTestId('compass-arrow-current').querySelector('polygon')).toBeNull();
+    expect(screen.getByTestId('currentrose-numeric-current-dir')).toHaveTextContent('No data');
+    expect(screen.getByTestId('currentrose-numeric-current-spd')).toHaveTextContent('No data');
+  });
+
+  it('renders 0 drift instead of "No data"', () => {
+    const props = makeProps({ fields: { heading: [90], currentDir: [0], currentSpd: [0] }, options: currentOptions });
+    render(<CompassPanel {...props} />);
+
+    expect(screen.getByTestId('currentrose-numeric-current-dir')).toHaveTextContent('0°');
+    expect(screen.getByTestId('currentrose-numeric-current-spd')).toHaveTextContent('0.00 cm/s');
+  });
+});

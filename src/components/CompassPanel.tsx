@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { PanelProps } from '@grafana/data';
 import { useTheme } from '@grafana/ui';
 import { PanelDataErrorView } from '@grafana/runtime';
@@ -15,6 +15,7 @@ import {
   SvgNeedle,
   PngNeedle,
 } from './needles';
+import { VectorOverlay, useUnwrappedAngle, normalizeDegrees, overlayRotation, computeLayout } from './vectorOverlays';
 
 export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
   data,
@@ -25,9 +26,9 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
   id,
 }) => {
   const size = Math.min(width, height);
-  const showWindSpd = options.apparentWindSpdField || options.trueWindSpdField;
-  const radius = showWindSpd ? (size / 2) * 0.925 : size / 2;
-  const h_offset = showWindSpd ? size * 0.0375 : 0;
+  const rowsBelow = options.apparentWindSpdField || options.trueWindSpdField ? 1 : 0;
+  const rowsAbove = options.currentSpdField ? 1 : 0;
+  const { radius, hOffset: h_offset } = computeLayout(size, rowsAbove, rowsBelow);
 
   const theme = useTheme();
 
@@ -50,62 +51,14 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
 
   const heading = extractLatest(options.headingField) ?? null;
   const trueWindDir = extractLatest(options.trueWindDirField) ?? null;
-  const trueWindSpd = extractLatest(options.trueWindSpdField) ?? null;
   const apparentWindDir = extractLatest(options.apparentWindDirField) ?? null;
-  const apparentWindSpd = extractLatest(options.apparentWindSpdField) ?? null;
+  const currentDir = extractLatest(options.currentDirField) ?? null;
 
   // === Smooth direction interpolation ===
-  const [displayHeading, setDisplayHeading] = useState(heading);
-  const cumulativeHeadingRef = useRef(heading);
-
-  const [displayTruewind, setDisplayTruewind] = useState(trueWindDir);
-  const cumulativeTruewindRef = useRef(trueWindDir);
-
-  const [displayApparent, setDisplayApparent] = useState(apparentWindDir);
-  const cumulativeApparentRef = useRef(apparentWindDir);
-
-  function unwrapAngle(prev: number | null, raw: number | null): number | null {
-    // Initialize on first reading
-    if (prev == null) {
-      return raw;
-    }
-
-    if (raw == null) {
-      return null;
-    }
-
-    let delta = raw - (prev % 360);
-
-    if (delta > 180) {
-      delta -= 360;
-    }
-    if (delta < -180) {
-      delta += 360;
-    }
-
-    return prev + delta;
-  }
-
-  useEffect(() => {
-    const prev = cumulativeHeadingRef.current;
-    const next = unwrapAngle(prev, heading);
-    cumulativeHeadingRef.current = next;
-    setDisplayHeading(next);
-  }, [heading]);
-
-  useEffect(() => {
-    const prev = cumulativeTruewindRef.current;
-    const next = unwrapAngle(prev, trueWindDir);
-    cumulativeTruewindRef.current = next;
-    setDisplayTruewind(next);
-  }, [trueWindDir]);
-
-  useEffect(() => {
-    const prev = cumulativeApparentRef.current;
-    const next = unwrapAngle(prev, apparentWindDir);
-    cumulativeApparentRef.current = next;
-    setDisplayApparent(next);
-  }, [apparentWindDir]);
+  const displayHeading = useUnwrappedAngle(heading);
+  const displayTruewind = useUnwrappedAngle(trueWindDir);
+  const displayApparent = useUnwrappedAngle(apparentWindDir);
+  const displayCurrent = useUnwrappedAngle(currentDir);
 
   // === Colors ===
   const colors = {
@@ -116,6 +69,74 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
     bezel: theme.visualization.getColorByName(options.bezelColor || '#c6c6c6'),
     trueWind: theme.visualization.getColorByName(options.trueWindColor || 'blue'),
     apparentWind: theme.visualization.getColorByName(options.apparentWindColor || 'yellow'),
+    current: theme.visualization.getColorByName(options.currentColor || 'green'),
+  };
+
+  // === Vector overlays (wind, current) ===
+  // Drawn in this order, so later entries sit on top.
+  const overlays: VectorOverlay[] = [
+    {
+      key: 'current',
+      label: 'C',
+      color: colors.current,
+      reference: 'true',
+      convention: 'to',
+      dirField: options.currentDirField,
+      spdField: options.currentSpdField,
+      spdUom: options.currentSpdUom,
+      dir: currentDir,
+      spd: extractLatest(options.currentSpdField) ?? null,
+      displayDir: displayCurrent,
+      testIds: {
+        arrow: 'compass-arrow-current',
+        dir: 'currentrose-numeric-current-dir',
+        spd: 'currentrose-numeric-current-spd',
+      },
+    },
+    {
+      key: 'apparentWind',
+      label: 'A',
+      color: colors.apparentWind,
+      reference: 'relative',
+      convention: 'from',
+      dirField: options.apparentWindDirField,
+      spdField: options.apparentWindSpdField,
+      spdUom: options.apparentWindSpdUom,
+      dir: apparentWindDir,
+      spd: extractLatest(options.apparentWindSpdField) ?? null,
+      displayDir: displayApparent,
+      testIds: {
+        arrow: 'compass-arrow-apparentwind',
+        dir: 'windrose-numeric-apparent-dir',
+        spd: 'windrose-numeric-apparentwind-spd',
+      },
+    },
+    {
+      key: 'trueWind',
+      label: 'T',
+      color: colors.trueWind,
+      reference: 'true',
+      convention: 'from',
+      dirField: options.trueWindDirField,
+      spdField: options.trueWindSpdField,
+      spdUom: options.trueWindSpdUom,
+      dir: trueWindDir,
+      spd: extractLatest(options.trueWindSpdField) ?? null,
+      displayDir: displayTruewind,
+      testIds: {
+        arrow: 'compass-arrow-truewind',
+        dir: 'windrose-numeric-truewind-dir',
+        spd: 'windrose-numeric-truewind-spd',
+      },
+    },
+  ];
+
+  // Readout placement per overlay (also their render order): wind in the bottom corners,
+  // current in the top-left.
+  const readoutLayout: Record<string, { x: number; dirY: number; spdY: number; anchor: 'start' | 'end' }> = {
+    trueWind: { x: -radius, dirY: radius * 0.95, spdY: radius * 1.1, anchor: 'start' },
+    apparentWind: { x: radius, dirY: radius * 0.95, spdY: radius * 1.1, anchor: 'end' },
+    current: { x: -radius, dirY: -radius * 0.84, spdY: -radius * 0.99, anchor: 'start' },
   };
 
   // === Helpers ===
@@ -144,7 +165,8 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
       );
     });
 
-  // === Wind arrows ===
+  // === Overlay arrows ===
+  // 'from' arrows sit at the rim and point inward, toward where the flow is going.
   const renderWindArrow = (angleDeg: number, color: string, label: string) => {
     const rOuter = radius * 0.9;
     const rNotch = radius * 0.85;
@@ -166,6 +188,49 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
           fill={color}
           stroke={colors.text}
         />
+        <text
+          x={pText.x}
+          y={pText.y + radius * 0.025}
+          fontFamily="system-ui, sans-serif"
+          fontSize={radius * 0.075}
+          fill={colors.text}
+          textAnchor="middle"
+          fontWeight="600"
+        >
+          {label}
+        </text>
+      </g>
+    );
+  };
+
+  // 'to' arrows start near the center and point outward, toward where the flow is going.
+  const renderCurrentArrow = (angleDeg: number, color: string, label: string) => {
+    const rTip = radius * 0.9;
+    const rHeadBase = radius * 0.66;
+    const rTail = radius * 0.4;
+    const rText = radius * 0.73;
+    const headHalfWidth = radius * 0.11;
+    const shaftHalfWidth = radius * 0.03;
+
+    const angleRad = (angleDeg * Math.PI) / 180;
+    const along = (r: number, offset: number) => {
+      const p = polarToCartesian(r, angleRad);
+      return { x: p.x + offset * Math.cos(angleRad), y: p.y + offset * Math.sin(angleRad) };
+    };
+    const points = [
+      along(rTail, -shaftHalfWidth),
+      along(rHeadBase, -shaftHalfWidth),
+      along(rHeadBase, -headHalfWidth),
+      along(rTip, 0),
+      along(rHeadBase, headHalfWidth),
+      along(rHeadBase, shaftHalfWidth),
+      along(rTail, shaftHalfWidth),
+    ];
+    const pText = polarToCartesian(rText, angleRad);
+
+    return (
+      <g>
+        <polygon points={points.map((p) => `${p.x},${p.y}`).join(' ')} fill={color} stroke={colors.text} />
         <text
           x={pText.x}
           y={pText.y + radius * 0.025}
@@ -271,31 +336,27 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
           {renderTicks(8, 0.72, 0.86, (i) => !!options.showLabels && [0, 2, 4, 6].includes(i), colors.text, 0.02)}
         </g>
 
-        {/* Wind arrows */}
-        {options.apparentWindDirField && (
-          <g
-            transform={
-              options.rotationMode !== 'rotate-dial' && displayHeading !== null && displayApparent !== null
-                ? `rotate(${displayApparent + displayHeading})`
-                : `rotate(${displayApparent ?? 0})`
-            }
-            style={transitionStyle}
-          >
-            {options.apparentWindDirField && apparentWindDir !== null && renderWindArrow(0, colors.apparentWind, 'A')}
-          </g>
-        )}
-
-        {options.trueWindDirField && (
-          <g
-            transform={
-              options.rotationMode === 'rotate-dial' && displayHeading !== null && displayTruewind !== null
-                ? `rotate(${displayTruewind - displayHeading})`
-                : `rotate(${displayTruewind ?? 0})`
-            }
-            style={transitionStyle}
-          >
-            {options.trueWindDirField && trueWindDir !== null && renderWindArrow(0, colors.trueWind, 'T')}
-          </g>
+        {/* Overlay arrows */}
+        {overlays.map(
+          (o) =>
+            o.dirField && (
+              <g
+                key={o.key}
+                transform={`rotate(${overlayRotation(
+                  o.displayDir,
+                  displayHeading,
+                  o.reference,
+                  options.rotationMode
+                )})`}
+                style={transitionStyle}
+                data-testid={o.testIds.arrow}
+              >
+                {o.dir !== null &&
+                  (o.convention === 'to'
+                    ? renderCurrentArrow(0, o.color, o.label)
+                    : renderWindArrow(0, o.color, o.label))}
+              </g>
+            )
         )}
 
         {/* Numeric heading */}
@@ -314,65 +375,32 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
           </text>
         )}
 
-        {options.showHeadingValue && options.trueWindDirField && (
-          <text
-            x={-radius}
-            y={radius * 0.95}
-            fontFamily="system-ui, sans-serif"
-            fontSize={radius * 0.15}
-            fill={colors.trueWind}
-            textAnchor="start"
-            fontWeight="600"
-            data-testid="windrose-numeric-truewind-dir"
-          >
-            {trueWindDir !== null ? `${Math.round(((trueWindDir % 360) + 360) % 360)}°` : 'No data'}
-          </text>
-        )}
-
-        {options.trueWindSpdField && (
-          <text
-            x={-radius}
-            y={radius * 1.1}
-            fontFamily="system-ui, sans-serif"
-            fontSize={radius * 0.15}
-            fill={colors.trueWind}
-            textAnchor="start"
-            fontWeight="600"
-            data-testid="windrose-numeric-truewind-spd"
-          >
-            {trueWindSpd !== null ? `${trueWindSpd.toFixed(2)} ${options.trueWindSpdUom}` : 'No data'}
-          </text>
-        )}
-
-        {options.showHeadingValue && options.apparentWindDirField && (
-          <text
-            x={radius}
-            y={radius * 0.95}
-            fontFamily="system-ui, sans-serif"
-            fontSize={radius * 0.15}
-            fill={colors.apparentWind}
-            textAnchor="end"
-            fontWeight="600"
-            data-testid="windrose-numeric-apparent-dir"
-          >
-            {apparentWindDir !== null ? `${Math.round(((apparentWindDir % 360) + 360) % 360)}°` : 'No data'}
-          </text>
-        )}
-
-        {options.apparentWindSpdField && (
-          <text
-            x={radius}
-            y={radius * 1.1}
-            fontFamily="system-ui, sans-serif"
-            fontSize={radius * 0.15}
-            fill={colors.apparentWind}
-            textAnchor="end"
-            fontWeight="600"
-            data-testid="windrose-numeric-apparentwind-spd"
-          >
-            {apparentWindSpd !== null ? `${apparentWindSpd.toFixed(2)} ${options.apparentWindSpdUom}` : 'No data'}
-          </text>
-        )}
+        {/* Overlay readouts */}
+        {Object.entries(readoutLayout).map(([key, pos]) => {
+          const o = overlays.find((overlay) => overlay.key === key)!;
+          const textProps = {
+            x: pos.x,
+            fontFamily: 'system-ui, sans-serif',
+            fontSize: radius * 0.15,
+            fill: o.color,
+            textAnchor: pos.anchor,
+            fontWeight: '600',
+          };
+          return (
+            <React.Fragment key={o.key}>
+              {options.showHeadingValue && o.dirField && (
+                <text {...textProps} y={pos.dirY} data-testid={o.testIds.dir}>
+                  {o.dir !== null ? `${Math.round(normalizeDegrees(o.dir))}°` : 'No data'}
+                </text>
+              )}
+              {o.spdField && (
+                <text {...textProps} y={pos.spdY} data-testid={o.testIds.spd}>
+                  {o.spd !== null ? `${o.spd.toFixed(2)} ${o.spdUom}` : 'No data'}
+                </text>
+              )}
+            </React.Fragment>
+          );
+        })}
       </g>
     </svg>
   );

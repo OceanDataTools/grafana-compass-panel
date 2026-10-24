@@ -24,7 +24,8 @@ or need to act on — e.g. a new minimum supported Grafana version.
   tick marks. (#39)
 - Custom SVG/PNG needles get a size multiplier and a pivot option (center, for
   vehicle icons that spin in place, or bottom center, for clock-hand style
-  images). Custom SVG needles also accept raw `<svg>` markup. (#37)
+  images). The size is capped so the needle never extends past the dial face.
+  Custom SVG needles also accept raw `<svg>` markup. (#37)
 
 ### Fixed
 

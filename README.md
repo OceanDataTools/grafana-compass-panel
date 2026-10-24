@@ -92,7 +92,7 @@ Optionally the panel can display true and/or apparent wind angle, and water curr
 - **Tail Color**: Color of the tail (for the default needle).
 - **Custom SVG**: URL, data URI (e.g. `data:image/svg+xml;base64,...`), or raw `<svg>` markup for your own SVG. If the SVG has a `width`/`height` but no `viewBox`, the panel adds one so the image scales instead of stretching.
 - **Custom PNG**: Path/URL to your own PNG asset.
-- **Custom Needle Size**: Size multiplier for a custom SVG/PNG needle (0.1×–3×, default 1×). The image always keeps its aspect ratio.
+- **Custom Needle Size**: Size multiplier for a custom SVG/PNG needle (0.1×–3×, default 1×). The image always keeps its aspect ratio, and is capped so that no part of it extends past the edge of the dial face at any heading — a square icon spinning in place stops growing sooner than a long, thin needle.
 - **Custom Needle Pivot**: Which point of a custom SVG/PNG needle sits on the dial center and rotates in place:
   - `Center` (default) – the image spins in place around its middle, e.g. a top-down vehicle icon. At 1× it spans 1.2× the dial radius.
   - `Bottom center` – the image swings around its bottom edge like a clock hand. At 1× it reaches the major tick marks.

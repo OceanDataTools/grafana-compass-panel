@@ -369,9 +369,66 @@ describe('CompassPanel custom image needles', () => {
 
     const doubled = makeProps({
       fields: { heading: [90] },
-      options: { needleType: 'svg', needleSvg: svg, needleImageSize: 2 },
+      options: { needleType: 'svg', needleSvg: svg, needleImageSize: 0.5 },
     });
     render(<CompassPanel {...doubled} />);
-    expect(imageAttrs('compass-svg-needle').width).toBeCloseTo(normal * 2);
+    expect(imageAttrs('compass-svg-needle').width).toBeCloseTo(normal * 0.5);
+  });
+
+  describe('never extends past the dial face', () => {
+    const dialRadius = (container: HTMLElement) => Number(container.querySelectorAll('circle')[1].getAttribute('r'));
+    const tallSvg = 'data:image/svg+xml;base64,' + Buffer.from('<svg viewBox="0 0 20 100"/>').toString('base64');
+
+    it.each([
+      ['a square SVG spinning in place', { needleType: 'svg', needleSvg: svg }, 'compass-svg-needle', 0.5, 0.5],
+      ['a tall SVG spinning in place', { needleType: 'svg', needleSvg: tallSvg }, 'compass-svg-needle', 0.1, 0.5],
+      [
+        'a tall SVG swinging from its base',
+        { needleType: 'svg', needleSvg: tallSvg, needleImagePivot: 'bottom' },
+        'compass-svg-needle',
+        0.1,
+        1,
+      ],
+      [
+        'a PNG of not-yet-known shape',
+        { needleType: 'png', needlePng: 'data:image/png;base64,AAAA' },
+        'compass-png-needle',
+        0.5,
+        0.5,
+      ],
+    ] as const)('%s at 3x', (_, extra, testId, halfWidthFrac, reachFrac) => {
+      const props = makeProps({ fields: { heading: [90] }, options: { ...extra, needleImageSize: 3 } });
+      const { container } = render(<CompassPanel {...props} />);
+
+      // The drawn image's farthest corner from the pivot, given its share of the box.
+      const { width } = imageAttrs(testId);
+      const reach = Math.hypot(width * halfWidthFrac, width * reachFrac);
+      expect(reach).toBeCloseTo(dialRadius(container));
+    });
+
+    it('lets a tall needle grow longer than a square icon before capping', () => {
+      const tall = makeProps({
+        fields: { heading: [90] },
+        options: { needleType: 'svg', needleSvg: tallSvg, needleImageSize: 3 },
+      });
+      const { unmount } = render(<CompassPanel {...tall} />);
+      const tallSide = imageAttrs('compass-svg-needle').width;
+      unmount();
+
+      const square = makeProps({
+        fields: { heading: [90] },
+        options: { needleType: 'svg', needleSvg: svg, needleImageSize: 3 },
+      });
+      render(<CompassPanel {...square} />);
+      expect(tallSide).toBeGreaterThan(imageAttrs('compass-svg-needle').width);
+    });
+
+    it('leaves the default 1x size uncapped', () => {
+      const props = makeProps({ fields: { heading: [90] }, options: { needleType: 'svg', needleSvg: svg } });
+      render(<CompassPanel {...props} />);
+
+      // 1.2 x radius (200 for a 400px panel).
+      expect(imageAttrs('compass-svg-needle').width).toBeCloseTo(240);
+    });
   });
 });

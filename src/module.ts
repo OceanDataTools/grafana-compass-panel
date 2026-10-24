@@ -245,7 +245,7 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
     .addSliderInput({
       path: 'needleImageSize',
       name: 'Custom Needle Size',
-      description: 'Size multiplier for the custom SVG/PNG needle',
+      description: 'Size multiplier for the custom SVG/PNG needle. It never grows past the edge of the dial face.',
       defaultValue: 1,
       settings: { min: 0.1, max: 3, step: 0.05 },
       showIf: (opts) => opts.needleType === 'svg' || opts.needleType === 'png',

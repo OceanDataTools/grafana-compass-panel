@@ -37,11 +37,34 @@ function addMissingViewBox(svg: string): string {
   return svg.slice(0, root.index) + fixedRoot + svg.slice(root.index + root[0].length);
 }
 
+// The SVG markup behind raw <svg> markup or an SVG data URI; null for URLs.
+function svgMarkup(src: string): string | null {
+  const trimmed = src.trim();
+  return /^(<\?xml|<svg)/i.test(trimmed) ? trimmed : decodeSvgDataUri(trimmed);
+}
+
+// The SVG's intrinsic width/height, from its viewBox or else its width/height
+// attributes. Null when it can't be read (e.g. an SVG loaded from a URL).
+export function svgAspect(src: string): { width: number; height: number } | null {
+  const markup = svgMarkup(src);
+  const root = markup ? /<svg\b[^>]*>/i.exec(markup) : null;
+  if (!root) {
+    return null;
+  }
+  const viewBox = /\bviewBox\s*=\s*["']\s*[-\d.]+[\s,]+[-\d.]+[\s,]+([\d.]+)[\s,]+([\d.]+)\s*["']/i.exec(root[0]);
+  if (viewBox) {
+    return { width: Number(viewBox[1]), height: Number(viewBox[2]) };
+  }
+  const width = /\bwidth\s*=\s*["']\s*([\d.]+)\s*(px)?\s*["']/i.exec(root[0]);
+  const height = /\bheight\s*=\s*["']\s*([\d.]+)\s*(px)?\s*["']/i.exec(root[0]);
+  return width && height ? { width: Number(width[1]), height: Number(height[1]) } : null;
+}
+
 // Accepts a URL, an SVG data URI, or raw <svg> markup, and returns an href that renders
 // the SVG scaled to fit its box. URLs are passed through untouched.
 export function normalizeSvgSource(src: string): string {
   const trimmed = src.trim();
-  const markup = /^(<\?xml|<svg)/i.test(trimmed) ? trimmed : decodeSvgDataUri(trimmed);
+  const markup = svgMarkup(trimmed);
   if (markup === null) {
     return trimmed;
   }

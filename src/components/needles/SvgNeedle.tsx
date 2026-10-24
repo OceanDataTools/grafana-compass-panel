@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { ImageNeedle, ImageNeedlePivot } from './ImageNeedle';
-import { normalizeSvgSource } from './svgSource';
+import { normalizeSvgSource, svgAspect } from './svgSource';
 
 interface SvgNeedleProps {
   radius: number;
@@ -11,5 +11,8 @@ interface SvgNeedleProps {
 
 export const SvgNeedle: React.FC<SvgNeedleProps> = ({ radius, needleSvg, size, pivot }) => {
   const href = useMemo(() => normalizeSvgSource(needleSvg), [needleSvg]);
-  return <ImageNeedle radius={radius} href={href} size={size} pivot={pivot} testId="compass-svg-needle" />;
+  const aspect = useMemo(() => svgAspect(needleSvg), [needleSvg]);
+  return (
+    <ImageNeedle radius={radius} href={href} size={size} pivot={pivot} aspect={aspect} testId="compass-svg-needle" />
+  );
 };

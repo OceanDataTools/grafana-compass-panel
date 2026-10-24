@@ -1333,6 +1333,872 @@
       ],
       "title": "Custom Color Needle",
       "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 18
+      },
+      "id": 23,
+      "options": {
+        "animationDurationMs": 600,
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "",
+        "apparentWindField": "",
+        "apparentWindSpdField": "",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "A-series",
+        "needleColor": "red",
+        "needlePng": "",
+        "needleSvg": "",
+        "needleType": "ship",
+        "rotationMode": "rotate-needle",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "",
+        "trueWindField": "",
+        "trueWindSpdField": "",
+        "trueWindSpdUom": "kts",
+        "currentColor": "green",
+        "currentDirField": "F-series",
+        "currentSpdField": "G-series",
+        "currentSpdUom": "kts",
+        "currentOpacity": 0.85
+      },
+      "pluginVersion": "2.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "A",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "45"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "F",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "200"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "G",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "1.5"
+        }
+      ],
+      "title": "Current - North Up",
+      "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 4,
+        "y": 18
+      },
+      "id": 24,
+      "options": {
+        "animationDurationMs": 600,
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "",
+        "apparentWindField": "",
+        "apparentWindSpdField": "",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "A-series",
+        "needleColor": "red",
+        "needlePng": "",
+        "needleSvg": "",
+        "needleType": "ship",
+        "rotationMode": "rotate-dial",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "",
+        "trueWindField": "",
+        "trueWindSpdField": "",
+        "trueWindSpdUom": "kts",
+        "currentColor": "green",
+        "currentDirField": "F-series",
+        "currentSpdField": "G-series",
+        "currentSpdUom": "kts",
+        "currentOpacity": 0.85
+      },
+      "pluginVersion": "2.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "A",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "45"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "F",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "200"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "G",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "1.5"
+        }
+      ],
+      "title": "Current - Bow Up",
+      "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 8,
+        "y": 18
+      },
+      "id": 25,
+      "options": {
+        "animationDurationMs": 600,
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "C-series",
+        "apparentWindField": "C-series",
+        "apparentWindSpdField": "E-series",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "A-series",
+        "needleColor": "red",
+        "needlePng": "",
+        "needleSvg": "",
+        "needleType": "ship",
+        "rotationMode": "rotate-needle",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "B-series",
+        "trueWindField": "B-series",
+        "trueWindSpdField": "D-series",
+        "trueWindSpdUom": "kts",
+        "currentColor": "green",
+        "currentDirField": "F-series",
+        "currentSpdField": "G-series",
+        "currentSpdUom": "kts",
+        "currentOpacity": 0.85
+      },
+      "pluginVersion": "2.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "A",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "45"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "B",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "150"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "C",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "140"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "D",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "25.014"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "E",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "22.503"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "F",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "200"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "G",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "1.5"
+        }
+      ],
+      "title": "Wind + Current w/spd - North Up",
+      "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 12,
+        "y": 18
+      },
+      "id": 26,
+      "options": {
+        "animationDurationMs": 600,
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "C-series",
+        "apparentWindField": "C-series",
+        "apparentWindSpdField": "E-series",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "A-series",
+        "needleColor": "red",
+        "needlePng": "",
+        "needleSvg": "",
+        "needleType": "ship",
+        "rotationMode": "rotate-dial",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "B-series",
+        "trueWindField": "B-series",
+        "trueWindSpdField": "D-series",
+        "trueWindSpdUom": "kts",
+        "currentColor": "green",
+        "currentDirField": "F-series",
+        "currentSpdField": "G-series",
+        "currentSpdUom": "kts",
+        "currentOpacity": 0.85
+      },
+      "pluginVersion": "2.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "A",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "45"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "B",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "150"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "C",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "140"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "D",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "25.014"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "E",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "22.503"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "F",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "200"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "db84e60d-b92a-4089-82cb-34842fb1754b"
+          },
+          "hide": false,
+          "refId": "G",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "1.5"
+        }
+      ],
+      "title": "Wind + Current w/spd - Bow Up",
+      "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 16,
+        "y": 18
+      },
+      "id": 27,
+      "options": {
+        "animationDurationMs": 600,
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "",
+        "apparentWindField": "",
+        "apparentWindSpdField": "",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "A-series",
+        "needleColor": "red",
+        "needlePng": "",
+        "needleSvg": "",
+        "needleType": "ship",
+        "rotationMode": "rotate-needle",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "",
+        "trueWindField": "",
+        "trueWindSpdField": "",
+        "trueWindSpdUom": "kts",
+        "currentColor": "green",
+        "currentDirField": "current_set",
+        "currentSpdField": "current_drift",
+        "currentSpdUom": "kts",
+        "currentOpacity": 0.85
+      },
+      "pluginVersion": "2.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "trlxrdZVk"
+          },
+          "refId": "A",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "45"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "trlxrdZVk"
+          },
+          "refId": "F",
+          "scenarioId": "simulation",
+          "sim": {
+            "key": {
+              "tick": 1,
+              "type": "sine",
+              "uid": "current"
+            },
+            "stream": true
+          }
+        }
+      ],
+      "title": "Current - Live (changing set & drift)",
+      "type": "oceandatatools-compass-panel",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "binary",
+            "alias": "set_offset",
+            "binary": {
+              "left": "Value",
+              "operator": "*",
+              "right": "30"
+            },
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "binary",
+            "alias": "current_set",
+            "binary": {
+              "left": "set_offset",
+              "operator": "+",
+              "right": "200"
+            },
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "binary",
+            "alias": "current_drift",
+            "binary": {
+              "left": "Value",
+              "operator": "+",
+              "right": "1.5"
+            },
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 20,
+        "y": 18
+      },
+      "id": 28,
+      "options": {
+        "animationDurationMs": 600,
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "",
+        "apparentWindField": "",
+        "apparentWindSpdField": "",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "A-series",
+        "needleColor": "red",
+        "needlePng": "",
+        "needleSvg": "",
+        "needleType": "ship",
+        "rotationMode": "rotate-needle",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "",
+        "trueWindField": "",
+        "trueWindSpdField": "",
+        "trueWindSpdUom": "kts",
+        "currentColor": "green",
+        "currentDirField": "current_set",
+        "currentSpdField": "current_drift",
+        "currentSpdUom": "kts",
+        "currentOpacity": 0.85,
+        "currentScaleBySpeed": true,
+        "currentScaleMaxSpd": 2.5
+      },
+      "pluginVersion": "2.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "trlxrdZVk"
+          },
+          "refId": "A",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "45"
+        },
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "trlxrdZVk"
+          },
+          "refId": "F",
+          "scenarioId": "simulation",
+          "sim": {
+            "key": {
+              "tick": 1,
+              "type": "sine",
+              "uid": "current"
+            },
+            "stream": true
+          }
+        }
+      ],
+      "title": "Current - Live, scaled by speed",
+      "type": "oceandatatools-compass-panel",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "binary",
+            "alias": "set_offset",
+            "binary": {
+              "left": "Value",
+              "operator": "*",
+              "right": "30"
+            },
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "binary",
+            "alias": "current_set",
+            "binary": {
+              "left": "set_offset",
+              "operator": "+",
+              "right": "200"
+            },
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "binary",
+            "alias": "current_drift",
+            "binary": {
+              "left": "Value",
+              "operator": "+",
+              "right": "1.5"
+            },
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 24
+      },
+      "id": 29,
+      "options": {
+        "animationDurationMs": 600,
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "",
+        "apparentWindField": "",
+        "apparentWindSpdField": "",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "A-series",
+        "needleColor": "red",
+        "needlePng": "",
+        "needleSvg": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIj48ZyBzdHJva2U9IiMxZjI5MzciIHN0cm9rZS13aWR0aD0iMTQiIGZpbGw9Im5vbmUiPjxsaW5lIHgxPSIxNDAiIHkxPSIxNDAiIHgyPSIzNzIiIHkyPSIzNzIiLz48bGluZSB4MT0iMzcyIiB5MT0iMTQwIiB4Mj0iMTQwIiB5Mj0iMzcyIi8+PC9nPjxnIGZpbGw9IiM2MGE1ZmEiIGZpbGwtb3BhY2l0eT0iMC42IiBzdHJva2U9IiMxZjI5MzciIHN0cm9rZS13aWR0aD0iOCI+PGNpcmNsZSBjeD0iMTIwIiBjeT0iMTIwIiByPSI4MCIvPjxjaXJjbGUgY3g9IjM5MiIgY3k9IjEyMCIgcj0iODAiLz48Y2lyY2xlIGN4PSIxMjAiIGN5PSIzOTIiIHI9IjgwIi8+PGNpcmNsZSBjeD0iMzkyIiBjeT0iMzkyIiByPSI4MCIvPjwvZz48cmVjdCB4PSIxOTYiIHk9IjE5NiIgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIHJ4PSIyNCIgZmlsbD0iI2VmNDQ0NCIgc3Ryb2tlPSIjMWYyOTM3IiBzdHJva2Utd2lkdGg9IjgiLz48cG9seWdvbiBwb2ludHM9IjI1Niw0MCAyOTYsMTEwIDIxNiwxMTAiIGZpbGw9IiNlZjQ0NDQiIHN0cm9rZT0iIzFmMjkzNyIgc3Ryb2tlLXdpZHRoPSI4Ii8+PC9zdmc+Cg==",
+        "needleType": "svg",
+        "rotationMode": "rotate-needle",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "",
+        "trueWindField": "",
+        "trueWindSpdField": "",
+        "trueWindSpdUom": "kts",
+        "needleImageSize": 1,
+        "needleImagePivot": "center"
+      },
+      "pluginVersion": "2.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "trlxrdZVk"
+          },
+          "refId": "A",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "45"
+        }
+      ],
+      "title": "Custom SVG Needle (no viewBox)",
+      "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 4,
+        "y": 24
+      },
+      "id": 30,
+      "options": {
+        "animationDurationMs": 600,
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "",
+        "apparentWindField": "",
+        "apparentWindSpdField": "",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "A-series",
+        "needleColor": "red",
+        "needlePng": "",
+        "needleSvg": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCAyMDAiPjxwb2x5Z29uIHBvaW50cz0iMjAsMiAzMiwxOTggOCwxOTgiIGZpbGw9IiM3YzNhZWQiIHN0cm9rZT0iIzFmMjkzNyIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PC9zdmc+",
+        "needleType": "svg",
+        "rotationMode": "rotate-needle",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "",
+        "trueWindField": "",
+        "trueWindSpdField": "",
+        "trueWindSpdUom": "kts",
+        "needleImagePivot": "bottom",
+        "needleImageSize": 1
+      },
+      "pluginVersion": "2.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "trlxrdZVk"
+          },
+          "refId": "A",
+          "scenarioId": "csv_metric_values",
+          "stringInput": "45"
+        }
+      ],
+      "title": "Custom SVG Needle - bottom pivot",
+      "type": "oceandatatools-compass-panel"
+    },
+    {
+      "datasource": {
+        "type": "grafana-testdata-datasource",
+        "uid": "trlxrdZVk"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 8,
+        "y": 24
+      },
+      "id": 31,
+      "options": {
+        "animationDurationMs": 600,
+        "apparentWindColor": "yellow",
+        "apparentWindDirField": "",
+        "apparentWindField": "",
+        "apparentWindSpdField": "",
+        "apparentWindSpdUom": "kts",
+        "bezelColor": "#c6c6c6",
+        "dialColor": "white",
+        "headingField": "heading",
+        "needleColor": "red",
+        "needlePng": "data:image/png;base64,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",
+        "needleSvg": "",
+        "needleType": "png",
+        "rotationMode": "rotate-needle",
+        "seriesCountSize": "sm",
+        "showHeadingValue": true,
+        "showLabels": true,
+        "showSeriesCount": false,
+        "tailColor": "gray",
+        "text": "Default value of text input option",
+        "textColor": "#111827",
+        "trueWindColor": "blue",
+        "trueWindDirField": "",
+        "trueWindField": "",
+        "trueWindSpdField": "",
+        "trueWindSpdUom": "kts",
+        "needleImageSize": 1,
+        "needleImagePivot": "center"
+      },
+      "pluginVersion": "2.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-testdata-datasource",
+            "uid": "trlxrdZVk"
+          },
+          "refId": "A",
+          "scenarioId": "simulation",
+          "sim": {
+            "key": {
+              "tick": 1,
+              "type": "flight",
+              "uid": "png-drone"
+            },
+            "stream": true
+          }
+        }
+      ],
+      "title": "Custom PNG Needle - drone, live",
+      "type": "oceandatatools-compass-panel"
     }
   ],
   "preload": false,

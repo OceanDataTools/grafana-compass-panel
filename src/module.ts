@@ -15,7 +15,7 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
       path: 'trueWindDirField',
       name: 'Truewind Direction Field',
       description:
-        'Select which field contains the true wind direction, as an absolute compass bearing (0-360°, independent of the ship\'s heading)',
+        "Select which field contains the true wind direction, as an absolute compass bearing (0-360°, independent of the ship's heading)",
       defaultValue: '',
     })
     .addFieldNamePicker({
@@ -44,7 +44,7 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
       path: 'apparentWindDirField',
       name: 'Apparent wind Direction Field',
       description:
-        'Select which field contains the apparent wind angle, relative to the ship\'s bow (0-360°, as read directly off a wind vane/anemometer) — NOT an absolute compass bearing',
+        "Select which field contains the apparent wind angle, relative to the ship's bow (0-360°, as read directly off a wind vane/anemometer) — NOT an absolute compass bearing",
       defaultValue: '',
     })
     .addFieldNamePicker({
@@ -68,6 +68,51 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
         ],
       },
       showIf: (opts) => opts.apparentWindSpdField !== '',
+    })
+    .addFieldNamePicker({
+      path: 'currentDirField',
+      name: 'Current Set (Direction) Field',
+      description:
+        'Select which field contains the water current set — the absolute compass bearing (0-360°) the current is flowing TOWARD (the opposite of the wind\'s "from" convention)',
+      defaultValue: '',
+    })
+    .addFieldNamePicker({
+      path: 'currentSpdField',
+      name: 'Current Drift (Speed) Field',
+      description: 'Select which field contains the water current drift (speed) value',
+      defaultValue: '',
+      showIf: (opts) => opts.currentDirField !== '',
+    })
+    .addSelect({
+      path: 'currentSpdUom',
+      name: 'Current UOM',
+      description: 'Select the water current speed unit of measure',
+      defaultValue: 'kts',
+      settings: {
+        options: [
+          { value: 'kts', label: 'kts' },
+          { value: 'm/s', label: 'm/s' },
+          { value: 'cm/s', label: 'cm/s' },
+          { value: 'kph', label: 'kph' },
+        ],
+      },
+      showIf: (opts) => opts.currentSpdField !== '',
+    })
+    .addBooleanSwitch({
+      path: 'currentScaleBySpeed',
+      name: 'Scale Current Arrow by Speed',
+      description: 'Grow the current arrow with the current speed instead of drawing it at a fixed size',
+      defaultValue: false,
+      showIf: (opts) => !!opts.currentSpdField,
+    })
+    .addNumberInput({
+      path: 'currentScaleMaxSpd',
+      name: 'Current Speed at Full Size',
+      description:
+        'Current speed (in the Current UOM) at which the arrow reaches its largest size, just inside the tick marks. Faster currents are drawn at that same size.',
+      defaultValue: 3,
+      settings: { min: 0 },
+      showIf: (opts) => !!opts.currentSpdField && !!opts.currentScaleBySpeed,
     })
     .addColorPicker({
       path: 'textColor',
@@ -132,6 +177,25 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
       showIf: (opts) => opts.apparentWindDirField !== '',
       settings: { showAlpha: true, mode: 'hue' },
     })
+    .addColorPicker({
+      path: 'currentColor',
+      name: 'Current Color',
+      category: ['Coloring'],
+      description: 'Color of the water current indicator and labels',
+      defaultValue: 'green',
+      showIf: (opts) => opts.currentDirField !== '',
+      settings: { showAlpha: true, mode: 'hue' },
+    })
+    .addSliderInput({
+      path: 'currentOpacity',
+      name: 'Current Arrow Opacity',
+      category: ['Coloring'],
+      description:
+        'Opacity of the water current arrow, so the needle underneath stays visible (0 = transparent, 1 = opaque)',
+      defaultValue: 0.85,
+      showIf: (opts) => opts.currentDirField !== '',
+      settings: { min: 0, max: 1, step: 0.05 },
+    })
     .addBooleanSwitch({
       path: 'showLabels',
       name: 'Show Cardinal Labels',
@@ -167,7 +231,7 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
     .addTextInput({
       path: 'needleSvg',
       name: 'Custom SVG URL / Base64',
-      description: 'Provide a URL or data URI for a custom SVG needle',
+      description: 'Provide a URL, data URI, or raw <svg> markup for a custom SVG needle',
       defaultValue: '',
       showIf: (opts) => opts.needleType === 'svg',
     })
@@ -177,6 +241,27 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
       description: 'Provide a URL or data URI for a custom PNG needle',
       defaultValue: '',
       showIf: (opts) => opts.needleType === 'png',
+    })
+    .addSliderInput({
+      path: 'needleImageSize',
+      name: 'Custom Needle Size',
+      description: 'Size multiplier for the custom SVG/PNG needle. It never grows past the edge of the dial face.',
+      defaultValue: 1,
+      settings: { min: 0.1, max: 3, step: 0.05 },
+      showIf: (opts) => opts.needleType === 'svg' || opts.needleType === 'png',
+    })
+    .addSelect({
+      path: 'needleImagePivot',
+      name: 'Custom Needle Pivot',
+      description: 'Point of the custom SVG/PNG image that sits on the dial center and rotates in place',
+      defaultValue: 'center',
+      settings: {
+        options: [
+          { value: 'center', label: 'Center', description: 'Spins in place, e.g. a top-down vehicle icon' },
+          { value: 'bottom', label: 'Bottom center', description: 'Swings like a clock hand' },
+        ],
+      },
+      showIf: (opts) => opts.needleType === 'svg' || opts.needleType === 'png',
     })
     .addSelect({
       path: 'rotationMode',

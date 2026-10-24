@@ -8,4 +8,5 @@ export { QuadcopterNeedle } from './QuadcopterNeedle';
 export { ROVNeedle } from './ROVNeedle';
 export { SvgNeedle } from './SvgNeedle';
 export { PngNeedle } from './PngNeedle';
+export type { ImageNeedlePivot } from './ImageNeedle';
 export type { NeedleColors, NeedleProps } from './types';

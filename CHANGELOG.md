@@ -8,6 +8,17 @@ requirements (dependency bumps, CI/build tooling, scaffold syncs) are not
 listed individually here, unless they change something a user would notice
 or need to act on — e.g. a new minimum supported Grafana version.
 
+## Unreleased
+
+### Added
+
+- Optional water current overlay: pick a current set (direction) field and,
+  optionally, a drift (speed) field with its own unit (kts, m/s, cm/s, kph)
+  and color. Current is drawn as an outward-pointing arrow toward the set
+  bearing (oceanographic "flowing to" convention, unlike wind's "coming from"),
+  with set/drift readouts in the top-left corner. Works with or without the
+  wind overlays, in both rotation modes. (#39)
+
 ## 2.2.0 - 2026-09-12
 
 ### Added

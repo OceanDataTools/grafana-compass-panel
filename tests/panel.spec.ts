@@ -46,3 +46,19 @@ test('should display water current alongside true and apparent wind', async ({
   await expect(panel.getByTestId('windrose-numeric-truewind-dir')).toHaveText('150°');
   await expect(panel.getByTestId('windrose-numeric-apparent-dir')).toHaveText('140°');
 });
+
+test('should render a custom SVG needle centered on the dial', async ({
+  gotoPanelEditPage,
+  readProvisionedDashboard,
+}) => {
+  const dashboard = await readProvisionedDashboard({ fileName: 'dashboard.json' });
+  const panelEditPage = await gotoPanelEditPage({ dashboard, id: '29' });
+  const panel = panelEditPage.panel.locator;
+
+  const needle = panel.getByTestId('compass-svg-needle');
+  await expect(needle).toBeVisible();
+  const needleBox = (await needle.boundingBox())!;
+  const dialBox = (await panel.getByTestId('compass-dial').boundingBox())!;
+  expect(needleBox.x + needleBox.width / 2).toBeCloseTo(dialBox.x + dialBox.width / 2, 0);
+  expect(needleBox.y + needleBox.height / 2).toBeCloseTo(dialBox.y + dialBox.height / 2, 0);
+});

@@ -22,6 +22,23 @@ or need to act on — e.g. a new minimum supported Grafana version.
   needle underneath stays visible, and it can optionally scale with the
   current speed up to a configurable limit, without ever covering the dial's
   tick marks. (#39)
+- Custom SVG/PNG needles get a size multiplier and a pivot option (center, for
+  vehicle icons that spin in place, or bottom center, for clock-hand style
+  images). Custom SVG needles also accept raw `<svg>` markup. (#37)
+
+### Fixed
+
+- Custom SVG needles no longer render tiny (they were squeezed into a narrow
+  fixed box) or stretched (SVGs without a `viewBox` now get one added), and
+  custom PNG needles now rotate around the dial center instead of an
+  off-center point. (#37)
+
+### Changed
+
+- Custom SVG/PNG needles are now drawn in a square box that keeps the image's
+  aspect ratio, centered on the dial by default. Existing tall PNG needles
+  render at about the same size; existing SVG needles may render larger — use
+  the new Custom Needle Size option to adjust. (#37)
 
 ## 2.2.0 - 2026-09-12
 

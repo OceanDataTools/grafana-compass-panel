@@ -85,13 +85,17 @@ Optionally the panel can display true and/or apparent wind angle, and water curr
   - `Underwater Drone` - glider-shaped AUV silhouette.
   - `Quadcopter` - four-arm drone frame and rotor silhouette.
   - `ROV` - Remotely Operated Vehicle silhouette.
-  - `Custom SVG` – Load a custom vector (provide URL or relative path)
-  - `Custom PNG` – Load a custom image (provide URL or relative path)
+  - `Custom SVG` – Load a custom vector (provide a URL, relative path, data URI, or raw `<svg>` markup)
+  - `Custom PNG` – Load a custom image (provide a URL, relative path, or data URI)
 
 - **Needle Color**: Color of the primary needle (or the front rotor, for the quadcopter).
 - **Tail Color**: Color of the tail (for the default needle).
-- **Custom SVG**: Path/URL to your own SVG asset.
+- **Custom SVG**: URL, data URI (e.g. `data:image/svg+xml;base64,...`), or raw `<svg>` markup for your own SVG. If the SVG has a `width`/`height` but no `viewBox`, the panel adds one so the image scales instead of stretching.
 - **Custom PNG**: Path/URL to your own PNG asset.
+- **Custom Needle Size**: Size multiplier for a custom SVG/PNG needle (0.1×–3×, default 1×). The image always keeps its aspect ratio.
+- **Custom Needle Pivot**: Which point of a custom SVG/PNG needle sits on the dial center and rotates in place:
+  - `Center` (default) – the image spins in place around its middle, e.g. a top-down vehicle icon. At 1× it spans 1.2× the dial radius.
+  - `Bottom center` – the image swings around its bottom edge like a clock hand. At 1× it reaches the major tick marks.
 
 ### Colors
 

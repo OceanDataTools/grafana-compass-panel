@@ -36,6 +36,8 @@ export interface SimpleOptions {
     | 'png';
   needleSvg?: string;
   needlePng?: string;
+  needleImageSize?: number;
+  needleImagePivot?: 'center' | 'bottom';
 
   rotationMode?: 'rotate-needle' | 'rotate-dial';
 

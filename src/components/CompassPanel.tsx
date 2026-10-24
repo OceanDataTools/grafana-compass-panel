@@ -282,10 +282,24 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
       return <QuadcopterNeedle radius={radius} colors={colors} />;
     }
     if (options.needleType === 'svg' && options.needleSvg) {
-      return <SvgNeedle radius={radius} needleSvg={options.needleSvg} />;
+      return (
+        <SvgNeedle
+          radius={radius}
+          needleSvg={options.needleSvg}
+          size={options.needleImageSize}
+          pivot={options.needleImagePivot}
+        />
+      );
     }
     if (options.needleType === 'png' && options.needlePng) {
-      return <PngNeedle radius={radius} needlePng={options.needlePng} transitionStyle={transitionStyle} />;
+      return (
+        <PngNeedle
+          radius={radius}
+          needlePng={options.needlePng}
+          size={options.needleImageSize}
+          pivot={options.needleImagePivot}
+        />
+      );
     }
     return <DefaultNeedle radius={radius} colors={colors} />;
   };

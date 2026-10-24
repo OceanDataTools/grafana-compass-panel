@@ -231,7 +231,7 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
     .addTextInput({
       path: 'needleSvg',
       name: 'Custom SVG URL / Base64',
-      description: 'Provide a URL or data URI for a custom SVG needle',
+      description: 'Provide a URL, data URI, or raw <svg> markup for a custom SVG needle',
       defaultValue: '',
       showIf: (opts) => opts.needleType === 'svg',
     })
@@ -241,6 +241,27 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
       description: 'Provide a URL or data URI for a custom PNG needle',
       defaultValue: '',
       showIf: (opts) => opts.needleType === 'png',
+    })
+    .addSliderInput({
+      path: 'needleImageSize',
+      name: 'Custom Needle Size',
+      description: 'Size multiplier for the custom SVG/PNG needle',
+      defaultValue: 1,
+      settings: { min: 0.1, max: 3, step: 0.05 },
+      showIf: (opts) => opts.needleType === 'svg' || opts.needleType === 'png',
+    })
+    .addSelect({
+      path: 'needleImagePivot',
+      name: 'Custom Needle Pivot',
+      description: 'Point of the custom SVG/PNG image that sits on the dial center and rotates in place',
+      defaultValue: 'center',
+      settings: {
+        options: [
+          { value: 'center', label: 'Center', description: 'Spins in place, e.g. a top-down vehicle icon' },
+          { value: 'bottom', label: 'Bottom center', description: 'Swings like a clock hand' },
+        ],
+      },
+      showIf: (opts) => opts.needleType === 'svg' || opts.needleType === 'png',
     })
     .addSelect({
       path: 'rotationMode',

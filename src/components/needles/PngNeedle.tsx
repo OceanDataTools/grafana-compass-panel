@@ -1,27 +1,13 @@
 import React from 'react';
+import { ImageNeedle, ImageNeedlePivot } from './ImageNeedle';
 
 interface PngNeedleProps {
   radius: number;
   needlePng: string;
-  transitionStyle: React.CSSProperties;
+  size?: number;
+  pivot?: ImageNeedlePivot;
 }
 
-export const PngNeedle: React.FC<PngNeedleProps> = ({ radius, needlePng, transitionStyle }) => {
-  // Scale PNG relative to the dial radius
-  const pngWidth = 20;
-  const pngHeight = 50;
-  const scale = radius / 42;
-
-  return (
-    <g transform={`scale(${scale})`} style={{ transformOrigin: '0 0', ...transitionStyle }}>
-      <image
-        href={needlePng}
-        x={-pngWidth / 2}
-        y={-pngHeight / 1.7}
-        width={pngWidth}
-        height={pngHeight}
-        data-testid="compass-png-needle"
-      />
-    </g>
-  );
-};
+export const PngNeedle: React.FC<PngNeedleProps> = ({ radius, needlePng, size, pivot }) => (
+  <ImageNeedle radius={radius} href={needlePng} size={size} pivot={pivot} testId="compass-png-needle" />
+);

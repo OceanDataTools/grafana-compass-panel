@@ -99,7 +99,7 @@ Optionally the panel can display true and/or apparent wind angle, and water curr
 - **True Wind Color**: Color of the true wind indicator and labels.
 - **Apparent Wind Color**: Color of the apparent wind indicator and labels.
 - **Current Color**: Color of the water current indicator and labels.
-- **Current Arrow Opacity**: Opacity of the water current arrow (0–1, default 1), so the needle underneath it stays visible.
+- **Current Arrow Opacity**: Opacity of the water current arrow (0–1, default 0.85), so the needle underneath it stays visible.
 
 ---
 

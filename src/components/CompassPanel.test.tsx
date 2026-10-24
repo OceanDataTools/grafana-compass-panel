@@ -201,11 +201,11 @@ describe('CompassPanel water current', () => {
     expect(tipY('compass-arrow-truewind')).toBe(Math.max(...ys('compass-arrow-truewind')));
   });
 
-  it('defaults the current arrow to fully opaque', () => {
+  it('defaults the current arrow to 0.85 opacity', () => {
     const props = makeProps({ fields: { heading: [0], currentDir: [0] }, options: currentOptions });
     render(<CompassPanel {...props} />);
 
-    expect(screen.getByTestId('compass-arrow-current').querySelector('g')!.getAttribute('opacity')).toBe('1');
+    expect(screen.getByTestId('compass-arrow-current').querySelector('g')!.getAttribute('opacity')).toBe('0.85');
   });
 
   it('applies the configured current arrow opacity', () => {

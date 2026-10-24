@@ -221,7 +221,7 @@ export const CompassPanel: React.FC<PanelProps<SimpleOptions>> = ({
     const pText = polarToCartesian(rText, angleRad);
 
     return (
-      <g opacity={options.currentOpacity ?? 1}>
+      <g opacity={options.currentOpacity ?? 0.85}>
         <polygon points={points.map((p) => `${p.x},${p.y}`).join(' ')} fill={color} stroke={colors.text} />
         <text
           x={pText.x}

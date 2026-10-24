@@ -27,7 +27,7 @@ test('should display water current arrow and readouts without wind', async ({
 
   await expect(panel.getByTestId('compass-arrow-current')).toBeVisible();
   await expect(panel.getByTestId('currentrose-numeric-current-dir')).toHaveText('200°');
-  await expect(panel.getByTestId('currentrose-numeric-current-spd')).toHaveText('42.50 cm/s');
+  await expect(panel.getByTestId('currentrose-numeric-current-spd')).toHaveText('1.50 kts');
   await expect(panel.getByTestId('compass-arrow-truewind')).toHaveCount(0);
 });
 

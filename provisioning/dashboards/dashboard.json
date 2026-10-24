@@ -1380,8 +1380,8 @@
         "currentColor": "green",
         "currentDirField": "F-series",
         "currentSpdField": "G-series",
-        "currentSpdUom": "cm/s",
-        "currentOpacity": 1
+        "currentSpdUom": "kts",
+        "currentOpacity": 0.85
       },
       "pluginVersion": "2.1.3",
       "targets": [
@@ -1413,7 +1413,7 @@
           "hide": false,
           "refId": "G",
           "scenarioId": "csv_metric_values",
-          "stringInput": "42.5"
+          "stringInput": "1.5"
         }
       ],
       "title": "Current - North Up",
@@ -1465,8 +1465,8 @@
         "currentColor": "green",
         "currentDirField": "F-series",
         "currentSpdField": "G-series",
-        "currentSpdUom": "cm/s",
-        "currentOpacity": 1
+        "currentSpdUom": "kts",
+        "currentOpacity": 0.85
       },
       "pluginVersion": "2.1.3",
       "targets": [
@@ -1498,7 +1498,7 @@
           "hide": false,
           "refId": "G",
           "scenarioId": "csv_metric_values",
-          "stringInput": "42.5"
+          "stringInput": "1.5"
         }
       ],
       "title": "Current - Bow Up",
@@ -1550,8 +1550,8 @@
         "currentColor": "green",
         "currentDirField": "F-series",
         "currentSpdField": "G-series",
-        "currentSpdUom": "cm/s",
-        "currentOpacity": 1
+        "currentSpdUom": "kts",
+        "currentOpacity": 0.85
       },
       "pluginVersion": "2.1.3",
       "targets": [
@@ -1623,7 +1623,7 @@
           "hide": false,
           "refId": "G",
           "scenarioId": "csv_metric_values",
-          "stringInput": "42.5"
+          "stringInput": "1.5"
         }
       ],
       "title": "Wind + Current w/spd - North Up",
@@ -1675,8 +1675,8 @@
         "currentColor": "green",
         "currentDirField": "F-series",
         "currentSpdField": "G-series",
-        "currentSpdUom": "cm/s",
-        "currentOpacity": 0.6
+        "currentSpdUom": "kts",
+        "currentOpacity": 0.85
       },
       "pluginVersion": "2.1.3",
       "targets": [
@@ -1748,7 +1748,7 @@
           "hide": false,
           "refId": "G",
           "scenarioId": "csv_metric_values",
-          "stringInput": "42.5"
+          "stringInput": "1.5"
         }
       ],
       "title": "Wind + Current w/spd - Bow Up",

@@ -176,7 +176,7 @@ export const plugin = new PanelPlugin<SimpleOptions>(CompassPanel).setPanelOptio
       category: ['Coloring'],
       description:
         'Opacity of the water current arrow, so the needle underneath stays visible (0 = transparent, 1 = opaque)',
-      defaultValue: 1,
+      defaultValue: 0.85,
       showIf: (opts) => opts.currentDirField !== '',
       settings: { min: 0, max: 1, step: 0.05 },
     })

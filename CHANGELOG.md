@@ -8,7 +8,7 @@ requirements (dependency bumps, CI/build tooling, scaffold syncs) are not
 listed individually here, unless they change something a user would notice
 or need to act on — e.g. a new minimum supported Grafana version.
 
-## Unreleased
+## 2.3.0 - 2026-10-24
 
 ### Added
 

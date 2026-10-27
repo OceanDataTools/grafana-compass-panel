@@ -40,15 +40,6 @@ Optionally the panel can display true and/or apparent wind angle, and water curr
 
 ---
 
-## Getting Started
-
-1. Install the plugin by copying it into Grafana’s plugin directory or installing from the Grafana Marketplace.
-2. Restart Grafana.
-3. Add a new panel and select **Compass** as the visualization.
-4. Configure the data source and select the field representing **heading** (0–360 degrees).
-
----
-
 ## Options
 
 ### Data Options
